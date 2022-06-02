@@ -7,13 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SarcLibrary", "SarcLibrary\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AampLibrary", "AampLibrary\AampLibrary.csproj", "{F1197CE7-780D-4CB3-B979-C16A879B73E4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EadTesting", "EAD.Testing\EadTesting.csproj", "{EE37F87E-DBB3-4E65-8FC6-0F31111ECC64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOTests", "IOTests\IOTests.csproj", "{EE37F87E-DBB3-4E65-8FC6-0F31111ECC64}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BymlLibrary", "BymlLibrary\BymlLibrary.csproj", "{D6081CC3-3D08-44E8-9BE2-95832112D129}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yaz0Library", "Yaz0Library\Yaz0Library.csproj", "{9A80E4FE-6482-454C-86FC-FEA50D6C4C08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yaz0Library", "Yaz0Library\Yaz0Library.csproj", "{9A80E4FE-6482-454C-86FC-FEA50D6C4C08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nintendo", "Nintendo\Nintendo.csproj", "{0F95E1BD-D9E0-4EAD-BDFC-3CBE04F56B42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nintendo", "Nintendo\Nintendo.csproj", "{0F95E1BD-D9E0-4EAD-BDFC-3CBE04F56B42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
