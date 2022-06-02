@@ -1,6 +1,6 @@
 # NintendoCommonFormats
 
-A single library for manipulating common Nintendo file fomrats in C#.
+A single library for manipulating common Nintendo file formats in C#.
 
 _***Discliamer:** Most of the code in this repository was not written by me._<br>
 _Credit to KillzXGaming, exelix, Syroot and others for the discovery and implemetation of this code._
