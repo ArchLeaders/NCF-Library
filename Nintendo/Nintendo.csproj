@@ -12,6 +12,14 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GNU General Public License v3.0 or later</PackageLicenseExpression>
     <PackageTags>nintendo;samp;byml;sarc;yaz0;parameterio</PackageTags>
+    <Description>A single library constructed from several
+other libraries for manipulating common
+Nintendo file formats in C#.</Description>
+    <Copyright></Copyright>
+    <PackageProjectUrl>https://github.com/ArchLeaders/NintendoCommonFormats</PackageProjectUrl>
+    <PackageIcon>Icon-128.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/ArchLeaders/NintendoCommonFormats</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +27,17 @@
     <Folder Include="Byml\" />
     <Folder Include="Yaz0\" />
     <Folder Include="Sarc\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\docs\resources\Icon-128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
