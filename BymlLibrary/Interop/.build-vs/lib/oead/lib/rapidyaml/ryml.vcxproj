@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{ECC3A19C-4467-3B47-AF00-05935A0E19C6}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ryml</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\lib\oead\lib\rapidyaml\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ryml.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ryml</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\lib\oead\lib\rapidyaml\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ryml.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ryml</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\lib\oead\lib\rapidyaml\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">ryml.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">ryml</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\lib\oead\lib\rapidyaml\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">ryml.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">ryml</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/rapidyaml/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+C:\CMake\bin\cmake.exe "-SD:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop" "-BD:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs" --check-stamp-file "D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs/lib/oead/lib/rapidyaml/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeDependentOption.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;C:\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;C:\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;C:\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\CMakeFiles\3.23.2\CMakeCCompiler.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\ConfigurationTypes.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\CreateSourceGroup.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\GetFlags.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\PVS-Studio.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\PrintVar.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4CatSources.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4Doxygen.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4GetTargetPropertyRecursive.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4Project.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4SanitizeTarget.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4StaticAnalysis.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\lib\oead\lib\rapidyaml\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/rapidyaml/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+C:\CMake\bin\cmake.exe "-SD:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop" "-BD:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs" --check-stamp-file "D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs/lib/oead/lib/rapidyaml/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeDependentOption.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;C:\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;C:\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;C:\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\CMakeFiles\3.23.2\CMakeCCompiler.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\ConfigurationTypes.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\CreateSourceGroup.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\GetFlags.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\PVS-Studio.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\PrintVar.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4CatSources.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4Doxygen.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4GetTargetPropertyRecursive.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4Project.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4SanitizeTarget.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4StaticAnalysis.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\lib\oead\lib\rapidyaml\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/rapidyaml/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+C:\CMake\bin\cmake.exe "-SD:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop" "-BD:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs" --check-stamp-file "D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs/lib/oead/lib/rapidyaml/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeDependentOption.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;C:\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;C:\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;C:\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\CMakeFiles\3.23.2\CMakeCCompiler.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\ConfigurationTypes.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\CreateSourceGroup.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\GetFlags.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\PVS-Studio.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\PrintVar.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4CatSources.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4Doxygen.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4GetTargetPropertyRecursive.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4Project.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4SanitizeTarget.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4StaticAnalysis.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\lib\oead\lib\rapidyaml\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/rapidyaml/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+C:\CMake\bin\cmake.exe "-SD:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop" "-BD:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs" --check-stamp-file "D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs/lib/oead/lib/rapidyaml/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeDependentOption.cmake;C:\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;C:\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;C:\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;C:\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\CMakeFiles\3.23.2\CMakeCCompiler.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\ConfigurationTypes.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\CreateSourceGroup.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\GetFlags.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\PVS-Studio.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\PrintVar.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4CatSources.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4Doxygen.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4GetTargetPropertyRecursive.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4Project.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4SanitizeTarget.cmake;D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\cmake\c4StaticAnalysis.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\lib\oead\lib\rapidyaml\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\ryml.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\ryml_std.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\detail\stack.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\detail\parser_dbg.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\common.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\common.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\emit.def.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\emit.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\export.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\node.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\parse.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\parse.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\preprocess.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\preprocess.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\std\map.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\std\std.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\std\string.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\std\vector.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\tree.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\tree.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\writer.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\c4\yml\yml.hpp" />
+    <Natvis Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\src\ryml.natvis">
+    </Natvis>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\allocator.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\base64.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\base64.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\blob.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\bitmask.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\charconv.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\c4_pop.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\c4_push.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\char_traits.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\char_traits.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\common.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\compiler.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\config.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\cpu.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\ctor_dtor.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\enum.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\error.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\error.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\export.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\format.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\format.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\hash.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\language.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\language.cpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\memory_resource.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\memory_resource.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\memory_util.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\memory_util.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\platform.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\preprocessor.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\restrict.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\span.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\std\std.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\std\string.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\std\tuple.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\std\vector.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\substr.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\szconv.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\time.hpp" />
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\time.cpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\type_name.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\types.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\unrestrict.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\windows.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\windows_pop.hpp" />
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\windows_push.hpp" />
+    <Natvis Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\rapidyaml\ext\c4core\src\c4\c4core.natvis">
+    </Natvis>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\ZERO_CHECK.vcxproj">
+      <Project>{F3EBEA1D-AB8A-3FFA-8F20-0130D50CC793}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

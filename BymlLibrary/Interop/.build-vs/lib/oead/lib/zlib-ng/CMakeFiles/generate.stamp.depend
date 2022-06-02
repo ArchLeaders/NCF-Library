@@ -1,0 +1,24 @@
+# CMake generation dependency list for this directory.
+C:/CMake/share/cmake-3.23/Modules/CMakeCInformation.cmake
+C:/CMake/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake
+C:/CMake/share/cmake-3.23/Modules/CMakeDependentOption.cmake
+C:/CMake/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckCSourceCompiles.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckCSourceRuns.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckFunctionExists.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckIncludeFile.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckIncludeFileCXX.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckSymbolExists.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckTypeSize.cmake
+C:/CMake/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/CMake/share/cmake-3.23/Modules/Compiler/MSVC-C.cmake
+C:/CMake/share/cmake-3.23/Modules/FeatureSummary.cmake
+C:/CMake/share/cmake-3.23/Modules/Internal/CheckSourceCompiles.cmake
+C:/CMake/share/cmake-3.23/Modules/Internal/CheckSourceRuns.cmake
+C:/CMake/share/cmake-3.23/Modules/Platform/Windows-MSVC-C.cmake
+C:/CMake/share/cmake-3.23/Modules/Platform/Windows-MSVC.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs/CMakeFiles/3.23.2/CMakeCCompiler.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs/lib/oead/lib/zlib-ng/zconf-ng.h.cmakein
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/zlib-ng/CMakeLists.txt
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/zlib-ng/cmake/archdetect.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/zlib-ng/zlib.pc.cmakein

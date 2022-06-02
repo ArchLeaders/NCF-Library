@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\abseil\absl\base\internal\spinlock_wait.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\abseil\absl\base\internal\spinlock_wait.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\abseil\absl\base\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\abseil\absl\base\internal\spinlock_akaros.inc" />
+    <None Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\abseil\absl\base\internal\spinlock_linux.inc" />
+    <None Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\abseil\absl\base\internal\spinlock_posix.inc" />
+    <None Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\abseil\absl\base\internal\spinlock_win32.inc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{8D69CDBD-BA9C-3543-A94D-E37D75014A44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{FCAEBDDA-3835-32B2-ADAF-941D66C60470}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

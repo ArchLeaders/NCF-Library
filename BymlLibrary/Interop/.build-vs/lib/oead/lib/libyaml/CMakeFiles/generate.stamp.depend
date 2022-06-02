@@ -1,0 +1,17 @@
+# CMake generation dependency list for this directory.
+C:/CMake/share/cmake-3.23/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in
+C:/CMake/share/cmake-3.23/Modules/CMakeCInformation.cmake
+C:/CMake/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake
+C:/CMake/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake
+C:/CMake/share/cmake-3.23/Modules/CMakePackageConfigHelpers.cmake
+C:/CMake/share/cmake-3.23/Modules/CTest.cmake
+C:/CMake/share/cmake-3.23/Modules/CTestUseLaunchers.cmake
+C:/CMake/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/CMake/share/cmake-3.23/Modules/Compiler/MSVC-C.cmake
+C:/CMake/share/cmake-3.23/Modules/Platform/Windows-MSVC-C.cmake
+C:/CMake/share/cmake-3.23/Modules/Platform/Windows-MSVC.cmake
+C:/CMake/share/cmake-3.23/Modules/WriteBasicConfigVersionFile.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/.build-vs/CMakeFiles/3.23.2/CMakeCCompiler.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/libyaml/CMakeLists.txt
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/libyaml/cmake/config.h.in
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/libyaml/yamlConfig.cmake.in

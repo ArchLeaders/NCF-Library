@@ -1,0 +1,19 @@
+# CMake generation dependency list for this directory.
+C:/CMake/share/cmake-3.23/Modules/CMakePackageConfigHelpers.cmake
+C:/CMake/share/cmake-3.23/Modules/CMakeParseArguments.cmake
+C:/CMake/share/cmake-3.23/Modules/CTest.cmake
+C:/CMake/share/cmake-3.23/Modules/CTestUseLaunchers.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckCXXSourceCompiles.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckIncludeFileCXX.cmake
+C:/CMake/share/cmake-3.23/Modules/CheckLibraryExists.cmake
+C:/CMake/share/cmake-3.23/Modules/FindPackageHandleStandardArgs.cmake
+C:/CMake/share/cmake-3.23/Modules/FindPackageMessage.cmake
+C:/CMake/share/cmake-3.23/Modules/FindThreads.cmake
+C:/CMake/share/cmake-3.23/Modules/GNUInstallDirs.cmake
+C:/CMake/share/cmake-3.23/Modules/Internal/CheckSourceCompiles.cmake
+C:/CMake/share/cmake-3.23/Modules/WriteBasicConfigVersionFile.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/abseil/CMake/AbseilDll.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/abseil/CMake/AbseilHelpers.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/abseil/CMakeLists.txt
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/abseil/absl/copts/AbseilConfigureCopts.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/abseil/absl/copts/GENERATED_AbseilCopts.cmake

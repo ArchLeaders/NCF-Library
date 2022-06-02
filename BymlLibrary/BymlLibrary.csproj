@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Data\AcnhByml" />
+    <None Remove="Data\AcnhHeaders" />
+    <None Remove="Data\AcnhValues" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\AcnhByml" />
+    <EmbeddedResource Include="Data\AcnhHeaders" />
+    <EmbeddedResource Include="Data\AcnhValues" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interop\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SharpYaml" Version="1.9.1" />
+    <PackageReference Include="Syroot.BinaryData" Version="5.2.2" />
+    <PackageReference Include="Syroot.Maths" Version="1.5.3" />
+  </ItemGroup>
+
+</Project>

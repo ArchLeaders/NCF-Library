@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="AampHashedNames" />
+    <None Remove="AampHashedNamesNumbered" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\AampHashedNames" />
+    <EmbeddedResource Include="Data\AampHashedNamesNumbered" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SharpYaml" Version="1.9.1" />
+    <PackageReference Include="Syroot.BinaryData" Version="5.2.2" />
+    <PackageReference Include="Syroot.Maths" Version="1.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="aamp_hashed_names.txt" />
+    <Resource Include="aamp_hashed_names_numbered.txt" />
+  </ItemGroup>
+
+</Project>

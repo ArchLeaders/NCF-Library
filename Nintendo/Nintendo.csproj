@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId></PackageId>
+    <AssemblyName>Nintendo.Common.Formats</AssemblyName>
+    <Authors>KillzXGaming, exelix, Syroot, and ArchLeaders</Authors>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>GNU General Public License v3.0 or later</PackageLicenseExpression>
+    <PackageTags>nintendo;samp;byml;sarc;yaz0;parameterio</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Aamp\" />
+    <Folder Include="Byml\" />
+    <Folder Include="Yaz0\" />
+    <Folder Include="Sarc\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="SharpYaml" Version="1.9.1" />
+    <PackageReference Include="Syroot.BinaryData" Version="5.2.2" />
+    <PackageReference Include="Syroot.Maths" Version="1.5.3" />
+  </ItemGroup>
+
+</Project>

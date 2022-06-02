@@ -1,0 +1,6 @@
+# CMake generation dependency list for this directory.
+C:/CMake/share/cmake-3.23/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in
+C:/CMake/share/cmake-3.23/Modules/CMakePackageConfigHelpers.cmake
+C:/CMake/share/cmake-3.23/Modules/WriteBasicConfigVersionFile.cmake
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/EasyIterator/CMakeLists.txt
+D:/Visual Studio/Libraries/EADLibrary/BymlLibrary/Interop/lib/oead/lib/EasyIterator/cmake/EasyIteratorConfig.cmake.in

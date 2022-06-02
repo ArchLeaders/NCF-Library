@@ -1,0 +1,12 @@
+prefix=C:/Program Files (x86)/oead
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: absl_absl_cord_internal
+Description: Abseil absl_cord_internal library
+URL: https://abseil.io/
+Version: head
+Requires: absl_base_internal = head, absl_compressed_tuple = head, absl_config = head, absl_core_headers = head, absl_endian = head, absl_inlined_vector = head, absl_layout = head, absl_raw_logging_internal = head, absl_strings = head, absl_throw_delegate = head, absl_type_traits = head
+Libs: -L${libdir}  -labsl_absl_cord_internal
+Cflags: -I${includedir} -DNOMINMAX -Wno-conversion-null -Wno-deprecated-declarations -Wno-missing-declarations -Wno-sign-compare -Wno-unused-function -Wno-unused-parameter -Wno-unused-private-field

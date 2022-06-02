@@ -1,0 +1,12 @@
+prefix=C:/Program Files (x86)/oead
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: absl_absl_debugging_internal
+Description: Abseil absl_debugging_internal library
+URL: https://abseil.io/
+Version: head
+Requires: absl_core_headers = head, absl_config = head, absl_dynamic_annotations = head, absl_errno_saver = head, absl_raw_logging_internal = head
+Libs: -L${libdir}  -labsl_absl_debugging_internal
+Cflags: -I${includedir} -DNOMINMAX

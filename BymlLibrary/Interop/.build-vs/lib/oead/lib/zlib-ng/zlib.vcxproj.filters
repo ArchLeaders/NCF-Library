@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\adler32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\compress.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\crc32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\deflate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\deflate_fast.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\deflate_medium.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\deflate_slow.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\functable.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\inflate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\infback.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\inftrees.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\inffast.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\trees.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\uncompr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\zutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\arch\x86\x86.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\arch\x86\insert_string_sse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\arch\x86\deflate_quick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\arch\x86\fill_window_sse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\arch\x86\slide_sse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\arch\x86\crc_folding.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\fallback_builtins.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\.build-vs\lib\oead\lib\zlib-ng\zconf-ng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\zlib-ng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\adler32_p.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\crc32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\crc32_p.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\deflate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\deflate_p.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\functable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\gzguts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\inffast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\inffixed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\inflate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\inflate_p.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\inftrees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\match_p.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\memcopy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\trees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\trees_p.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\zbuild.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\zendian.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\zutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="D:\Visual Studio\Libraries\EADLibrary\BymlLibrary\Interop\lib\oead\lib\zlib-ng\win32\zlib-ng1.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{8D69CDBD-BA9C-3543-A94D-E37D75014A44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{FCAEBDDA-3835-32B2-ADAF-941D66C60470}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
