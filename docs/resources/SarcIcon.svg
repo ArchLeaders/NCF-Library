@@ -4,14 +4,14 @@
 <svg
    width="512"
    height="512"
-   viewBox="0 0 512 512"
+   viewBox="0 0 135.46666 135.46666"
    version="1.1"
    id="svg5"
-   inkscape:export-filename="D:\Visual Studio\Libraries\EADLibrary\docs\resources\Icon-128.png"
-   inkscape:export-xdpi="24"
-   inkscape:export-ydpi="24"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   sodipodi:docname="Icon.svg"
+   sodipodi:docname="AampIcon.svg"
+   inkscape:export-filename="D:\Visual Studio\Libraries\NCF-Library\docs\resources\Yaz0Icon-512.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,34 +24,37 @@
      inkscape:pageshadow="0"
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
-     inkscape:document-units="px"
+     inkscape:document-units="mm"
      showgrid="false"
+     units="px"
+     width="512px"
      inkscape:snap-bbox="true"
      inkscape:bbox-paths="true"
      inkscape:bbox-nodes="true"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-bbox-midpoints="true"
-     inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
+     inkscape:object-paths="true"
      inkscape:snap-smooth-nodes="true"
      inkscape:snap-midpoints="true"
      inkscape:snap-object-midpoints="true"
      inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
      inkscape:snap-page="true"
-     inkscape:snap-global="false"
-     inkscape:zoom="1.0204113"
-     inkscape:cx="170.51948"
-     inkscape:cy="290.56911"
+     inkscape:snap-global="true"
+     inkscape:zoom="0.89375"
+     inkscape:cx="396.08392"
+     inkscape:cy="229.93007"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="-8"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
      id="defs2">
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Drop Shadow"
        id="filter19665"
        x="-0.02941458"
@@ -92,20 +95,20 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#181818;fill-opacity:1;stroke-width:3"
+       style="fill:#181818;fill-opacity:1;stroke-width:0.79375"
        id="rect846"
-       width="512"
-       height="512"
-       x="4.7683716e-06"
-       y="4.7683716e-06"
-       ry="38.839371" />
+       width="135.46666"
+       height="135.46666"
+       x="0"
+       y="0"
+       ry="10.27625" />
     <path
-       style="fill:#ffffff;fill-opacity:0.44190872;stroke:none;stroke-width:0.91749px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 146.17817,-39.627611 C 145.27903,121.31796 24.794642,117.72141 -37.245829,231.0127 -99.286302,344.30399 -13.86826,320.0273 28.391191,376.67294 70.650643,433.31859 -108.27768,565.49177 63.457545,560.99608 235.19276,556.50039 104.61055,446.26068 290.58861,348.07763 476.56667,249.89459 711.73551,2.6318414 528.31151,46.689567 344.88751,90.747293 230.69708,-22.544002 230.69708,-22.544002 Z"
+       style="fill:#bd2233;fill-opacity:0.75686282;stroke:none;stroke-width:0.242753px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 38.676314,-10.484805 C 38.438414,32.09871 6.5602538,31.147123 -9.8546258,61.122109 -26.269496,91.097095 -3.6693061,84.673885 7.5118439,99.661385 18.692984,114.64888 -28.648466,149.6197 16.789814,148.43022 62.228084,147.24073 27.678214,118.07314 76.884904,92.095535 126.0916,66.117945 188.31335,0.69634133 139.78242,12.353281 91.251494,24.010221 61.038604,-5.9647667 61.038604,-5.9647667 Z"
        id="path50560" />
     <g
        id="g18663"
-       transform="matrix(1.1681261,0,0,1.1681261,-42.053683,-33.257026)"
+       transform="matrix(0.30906669,0,0,0.30906669,-11.126696,-8.7992547)"
        style="fill:#0d0d0d;fill-opacity:1;stroke:#0d0d0d;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal">
       <path
          style="fill:#0d0d0d;fill-opacity:1;stroke:#0d0d0d;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
@@ -123,15 +126,15 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:192px;line-height:1.25;font-family:Tajawal;-inkscape-font-specification:'Tajawal Heavy';stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.307054;filter:url(#filter19665)"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:164.366px;line-height:1.25;font-family:Tajawal;-inkscape-font-specification:'Tajawal Heavy';stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.307054;filter:url(#filter19665)"
        x="260.34796"
        y="430.86798"
        id="text2389"
-       transform="matrix(1.1681261,0,0,1.1681261,-43.040281,-43.040281)"><tspan
+       transform="matrix(0.26608565,0,0,0.26608565,-0.2637181,10.180861)"><tspan
          sodipodi:role="line"
          x="260.34796"
          y="430.86798"
          id="tspan2393"
-         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:192px;font-family:Tajawal;-inkscape-font-specification:'Tajawal Ultra-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.307054">NCF</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:164.366px;font-family:Tajawal;-inkscape-font-specification:'Tajawal Ultra-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.307054">SARC</tspan></text>
   </g>
 </svg>
