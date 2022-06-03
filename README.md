@@ -28,5 +28,6 @@ _Credit to KillzXGaming, exelix, Syroot and others for the discovery and impleme
 
 - **KillzXGaming** | Aamp implementation and Byml Yml/Xml serialization.
 - **exelix** | Byml, Sarc, and yaz0 implementation.
+- **AboodXD** | Original SARCLib
 - **Syroot** | Binary IO, original foundation libraries.
 - **ArchLeaders** | Code cleanup and modification to support newer Syroot libraries.
