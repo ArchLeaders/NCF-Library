@@ -10,7 +10,7 @@
     <AssemblyName>Nintendo.Common.Formats</AssemblyName>
     <Authors>KillzXGaming, exelix, Syroot, and ArchLeaders</Authors>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageLicenseExpression>GNU General Public License v3.0 or later</PackageLicenseExpression>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageTags>nintendo;samp;byml;sarc;yaz0;parameterio</PackageTags>
     <Description>A single library constructed from several
 other libraries for manipulating common

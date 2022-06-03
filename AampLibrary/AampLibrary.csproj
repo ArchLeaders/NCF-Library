@@ -7,12 +7,14 @@
     <Platforms>AnyCPU;x64</Platforms>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>KillzXGaming and Syroot. (Updated by ArchLeaders)</Authors>
-    <Description>Updated version of KillzXGaming AampLibrary</Description>
+    <Description>Updated version of KillzXGaming's AampLibrary</Description>
     <PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/AampLibrary</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>AampIcon-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/AampLibrary</RepositoryUrl>
     <PackageTags>aamp;parameterio;botw;nintendo;zelda</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
