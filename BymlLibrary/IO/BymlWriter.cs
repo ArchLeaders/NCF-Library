@@ -32,36 +32,39 @@ namespace Nintendo.Byml.IO
             StringArray.Sort(StringComparer.Ordinal);
 
             // Open a writer on the given stream.
-            using BinaryStream writer = new(stream, encoding: encoding, leaveOpen: true);
-
-            writer.ByteConverter = ByteConverter.GetConverter(Endianness);
-
-            // Write the header, specifying magic bytes, version and main node offsets.
-            writer.Write(0x4259);
-            writer.Write(Version);
-            uint nameArrayOffset = writer.ReserveOffset();
-            uint stringArrayOffset = writer.ReserveOffset();
-            uint? pathArrayOffset = SupportPaths ? writer.ReserveOffset() : null;
-            uint rootOffset = writer.ReserveOffset();
-
-            // Write the main nodes.
-            WriteEnumerableNode(writer, nameArrayOffset, NodeType.StringArray, NameArray);
-            if (StringArray.Count == 0)
-                writer.Write(0);
-            else
-                WriteEnumerableNode(writer, stringArrayOffset, NodeType.StringArray, StringArray);
-
-            // Include a path array offset if requested.
-            if (SupportPaths)
+            using (BinaryStream writer = new(stream, encoding: encoding, leaveOpen: true))
             {
-                if (PathArray.Count == 0)
+                writer.ByteConverter = ByteConverter.GetConverter(Endianness);
+
+                // Write the header, specifying magic bytes, version and main node offsets.
+                // writer.Write(Endianness == Endian.Big ? 0x4259 : 0x5942);
+                // Header writing is inversed?               B Y      Y B
+                writer.Write(Endianness == Endian.Little ? (ushort)0x4259 : (ushort)0x5942);
+                writer.Write(Version);
+                uint nameArrayOffset = writer.ReserveOffset();
+                uint stringArrayOffset = writer.ReserveOffset();
+                uint? pathArrayOffset = SupportPaths ? writer.ReserveOffset() : null;
+                uint rootOffset = writer.ReserveOffset();
+
+                // Write the main nodes.
+                WriteEnumerableNode(writer, nameArrayOffset, NodeType.StringArray, NameArray);
+                if (StringArray.Count == 0)
                     writer.Write(0);
                 else
-                    WriteEnumerableNode(writer, pathArrayOffset ?? 0, NodeType.PathArray, PathArray);
-            }
+                    WriteEnumerableNode(writer, stringArrayOffset, NodeType.StringArray, StringArray);
 
-            // Write the root node.
-            WriteEnumerableNode(writer, rootOffset, NodeTypeExtension.GetNodeType(RootNode), (IEnumerable)RootNode);
+                // Include a path array offset if requested.
+                if (SupportPaths)
+                {
+                    if (PathArray.Count == 0)
+                        writer.Write(0);
+                    else
+                        WriteEnumerableNode(writer, pathArrayOffset ?? 0, NodeType.PathArray, PathArray);
+                }
+
+                // Write the root node.
+                WriteEnumerableNode(writer, rootOffset, NodeTypeExtension.GetNodeType(RootNode), (IEnumerable)RootNode);
+            }
         }
 
         private void CollectNodeArrayContents(dynamic node)
