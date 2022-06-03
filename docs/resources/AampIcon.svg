@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46666 135.46666"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="AampIcon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     width="512px"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-paths="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     inkscape:snap-page="true"
+     inkscape:snap-global="true"
+     inkscape:zoom="0.89375"
+     inkscape:cx="396.08392"
+     inkscape:cy="229.93007"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <filter
+       style="color-interpolation-filters:sRGB"
+       inkscape:label="Drop Shadow"
+       id="filter19665"
+       x="-0.02941458"
+       y="-0.07678228"
+       width="1.064903"
+       height="1.1694195">
+      <feFlood
+         flood-opacity="0.458824"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood19655" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite19657" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="2.99401"
+         result="blur"
+         id="feGaussianBlur19659" />
+      <feOffset
+         dx="2"
+         dy="2"
+         result="offset"
+         id="feOffset19661" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite19663" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#181818;fill-opacity:1;stroke-width:0.79375"
+       id="rect846"
+       width="135.46666"
+       height="135.46666"
+       x="0"
+       y="0"
+       ry="10.27625" />
+    <path
+       style="fill:#0c8549;fill-opacity:0.75726146;stroke:none;stroke-width:0.242753px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 38.676314,-10.484805 C 38.438414,32.09871 6.5602538,31.147123 -9.8546258,61.122109 -26.269496,91.097095 -3.6693061,84.673885 7.5118439,99.661385 18.692984,114.64888 -28.648466,149.6197 16.789814,148.43022 62.228084,147.24073 27.678214,118.07314 76.884904,92.095535 126.0916,66.117945 188.31335,0.69634133 139.78242,12.353281 91.251494,24.010221 61.038604,-5.9647667 61.038604,-5.9647667 Z"
+       id="path50560" />
+    <g
+       id="g18663"
+       transform="matrix(0.30906669,0,0,0.30906669,-11.126696,-8.7992547)"
+       style="fill:#0d0d0d;fill-opacity:1;stroke:#0d0d0d;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal">
+      <path
+         style="fill:#0d0d0d;fill-opacity:1;stroke:#0d0d0d;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+         d="M 272.08295,188.06088 114.1336,338.98526 c 0,0 -21.023417,27.28864 0.47149,48.2057 18.91677,18.40822 47.62056,4.50519 47.62056,4.50519 L 323.47543,237.61813 c 0,0 50.17729,9.13371 73.71088,-7.84208 38.26637,-27.60319 31.44683,-71.65016 31.44683,-71.65016 l -48.67618,46.51125 -51.72448,-13.24311 -13.60122,-48.5028 51.50961,-49.218668 c 0,0 -55.45167,-5.267938 -83.27948,21.322198 -27.82782,26.59014 -10.77844,73.06612 -10.77844,73.06612 z"
+         id="path16163"
+         sodipodi:nodetypes="ccsccscccccsc" />
+      <path
+         style="fill:#0d0d0d;fill-opacity:1;stroke:#0d0d0d;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+         d="m 327.71884,288.97748 -39.36947,37.61847 78.26744,74.78641 c 0,0 15.72776,3.61333 26.65016,-6.82331 10.92241,-10.43661 8.47547,-30.22404 8.47547,-30.22404 z"
+         id="path16165" />
+      <path
+         style="fill:#0d0d0d;fill-opacity:1;stroke:#0d0d0d;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+         d="m 192.87254,219.59731 20.50984,-19.59763 -52.0997,-49.78253 v -23.87759 l -55.21625,-30.461248 -16.287347,8.985278 -8.5418,14.13682 28.587827,47.31332 h 27.41154 z"
+         id="path16167" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:164.366px;line-height:1.25;font-family:Tajawal;-inkscape-font-specification:'Tajawal Heavy';stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.307054;filter:url(#filter19665)"
+       x="260.34796"
+       y="430.86798"
+       id="text2389"
+       transform="matrix(0.26608565,0,0,0.26608565,-0.2637181,10.180861)"><tspan
+         sodipodi:role="line"
+         x="260.34796"
+         y="430.86798"
+         id="tspan2393"
+         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:164.366px;font-family:Tajawal;-inkscape-font-specification:'Tajawal Ultra-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.307054">AAMP</tspan></text>
+  </g>
+</svg>

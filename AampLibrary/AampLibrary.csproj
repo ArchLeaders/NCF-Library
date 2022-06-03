@@ -5,6 +5,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>KillzXGaming and Syroot. (Updated by ArchLeaders)</Authors>
+    <Description>Updated version of KillzXGaming AampLibrary</Description>
+    <PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/AampLibrary</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>AampIcon-128.png</PackageIcon>
+    <RepositoryUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/AampLibrary</RepositoryUrl>
+    <PackageTags>aamp;parameterio;botw;nintendo;zelda</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\docs\resources\AampIcon-128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SharpYaml" Version="1.9.1" />
     <PackageReference Include="Syroot.BinaryData" Version="5.2.2" />
@@ -27,6 +42,13 @@
   <ItemGroup>
     <Resource Include="aamp_hashed_names.txt" />
     <Resource Include="aamp_hashed_names_numbered.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
