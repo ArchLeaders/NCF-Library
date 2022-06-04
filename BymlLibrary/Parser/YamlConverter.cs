@@ -1,13 +1,10 @@
 ﻿#pragma warning disable IDE0150 // Prefer 'null' check over type check
-#pragma warning disable CS8604 // Possible null reference argument.
 
 using SharpYaml.Serialization;
 using System.Globalization;
-using Syroot.BinaryData;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
-using Syroot.BinaryData.Core;
 
 namespace Nintendo.Byml.Parser
 {
@@ -23,18 +20,11 @@ namespace Nintendo.Byml.Parser
             RefNodeId = 0;
 
             YamlNode root = SaveNode(byml.RootNode);
-            YamlMappingNode mapping = new();
-
-            mapping.Add("Version", byml.Version.ToString());
-            mapping.Add("IsBigEndian", (byml.Endianness == Endian.Big).ToString());
-            mapping.Add("SupportPaths", byml.SupportPaths.ToString());
-            mapping.Add("HasReferenceNodes", (RefNodeId != 0).ToString());
-            mapping.Add("root", root);
 
             NodePaths.Clear();
             RefNodeId = 0;
 
-            YamlStream stream = new(new YamlDocument(mapping));
+            YamlStream stream = new(new YamlDocument(root));
             using StringWriter? writer = new(new StringBuilder());
             stream.Save(writer, true);
             return writer.ToString();
@@ -50,23 +40,12 @@ namespace Nintendo.Byml.Parser
 
             yaml.Load(new StringReader(text));
 
-            var mapping = (YamlMappingNode)yaml.Documents[0].RootNode;
-            foreach (var child in mapping.Children)
-            {
-                var key = ((YamlScalarNode)child.Key).Value;
-                var value = child.Value.ToString();
+            dynamic root = yaml.Documents[0].RootNode;
 
-                if (key == "Version")
-                    byml.Version = ushort.Parse(value);
-                if (key == "IsBigEndian")
-                    byml.Endianness = bool.Parse(value) ? Endian.Big : Endian.Little;
-                if (key == "SupportPaths")
-                    byml.SupportPaths = bool.Parse(value);
-                if (child.Value is YamlMappingNode)
-                    byml.RootNode = ParseNode(child.Value);
-                if (child.Value is YamlSequenceNode)
-                    byml.RootNode = ParseNode(child.Value);
-            }
+            if (root is YamlMappingNode)
+                byml.RootNode = ParseNode(root);
+            else if (root is YamlSequenceNode)
+                byml.RootNode = ParseNode(root);
 
             ReferenceNodes.Clear();
             NodePaths.Clear();
