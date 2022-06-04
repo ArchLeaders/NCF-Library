@@ -6,18 +6,6 @@ using System.Text;
 
 namespace Nintendo.Byml
 {
-    public enum OpenMode : uint
-    {
-        Read = 0x00,
-        Xml = 0x01,
-    }
-
-    public enum ReadMode : uint
-    {
-        Yml = 0x00,
-        Xml = 0x01,
-    }
-
     public class BymlFile
     {
         //
@@ -54,8 +42,8 @@ namespace Nintendo.Byml
 
         public Endian Endianness { get; set; } = Endian.Little;
         public dynamic? RootNode { get; set; }
-        public bool SupportPaths { get; set; }
-        public ushort Version { get; set; }
+        public bool SupportPaths { get; set; } = false;
+        public ushort Version { get; set; } = 2;
 
         #endregion
 
@@ -84,6 +72,12 @@ namespace Nintendo.Byml
         public static BymlFile FromBinary(string fileName) => new BymlReader().Read(File.OpenRead(fileName), Encoding.UTF8);
         public static BymlFile FromBinary(byte[] bytes) => new BymlReader().Read(new MemoryStream(bytes), Encoding.UTF8);
         public static BymlFile FromBinary(Stream stream) => new BymlReader().Read(stream, Encoding.UTF8);
+
+        public static BymlFile FromYaml(string text) => YamlConverter.FromYaml(text);
+        public static BymlFile FromYamlFile(string fileName) => YamlConverter.FromYaml(File.ReadAllText(fileName));
+
+        public static BymlFile FromXml(string text) => XmlConverter.FromXml(text);
+        public static BymlFile FromXmlFile(string fileName) => XmlConverter.FromXml(File.ReadAllText(fileName));
 
         public static void ToBinary(BymlFile byml, Stream stream) => new BymlWriter(byml).Write(stream, Encoding.UTF8);
         public static byte[] ToBinary(BymlFile byml)
