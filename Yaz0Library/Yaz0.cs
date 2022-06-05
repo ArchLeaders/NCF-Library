@@ -3,11 +3,52 @@
 namespace Yaz0Library
 {
     /// <summary>
-    /// Copied from KillzXGaming's <a href="https://github.com/KillzXGaming/BfresPlatformConverter/blob/master/YAZ0.cs">BfresPLatformConverter</a>
+    /// <para><u>Note:</u> to use the fast compressor/decompressor you must have the compiled C library <b><a href="https://github.com/ArchLeaders/NCF-Library/raw/master/Yaz0Library/Yaz0.dll">Yaz0.dll</a></b> in the root build folder.</para>
+    /// <para><i>C# implementation of Yaz0 copied from KillzXGaming's <a href="https://github.com/KillzXGaming/BfresPlatformConverter/blob/master/YAZ0.cs">BfresPLatformConverter</a></i></para>
     /// </summary>
     public class Yaz0
     {
-        //Compression could be optimized by using look-ahead.
+        //
+        // C entry points
+        #region Expand
+
+        [DllImport("Yaz0.dll", EntryPoint = "decompress")]
+        internal static extern unsafe byte* C_Decompress([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] src, uint srcLen, uint* destLen);
+
+        [DllImport("Yaz0.dll", EntryPoint = "compress")]
+        internal static extern unsafe byte* C_Compress([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] src, uint srcLen, uint* destLen, byte optCompr);
+
+        [DllImport("Yaz0.dll", EntryPoint = "freePtr")]
+        internal static extern unsafe void C_FreePtr(void* ptr);
+
+        #endregion
+
+        //
+        // C wrapper
+        #region Expand
+
+        public static unsafe byte[] CompressFast(string fileName, int level = 7) => CompressFast(File.ReadAllBytes(fileName), level);
+        public static unsafe byte[] CompressFast(byte[] data, int level = 7)
+        {
+            uint buffer = 0;
+            C_Compress(data, (uint)data.Length, (uint*)buffer, (byte)level);
+            return BitConverter.GetBytes(buffer).Reverse().ToArray();
+        }
+
+        public static unsafe byte[] DecompressFast(string file) => Decompress(File.ReadAllBytes(file));
+        public static unsafe byte[] DecompressFast(byte[] data)
+        {
+            uint buffer = 0;
+            C_Decompress(data, (uint)data.Length, (uint*)buffer);
+            return BitConverter.GetBytes(buffer).Reverse().ToArray();
+        }
+
+        #endregion
+
+        //
+        // C# implementation
+        #region Expand
+
         public static unsafe byte[] Compress(string FileName, int level = 7, uint res1 = 0, uint res2 = 0) => Compress(File.ReadAllBytes(FileName), level, res1, res2);
         public static unsafe byte[] Compress(byte[] Data, int level = 7, uint reserved1 = 0, uint reserved2 = 0)
         {
@@ -128,7 +169,6 @@ namespace Yaz0Library
         }
 
         public static byte[] Decompress(string file) => Decompress(File.ReadAllBytes(file));
-        public static Stream DecompressToStream(string file) => new MemoryStream(Decompress(File.ReadAllBytes(file)));
         public static byte[] Decompress(byte[] Data)
         {
             uint leng = (uint)(Data[4] << 24 | Data[5] << 16 | Data[6] << 8 | Data[7]);
@@ -158,5 +198,7 @@ namespace Yaz0Library
                 }
             }
         }
+
+        #endregion
     }
 }
