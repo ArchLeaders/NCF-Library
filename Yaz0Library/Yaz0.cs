@@ -12,13 +12,13 @@ namespace Yaz0Library
         // C entry points
         #region Expand
 
-        [DllImport("Yaz0.dll", EntryPoint = "decompress")]
-        internal static extern unsafe byte* C_Decompress([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] src, uint srcLen, uint* destLen);
+        [DllImport("Yaz0.dll", EntryPoint = "decompress", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern unsafe byte* C_Decompress(byte* src, uint srcLen, uint* destLen);
 
-        [DllImport("Yaz0.dll", EntryPoint = "compress")]
-        internal static extern unsafe byte* C_Compress([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] src, uint srcLen, uint* destLen, byte optCompr);
+        [DllImport("Yaz0.dll", EntryPoint = "compress", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern unsafe byte* C_Compress(byte* src, uint srcLen, uint* destLen, byte optCompr);
 
-        [DllImport("Yaz0.dll", EntryPoint = "freePtr")]
+        [DllImport("Yaz0.dll", EntryPoint = "freePtr", CallingConvention = CallingConvention.Cdecl)]
         internal static extern unsafe void C_FreePtr(void* ptr);
 
         #endregion
@@ -27,20 +27,33 @@ namespace Yaz0Library
         // C wrapper
         #region Expand
 
-        public static unsafe byte[] CompressFast(string fileName, int level = 7) => CompressFast(File.ReadAllBytes(fileName), level);
-        public static unsafe byte[] CompressFast(byte[] data, int level = 7)
+        internal static unsafe byte[] CompressFast(string fileName, int level = 7) => CompressFast(File.ReadAllBytes(fileName), level);
+        internal static unsafe byte[] CompressFast(byte[] data, int level = 7)
         {
-            uint buffer = 0;
-            C_Compress(data, (uint)data.Length, (uint*)buffer, (byte)level);
-            return BitConverter.GetBytes(buffer).Reverse().ToArray();
+            uint srcLen = (uint)data.Length;
+            uint destLen;
+            fixed (byte* inputPtr = data) {
+                byte* outputPtr = C_Compress(inputPtr, srcLen, &destLen, (byte)level);
+                byte[] comp = new byte[destLen];
+                Marshal.Copy((IntPtr)outputPtr, comp, 0, (int)destLen);
+                C_FreePtr(outputPtr);
+                return comp;
+            }
         }
 
-        public static unsafe byte[] DecompressFast(string file) => Decompress(File.ReadAllBytes(file));
+
+        public static unsafe byte[] DecompressFast(string file) => DecompressFast(File.ReadAllBytes(file));
         public static unsafe byte[] DecompressFast(byte[] data)
         {
-            uint buffer = 0;
-            C_Decompress(data, (uint)data.Length, (uint*)buffer);
-            return BitConverter.GetBytes(buffer).Reverse().ToArray();
+            uint srcLen = (uint)data.Length;
+            uint destLen;
+            fixed (byte* inputPtr = data) {
+                byte* outputPtr = C_Decompress(inputPtr, srcLen, &destLen);
+                byte[] decomp = new byte[destLen];
+                Marshal.Copy((IntPtr)outputPtr, decomp, 0, (int)destLen);
+                C_FreePtr(outputPtr);
+                return decomp;
+            }
         }
 
         #endregion
