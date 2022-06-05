@@ -1,20 +1,40 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Authors>exelix and KillzXGaming. (Updated by ArchLeaders)</Authors>
+    <Description>Updated version of exelix's Yaz0 implemetation.</Description>
+    <PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/Yaz0Library</PackageProjectUrl>
+    <PackageIcon>Yaz0Icon-128.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/Yaz0Library</RepositoryUrl>
+    <PackageTags>yaz0;de/compression;botw;nintendo;zelda</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Yaz0.dll" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Yaz0.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\docs\resources\Yaz0Icon-128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
