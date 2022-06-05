@@ -13,6 +13,7 @@
     <PackageTags>sarc;archive;botw;nintendo;zelda</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	<VersionPrefix>1.0.1</VersionPrefix>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
