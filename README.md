@@ -2,7 +2,7 @@
 
 A single library constructed from several other libraries for manipulating common Nintendo file formats in C#.
 
-_***Discliamer:** Most of the code in this repository was not written by me._<br>
+_***Discliamer:** Most of the code in this repository was <ins>not</ins> written by me._<br>
 _Credit to KillzXGaming, exelix, Syroot and others for the discovery and implemetation of this code._
 
 ## Libraries
