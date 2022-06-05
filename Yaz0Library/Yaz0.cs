@@ -27,15 +27,31 @@ namespace Yaz0Library
         // C wrapper
         #region Expand
 
-        internal static unsafe byte[] CompressFast(string fileName, int level = 7) => CompressFast(File.ReadAllBytes(fileName), level);
-        internal static unsafe byte[] CompressFast(byte[] data, int level = 7)
+        public static unsafe byte[] CompressFast(string fileName, int level = 7) => CompressFast(File.ReadAllBytes(fileName), level);
+        public static unsafe byte[] CompressFast(byte[] data, int level = 7)
         {
             uint srcLen = (uint)data.Length;
             uint destLen;
             fixed (byte* inputPtr = data) {
+
+                // Compress byte ptr
                 byte* outputPtr = C_Compress(inputPtr, srcLen, &destLen, (byte)level);
-                byte[] comp = new byte[destLen];
-                Marshal.Copy((IntPtr)outputPtr, comp, 0, (int)destLen);
+
+                // Write header
+                byte[] comp = new byte[] {
+                    (byte)'Y',
+                    (byte)'a',
+                    (byte)'z',
+                    (byte)'0',
+                    (byte)((data.Length >> 24) & 0xFF),
+                    (byte)((data.Length >> 16) & 0xFF),
+                    (byte)((data.Length >> 8) & 0xFF),
+                    (byte)((data.Length >> 0) & 0xFF),
+                };
+
+                // Copy to a byte[]
+                Array.Resize(ref comp, (int)destLen + 16);
+                Marshal.Copy((IntPtr)outputPtr, comp, 16, (int)destLen);
                 C_FreePtr(outputPtr);
                 return comp;
             }
