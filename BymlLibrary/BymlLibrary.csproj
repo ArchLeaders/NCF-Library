@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -13,8 +13,9 @@
     <PackageTags>byml;binary-yaml;botw;nintendo;zelda</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-	<VersionPrefix>1.0.1</VersionPrefix>
+	<VersionPrefix>1.0.2</VersionPrefix>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PackageReleaseNotes>Fix AampLibrary compatibility issues.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\docs\resources\BymlIcon-128.png">
+    <None Include="..\docs\resources\icons\BymlIcon-128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

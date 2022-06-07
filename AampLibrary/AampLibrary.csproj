@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -15,8 +15,8 @@
     <PackageTags>aamp;parameterio;botw;nintendo;zelda</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-	<VersionPrefix>1.0.1</VersionPrefix>
-    <PackageReleaseNotes>Update deserialization/serialization syntax</PackageReleaseNotes>
+	<VersionPrefix>1.0.2</VersionPrefix>
+    <PackageReleaseNotes>Fix BymlLibrary compatibility issues.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\docs\resources\AampIcon-128.png">
+    <None Include="..\docs\resources\icons\AampIcon-128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

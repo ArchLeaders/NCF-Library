@@ -9,6 +9,7 @@ using System.Text;
 using Syroot.Maths;
 using SharpYaml.Serialization;
 using Nintendo.Aamp.Parser;
+using Aamp.Security.Cryptography;
 
 namespace Nintendo.Aamp
 {
@@ -293,7 +294,7 @@ namespace Nintendo.Aamp
         {
             bool isHash = uint.TryParse(name, out uint hash);
             if (!isHash || hash == 0 || Hashes.HasString(name))
-                return System.Security.Cryptography.Crc32.Compute(name);
+                return Crc32.Compute(name);
             else
                 return hash;
         }

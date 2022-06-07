@@ -3,7 +3,7 @@
 using SharpYaml.Serialization;
 using System.Globalization;
 using System.Diagnostics;
-using System.Security.Cryptography;
+using Byml.Security.Cryptography;
 using System.Text;
 
 namespace Nintendo.Byml.Parser

@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+﻿using Aamp.Security.Cryptography;
 
 namespace Nintendo.Aamp
 {
