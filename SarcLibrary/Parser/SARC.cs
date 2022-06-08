@@ -1,6 +1,10 @@
 ﻿// SARC IO Pulled from EditorCore : https://github.com/exelix11/EditorCore
 
 using Syroot.BinaryData;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Nintendo.Sarc.Parser
 {
@@ -93,7 +97,7 @@ namespace Nintendo.Sarc.Parser
 			return new KeyValuePair<int, byte[]>(align, memoryStream.ToArray());
 		}
 
-		internal static SarcFile DecompileSarc(Stream stream)
+        internal static SarcFile DecompileSarc(Stream stream)
 		{
 			Dictionary<string, byte[]> res = new();
 			BinaryStream br = new(stream, ByteConverter.Little, leaveOpen: false);

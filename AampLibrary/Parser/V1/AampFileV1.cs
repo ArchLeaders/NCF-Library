@@ -1,5 +1,6 @@
 ﻿using Nintendo.Aamp.IO;
 using Syroot.BinaryData;
+using System.IO;
 using System.Text;
 
 namespace Nintendo.Aamp.Parser

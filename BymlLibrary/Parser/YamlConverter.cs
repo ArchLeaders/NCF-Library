@@ -5,6 +5,10 @@ using System.Globalization;
 using System.Diagnostics;
 using Byml.Security.Cryptography;
 using System.Text;
+using System.Collections.Generic;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace Nintendo.Byml.Parser
 {
@@ -55,14 +59,12 @@ namespace Nintendo.Byml.Parser
 
         static dynamic? ParseNode(YamlNode node)
         {
-            if (node is YamlMappingNode castMappingNode)
-            {
+            if (node is YamlMappingNode castMappingNode) {
                 var values = new Dictionary<string, dynamic>();
                 if (IsValidReference(node))
                     ReferenceNodes.Add(node.Tag, values);
 
-                foreach (var child in castMappingNode.Children)
-                {
+                foreach (var child in castMappingNode.Children) {
                     var key = ((YamlScalarNode)child.Key).Value;
                     var tag = ((YamlScalarNode)child.Key).Tag;
                     if (tag == "!h")
@@ -127,8 +129,7 @@ namespace Nintendo.Byml.Parser
                 return Crc32.Compute(value).ToString("x");
             else if (tag == "!p")
                 return new BymlPathIndex() { Index = Int32.Parse(value, CultureInfo.InvariantCulture) };
-            else
-            {
+            else {
                 bool isFloat = float.TryParse(value, out float floatValue);
 
                 if (isFloat)
@@ -142,8 +143,7 @@ namespace Nintendo.Byml.Parser
         {
             if (node == null)
                 return new YamlScalarNode("null");
-            else if (node is IList<dynamic> castNode)
-            {
+            else if (node is IList<dynamic> castNode) {
                 var yamlNode = new YamlSequenceNode();
                 // NodePaths.Add(node, yamlNode);
 
@@ -156,20 +156,17 @@ namespace Nintendo.Byml.Parser
 
                 return yamlNode;
             }
-            else if (node is IDictionary<string, dynamic> nodeDict)
-            {
+            else if (node is IDictionary<string, dynamic> nodeDict) {
                 var yamlNode = new YamlMappingNode();
-              //  NodePaths.Add(node, yamlNode);
+                //  NodePaths.Add(node, yamlNode);
 
                 if (!HasEnumerables(nodeDict) && nodeDict.Count < 6)
                     yamlNode.Style = SharpYaml.YamlStyle.Flow;
 
-                foreach (var item in nodeDict)
-                {
+                foreach (var item in nodeDict) {
                     string key = item.Key;
                     YamlNode keyNode = new YamlScalarNode(key);
-                    if (IsHash(key))
-                    {
+                    if (IsHash(key)) {
                         uint hash = Convert.ToUInt32(key, 16);
                         if (Hashes.ContainsKey(hash))
                             key = $"{Hashes[hash]}";
@@ -184,15 +181,13 @@ namespace Nintendo.Byml.Parser
             }
             else if (node is BymlPathPoint castBymlPoint)
                 return ConvertPathPoint(castBymlPoint);
-            else if (node is List<BymlPathPoint> castList)
-            {
+            else if (node is List<BymlPathPoint> castList) {
                 var yamlNode = new YamlSequenceNode();
                 foreach (var pt in castList)
                     yamlNode.Add(ConvertPathPoint(pt));
                 return yamlNode;
             }
-            else
-            {
+            else {
                 string? tag = null;
                 if (node is int) tag = "!l";
                 else if (node is uint) tag = "!u";
@@ -223,8 +218,7 @@ namespace Nintendo.Byml.Parser
 
         private static bool HasEnumerables(IDictionary<string, dynamic> node)
         {
-            foreach (var item in node.Values)
-            {
+            foreach (var item in node.Values) {
                 if (item == null)
                     continue;
                 if (item is IList<dynamic>)
@@ -237,8 +231,7 @@ namespace Nintendo.Byml.Parser
 
         private static bool HasEnumerables(IList<dynamic> node)
         {
-            foreach (var _ in node)
-            {
+            foreach (var _ in node) {
                 if (node == null)
                     continue;
 
@@ -271,8 +264,7 @@ namespace Nintendo.Byml.Parser
 
             Dictionary<uint, string> hashes = new();
 
-            foreach (var list in hashLists)
-            {
+            foreach (var list in hashLists) {
                 string hashList = new Resource($"Data.{list}").ToString();
                 foreach (string hashStr in hashList.Split('\n'))
                     CheckHash(ref hashes, hashStr);
@@ -293,8 +285,7 @@ namespace Nintendo.Byml.Parser
         {
             bool isHex;
 
-            foreach (var c in chars)
-            {
+            foreach (var c in chars) {
                 isHex = ((c >= '0' && c <= '9') ||
                          (c >= 'a' && c <= 'f') ||
                          (c >= 'A' && c <= 'F'));

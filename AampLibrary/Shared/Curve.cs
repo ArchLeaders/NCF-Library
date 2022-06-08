@@ -1,4 +1,6 @@
-﻿namespace Nintendo.Aamp
+﻿using System;
+
+namespace Nintendo.Aamp
 {
     public class Curve
     {

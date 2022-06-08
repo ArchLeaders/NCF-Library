@@ -1,37 +1,39 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <TargetFramework>net5.0</TargetFramework>
+	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+	<packageReadmeFile>README.md</packageReadmeFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Authors>exelix and KillzXGaming. (Updated by ArchLeaders)</Authors>
     <Description>Updated version of exelix's Yaz0 implemetation.</Description>
     <PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/Yaz0Library</PackageProjectUrl>
     <PackageIcon>Yaz0Icon-128.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/Yaz0Library</RepositoryUrl>
     <PackageTags>yaz0;de/compression;botw;nintendo;zelda</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	<VersionPrefix>1.0.2</VersionPrefix>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+
+	<PackageReleaseNotes>Support DotNET standard 5.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Yaz0.dll">
+    <Content Include="Lib\Yaz0.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\docs\resources\Yaz0Icon-128.png">
+    <None Include="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="README.md">
+    <None Include="..\docs\resources\icons\Yaz0Icon-128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

@@ -1,5 +1,6 @@
 ﻿#pragma warning disable CS8603 // Possible null reference return.
 
+using System;
 using System.Text.Json.Serialization;
 
 namespace Nintendo.Aamp

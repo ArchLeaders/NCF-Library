@@ -10,6 +10,10 @@ using Syroot.Maths;
 using SharpYaml.Serialization;
 using Nintendo.Aamp.Parser;
 using Aamp.Security.Cryptography;
+using System.IO;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace Nintendo.Aamp
 {

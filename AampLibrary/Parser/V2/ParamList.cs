@@ -1,4 +1,5 @@
 ﻿using Nintendo.Aamp.IO;
+using System.IO;
 
 namespace Nintendo.Aamp.Parser
 {

@@ -1,6 +1,6 @@
 # AampLibrary
 
-Updated version of KillzXGaming's [AampLibrary](https://github.com/KillzXGaming/AampLibrary) in DotNET Standard 6.0 using the latest Syroot packages.
+Updated version of KillzXGaming's [AampLibrary](https://github.com/KillzXGaming/AampLibrary) in DotNET Standard using the latest Syroot packages.
 
 ## Credit
 

@@ -1,4 +1,7 @@
-﻿namespace Nintendo.Byml.Parser
+﻿using System;
+using System.Collections.Generic;
+
+namespace Nintendo.Byml.Parser
 {
 	internal static class XmlTypeConverter
 	{

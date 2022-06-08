@@ -3,6 +3,7 @@ using Nintendo.Byml.Parser;
 using Newtonsoft.Json;
 using Syroot.BinaryData.Core;
 using System.Text;
+using System.IO;
 
 namespace Nintendo.Byml
 {

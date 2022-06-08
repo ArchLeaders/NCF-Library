@@ -1,6 +1,4 @@
-﻿using Nintendo.Aamp;
-using Nintendo.Byml;
-using Nintendo.Sarc;
+﻿using Nintendo.Byml;
 using System.Diagnostics;
 using Yaz0Library;
 
@@ -53,10 +51,9 @@ Console.WriteLine("Testing BymlIO --> ");
 
 double lastTracked = 0;
 
-try
-{
+try {
     // Decompress
-    byte[] decompressed = Yaz0.Decompress("Data\\IO.sbyml");
+    byte[] decompressed = Yaz0.DecompressFast("Data\\IO.sbyml");
     Console.WriteLine($"Decompression took {(watch.ElapsedMilliseconds - lastTracked) / 1000.0} seconds.");
     lastTracked = watch.ElapsedMilliseconds;
 
@@ -67,28 +64,38 @@ try
 
     // Serialize
     byte[] serialized = byml.ToBinary();
-    Console.WriteLine($"Binary Serialization took {(watch.ElapsedMilliseconds - lastTracked) / 1000.0} seconds.");
+    Console.WriteLine($"Binary -> Binary Serialization took {(watch.ElapsedMilliseconds - lastTracked) / 1000.0} seconds.");
     lastTracked = watch.ElapsedMilliseconds;
+    File.WriteAllBytes("Data\\IO.out.byml", serialized);
 
-    // Write YML
+    // Write YAML
     byml.WriteYaml("Data\\IO.byml.yml");
     Console.WriteLine($"YAML Serialization took {(watch.ElapsedMilliseconds - lastTracked) / 1000.0} seconds.");
     lastTracked = watch.ElapsedMilliseconds;
 
+    // Load YML
+    BymlFile fromYml = BymlFile.FromYamlFile("Data\\IO.byml.yml");
+    Console.WriteLine($"YAML Deserialization took {(watch.ElapsedMilliseconds - lastTracked) / 1000.0} seconds.");
+    lastTracked = watch.ElapsedMilliseconds;
+
+    // Serialize YAML
+    byte[] serializedYaml = fromYml.ToBinary();
+    Console.WriteLine($"Yaml -> Binary Serialization took {(watch.ElapsedMilliseconds - lastTracked) / 1000.0} seconds.");
+    lastTracked = watch.ElapsedMilliseconds;
+    File.WriteAllBytes("Data\\IO.out.yml.byml", serializedYaml);
+
     // Compress (level 7)
-    byte[] compressed = Yaz0.Compress(serialized);
+    byte[] compressed = Yaz0.CompressFast(serialized);
     Console.WriteLine($"Compression took {(watch.ElapsedMilliseconds - lastTracked) / 1000.0} seconds.");
     lastTracked = watch.ElapsedMilliseconds;
 
     // Verify it works correctly
     File.WriteAllBytes("Data\\IO.out.sbyml", compressed);
-    File.WriteAllBytes("Data\\IO.out.byml", serialized);
 
     watch.Stop();
     Console.WriteLine($"Testing BymlIO --> Success (Elapsed seconds: {watch.ElapsedMilliseconds / 1000.0})\n");
 }
-catch (Exception ex)
-{
+catch (Exception ex) {
     File.WriteAllText("Data\\IO.byml.log", $"[{DateTime.Now}] {ex}\n\n");
     Console.WriteLine("\rTesting BymlIO --> Failed\n");
     throw;

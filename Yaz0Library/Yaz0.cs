@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Yaz0Library
 {
@@ -12,13 +14,13 @@ namespace Yaz0Library
         // C entry points
         #region Expand
 
-        [DllImport("Yaz0.dll", EntryPoint = "decompress", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("Lib\\Yaz0.dll", EntryPoint = "decompress", CallingConvention = CallingConvention.Cdecl)]
         internal static extern unsafe byte* C_Decompress(byte* src, uint srcLen, uint* destLen);
 
-        [DllImport("Yaz0.dll", EntryPoint = "compress", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("Lib\\Yaz0.dll", EntryPoint = "compress", CallingConvention = CallingConvention.Cdecl)]
         internal static extern unsafe byte* C_Compress(byte* src, uint srcLen, uint* destLen, byte optCompr);
 
-        [DllImport("Yaz0.dll", EntryPoint = "freePtr", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("Lib\\Yaz0.dll", EntryPoint = "freePtr", CallingConvention = CallingConvention.Cdecl)]
         internal static extern unsafe void C_FreePtr(void* ptr);
 
         #endregion

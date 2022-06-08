@@ -6,6 +6,7 @@ using Nintendo.Aamp.Shared;
 using Newtonsoft.Json;
 using Syroot.BinaryData;
 using System.Text;
+using System.IO;
 
 namespace Nintendo.Aamp
 {

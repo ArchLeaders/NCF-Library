@@ -1,38 +1,39 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <Authors>exelix and Syroot. (Updated by ArchLeaders)</Authors>
-    <Description>Updated version of exelix's SarcLibrary</Description>
-    <PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/SarcLibrary</PackageProjectUrl>
-    <PackageIcon>SarcIcon-128.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/SarcLibrary</RepositoryUrl>
-    <PackageTags>sarc;archive;botw;nintendo;zelda</PackageTags>
-    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-	<VersionPrefix>1.0.1</VersionPrefix>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Authors>exelix and Syroot. (Updated by ArchLeaders)</Authors>
+		<Description>Updated version of exelix's SarcLibrary</Description>
+		<PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/SarcLibrary</PackageProjectUrl>
+		<PackageIcon>SarcIcon-128.png</PackageIcon>
+		<RepositoryUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/SarcLibrary</RepositoryUrl>
+		<PackageTags>sarc;archive;botw;nintendo;zelda</PackageTags>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<VersionPrefix>1.0.3</VersionPrefix>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	
+		<PackageReleaseNotes>Support DotNET standard 5.0</PackageReleaseNotes>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\docs\resources\SarcIcon-128.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\docs\resources\icons\SarcIcon-128.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Syroot.BinaryData" Version="5.2.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Syroot.BinaryData" Version="5.2.2" />
+	</ItemGroup>
 
 </Project>

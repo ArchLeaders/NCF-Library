@@ -1,4 +1,6 @@
 ﻿using Syroot.BinaryData;
+using System;
+using System.IO;
 
 namespace Nintendo.Byml.IO
 {

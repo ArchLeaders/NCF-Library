@@ -1,4 +1,6 @@
-﻿namespace Nintendo.Aamp.Shared
+﻿using System.Collections.Generic;
+
+namespace Nintendo.Aamp.Shared
 {
     internal static class ParamEffect
     {

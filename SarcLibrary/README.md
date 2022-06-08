@@ -1,6 +1,6 @@
 ﻿# SarcLibrary
 
-Updated version of exelix's [SarcLibrary](https://github.com/exelix11/EditorCore/tree/master/FileFormatPlugins/SARCLib) in DotNET Standard 6.0 using the latest Syroot packages.
+Updated version of exelix's [SarcLibrary](https://github.com/exelix11/EditorCore/tree/master/FileFormatPlugins/SARCLib) in DotNET Standard using the latest Syroot packages.
 
 ## Credit
 

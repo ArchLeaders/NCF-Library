@@ -1,4 +1,7 @@
 ﻿using Aamp.Security.Cryptography;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nintendo.Aamp
 {

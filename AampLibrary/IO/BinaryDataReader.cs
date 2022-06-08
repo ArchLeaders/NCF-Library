@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.IO;
+using System.Text;
 using Syroot.BinaryData;
-using Syroot.BinaryData.Core;
 using Syroot.Maths;
 
 namespace Nintendo.Aamp.IO
@@ -48,10 +49,9 @@ namespace Nintendo.Aamp.IO
         {
             // Read the actual signature and compare it.
             string signature = this.ReadString(sizeof(uint), Encoding.ASCII);
+
             if (signature != validSignature)
-            {
                 throw new Exception($"Invalid signature, expected '{validSignature}' but got '{signature}'.");
-            }
         }
 
         internal long ReadOffset()

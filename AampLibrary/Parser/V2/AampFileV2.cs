@@ -8,6 +8,10 @@ using Nintendo.Aamp.IO;
 using System.Text;
 using Syroot.BinaryData;
 using Syroot.Maths;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace Nintendo.Aamp.Parser
 {

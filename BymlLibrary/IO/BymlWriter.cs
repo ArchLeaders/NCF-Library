@@ -3,7 +3,11 @@
 using Nintendo.Byml.Collections;
 using Syroot.BinaryData;
 using Syroot.BinaryData.Core;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Nintendo.Byml.IO

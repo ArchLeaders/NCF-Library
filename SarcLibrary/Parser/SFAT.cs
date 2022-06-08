@@ -1,6 +1,7 @@
 ﻿// SARC IO Pulled from EditorCore : https://github.com/exelix11/EditorCore
 
 using Syroot.BinaryData;
+using System.Collections.Generic;
 
 namespace Nintendo.Sarc.Parser
 {

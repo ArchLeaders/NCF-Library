@@ -5,6 +5,7 @@
 using Nintendo.Aamp.IO;
 using Syroot.Maths;
 using Syroot.BinaryData;
+using System.IO;
 
 namespace Nintendo.Aamp.Parser
 {

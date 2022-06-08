@@ -1,4 +1,6 @@
-﻿namespace Nintendo.Byml
+﻿using System;
+
+namespace Nintendo.Byml
 {
     /// <summary>
     /// Represents errors that occur when trying to process invalid BYAML data.

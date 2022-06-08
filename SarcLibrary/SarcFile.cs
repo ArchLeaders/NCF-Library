@@ -1,5 +1,7 @@
 ﻿using Nintendo.Sarc.Parser;
 using Syroot.BinaryData.Core;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Nintendo.Sarc
 {

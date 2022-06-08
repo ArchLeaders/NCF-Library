@@ -5,6 +5,8 @@
 
 # Ignore interop attempt
 /BymlLibrary/Interop
+/DotNet5
+/DotNet6
 
 # User-specific files
 *.rsuser

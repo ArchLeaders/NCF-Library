@@ -1,4 +1,6 @@
-﻿namespace Nintendo.Sarc.Parser
+﻿using System.Collections.Generic;
+
+namespace Nintendo.Sarc.Parser
 {
     internal static class NestedFile
     {

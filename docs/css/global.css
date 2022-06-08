@@ -1,0 +1,26 @@
+:root {
+    --paper: #1f1f1f;
+    --body: #e1e1e1;
+
+    --primary-light: #6b6b6b;
+    --primary-mid: #383838;
+    --primary-dark: #1d1d1d;
+
+    --secondary-light: #f14c62;
+    --secondary-mid: #ca1841;
+    --secondary-dark: #961c39;
+
+    --shadow: #00000027;
+}
+
+body {
+    background: var(--paper);
+    color: var(--body);
+    font-size: 16px;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 22px;
+    margin: 0.6rem 0.4rem;
+}

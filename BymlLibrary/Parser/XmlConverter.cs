@@ -5,6 +5,10 @@
 using Nintendo.Byml.IO;
 using Syroot.BinaryData;
 using Syroot.BinaryData.Core;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 

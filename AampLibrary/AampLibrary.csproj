@@ -1,28 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <Platforms>AnyCPU;x64</Platforms>
+    <TargetFramework>net5.0</TargetFramework>
+	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>KillzXGaming and Syroot. (Updated by ArchLeaders)</Authors>
     <Description>Updated version of KillzXGaming's AampLibrary</Description>
     <PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/AampLibrary</PackageProjectUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>AampIcon-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/AampLibrary</RepositoryUrl>
     <PackageTags>aamp;parameterio;botw;nintendo;zelda</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-	<VersionPrefix>1.0.2</VersionPrefix>
-    <PackageReleaseNotes>Fix BymlLibrary compatibility issues.</PackageReleaseNotes>
+	<VersionPrefix>1.0.3</VersionPrefix>
+	  
+	<PackageReleaseNotes>Support DotNET standard 5.0</PackageReleaseNotes>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="AampHashedNames" />
-    <None Remove="AampHashedNamesNumbered" />
-  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Data\AampHashedNames" />
@@ -35,6 +29,13 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
+	
+  <ItemGroup>
+    <None Include="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -43,16 +44,5 @@
     <PackageReference Include="Syroot.Maths" Version="1.5.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="aamp_hashed_names.txt" />
-    <Resource Include="aamp_hashed_names_numbered.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
 
 </Project>
