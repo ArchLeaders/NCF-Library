@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+	<PackageIcon>BfresIcon-128.png</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Authors>KillzXGaming and Syroot. (Updated by ArchLeaders)</Authors>
+	<Description>Updated version of KillzXGaming's BfresLibrary</Description>
+	<Copyright>(c) Syroot, licensed under MIT</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\docs\resources\icons\BfresIcon-128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+</Project>
