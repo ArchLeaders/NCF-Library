@@ -50,7 +50,7 @@ namespace Nintendo.Sarc
         /// Save to a file.
         /// </summary>
         /// <param name="fileName"></param>
-        public void Write(string fileName) => File.WriteAllBytes(fileName, SARC.CompileSarc(this).Value);
+        public void ToBinary(string fileName) => File.WriteAllBytes(fileName, SARC.CompileSarc(this).Value);
 
         public static SarcFile FromBinary(string fileName) => SARC.DecompileSarc(File.OpenRead(fileName));
         public static SarcFile FromBinary(byte[] bytes) => SARC.DecompileSarc(new MemoryStream(bytes));
