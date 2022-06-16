@@ -5,9 +5,9 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary.Switch
+namespace Nintendo.Bfres.Switch
 {
     public class ResDictUpdate
     {

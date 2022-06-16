@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an FVIS subfile in a <see cref="BfresFile"/>, storing visibility animations of <see cref="Bone"/> or

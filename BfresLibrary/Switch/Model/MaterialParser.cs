@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BfresLibrary.Switch.Core;
-using BfresLibrary.Core;
-using BfresLibrary;
+using Nintendo.Bfres.Switch.Core;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres;
 
-namespace BfresLibrary.Switch
+namespace Nintendo.Bfres.Switch
 {
     internal class MaterialParser
     {

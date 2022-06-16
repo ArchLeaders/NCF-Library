@@ -2,7 +2,7 @@
 using Syroot.NintenTools.NSW.Bntx;
 using Syroot.NintenTools.NSW.Bntx.GFX;
 
-namespace BfresLibrary.PlatformConverters
+namespace Nintendo.Bfres.PlatformConverters
 {
     class TextureConverter
     {

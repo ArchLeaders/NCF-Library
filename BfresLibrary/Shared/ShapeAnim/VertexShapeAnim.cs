@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a vertex shape animation in a <see cref="ShapeAnim"/> subfile.

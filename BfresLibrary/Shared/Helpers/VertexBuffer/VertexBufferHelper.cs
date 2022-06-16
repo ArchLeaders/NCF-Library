@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using Syroot.BinaryData;
 using Syroot.Maths;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using System.Linq;
 using Syroot.BinaryData.Core;
 
-namespace BfresLibrary.Helpers
+namespace Nintendo.Bfres.Helpers
 {
     /// <summary>
     /// Represents a helper class for working with <see cref="VertexBuffer"/> instances.

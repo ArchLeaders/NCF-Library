@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using System.IO;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an FSCN subfile in a <see cref="BfresFile"/>, storing scene animations controlling camera, light and

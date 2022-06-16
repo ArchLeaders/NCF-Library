@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace BfresLibrary.TextConvert
+namespace Nintendo.Bfres.TextConvert
 {
     public class NoFormattingConverter : JsonConverter
     {

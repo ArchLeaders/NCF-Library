@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
-using BfresLibrary.Core;
-using BfresLibrary.GX2;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres.GX2;
 using System.ComponentModel;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an FMDL subfile in a <see cref="BfresFile"/>, storing multi-dimensional texture data.

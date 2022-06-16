@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using Syroot.BinaryData;
 using Syroot.Maths;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary.Switch.Core
+namespace Nintendo.Bfres.Switch.Core
 {
     /// <summary>
     /// Loads the hierachy and data of a <see cref="Bfres.ResFile"/>.

@@ -1,4 +1,4 @@
-﻿namespace BfresLibrary.PlatformConverters
+﻿namespace Nintendo.Bfres.PlatformConverters
 {
     /// <summary>
     /// The conversion handler to process how to convert shaders and other data per game profile.

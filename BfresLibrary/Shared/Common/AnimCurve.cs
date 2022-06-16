@@ -1,7 +1,7 @@
-﻿using BfresLibrary.Core;
+﻿using Nintendo.Bfres.Core;
 using System.Collections.Generic;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an animation curve used by several sections to control different parameters over time.

@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Syroot.Maths;
-using BfresLibrary.TextConvert;
+using Nintendo.Bfres.TextConvert;
 
-namespace BfresLibrary.Helpers
+namespace Nintendo.Bfres.Helpers
 {
     public class MaterialAnimHelper
     {

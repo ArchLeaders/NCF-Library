@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using Syroot.BinaryData;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     public class StringTable : IResData
     {

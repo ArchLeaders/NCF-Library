@@ -1,9 +1,9 @@
 ﻿using Syroot.Maths;
-using BfresLibrary.Core;
-using BfresLibrary.GX2;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres.GX2;
 using System.ComponentModel;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents GX2 GPU configuration to determine how polygons are rendered.

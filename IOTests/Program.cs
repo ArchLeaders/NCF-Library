@@ -1,9 +1,9 @@
-﻿using BfresLibrary;
-using Nintendo.Aamp;
+﻿using Nintendo.Aamp;
+using Nintendo.Bfres;
 using Nintendo.Byml;
 using Nintendo.Sarc;
+using Nintendo.Yaz0;
 using System.Diagnostics;
-using Yaz0Library;
 
 Stopwatch watch = new();
 watch.Start();

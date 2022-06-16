@@ -1,8 +1,8 @@
-﻿using BfresLibrary.Core;
+﻿using Nintendo.Bfres.Core;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     public class ShaderAssign : IResData
     {

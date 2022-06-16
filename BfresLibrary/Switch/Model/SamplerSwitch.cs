@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using System.ComponentModel;
-using BfresLibrary.GX2;
+using Nintendo.Bfres.GX2;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     internal class SamplerSwitch : IResData
     {

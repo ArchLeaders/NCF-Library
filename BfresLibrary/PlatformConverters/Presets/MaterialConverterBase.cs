@@ -1,4 +1,4 @@
-﻿namespace BfresLibrary.PlatformConverters
+﻿namespace Nintendo.Bfres.PlatformConverters
 {
     internal class MaterialConverterBase
     {

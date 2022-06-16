@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace BfresLibrary.Swizzling
+namespace Nintendo.Bfres.Swizzling
 {
     public class GX2TexRegisters
     {

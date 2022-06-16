@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
-using BfresLibrary.Core;
-using BfresLibrary.GX2;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres.GX2;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a <see cref="Texture"/> sampler in a <see cref="UserData"/> section, storing configuration on how to

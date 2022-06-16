@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Syroot.BinaryData;
-using BfresLibrary.Core;
-using BfresLibrary.Helpers;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres.Helpers;
 using Syroot.Maths;
 using Syroot.BinaryData.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a data buffer holding vertices for a <see cref="Model"/> subfile.

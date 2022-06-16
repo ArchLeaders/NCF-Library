@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an exception raised when handling <see cref="BfresFile"/> data.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace BfresLibrary.Swizzling
+namespace Nintendo.Bfres.Swizzling
 {
     public class ByteUtils
     {

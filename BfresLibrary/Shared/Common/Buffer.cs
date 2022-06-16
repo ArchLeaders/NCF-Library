@@ -1,7 +1,7 @@
-﻿using BfresLibrary.Core;
+﻿using Nintendo.Bfres.Core;
 using System.Linq;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a buffer of data uploaded to the GX2 GPU which can hold arbitrary data.

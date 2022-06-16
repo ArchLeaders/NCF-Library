@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a file attachment to a <see cref="BfresFile"/> which can be of arbitrary data.

@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using Syroot.BinaryData;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary.WiiU.Core
+namespace Nintendo.Bfres.WiiU.Core
 {
     /// <summary>
     /// Loads the hierachy and data of a <see cref="Bfres.ResFile"/>.

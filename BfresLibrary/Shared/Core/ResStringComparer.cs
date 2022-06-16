@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BfresLibrary.Core
+namespace Nintendo.Bfres.Core
 {
     /// <summary>
     /// Represents a <see cref="StringComparer.Ordinal"/> sorting empty strings to the end of lists.

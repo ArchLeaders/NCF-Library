@@ -1,6 +1,6 @@
-﻿using BfresLibrary.Core;
+﻿using Nintendo.Bfres.Core;
 
-namespace BfresLibrary.GX2
+namespace Nintendo.Bfres.GX2
 {
     /// <summary>
     /// Represents GX2 settings controlling additional alpha blending options.

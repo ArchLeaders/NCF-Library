@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Syroot.BinaryData;
 using Syroot.Maths;
-using BfresLibrary.GX2;
+using Nintendo.Bfres.GX2;
 
-namespace BfresLibrary.Core
+namespace Nintendo.Bfres.Core
 {
     /// <summary>
     /// Represents extension methods for the <see cref="BinaryStream"/> class.

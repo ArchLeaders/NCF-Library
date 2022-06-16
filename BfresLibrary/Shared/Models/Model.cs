@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using System.ComponentModel;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an FMDL subfile in a <see cref="BfresFile"/>, storing model vertex data, skeletons and used materials.

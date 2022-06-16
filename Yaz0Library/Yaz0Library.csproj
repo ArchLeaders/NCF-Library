@@ -13,10 +13,8 @@
     <PackageTags>yaz0;de/compression;botw;nintendo;zelda</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-	<VersionPrefix>1.0.2</VersionPrefix>
+	<VersionPrefix>1.0.3</VersionPrefix>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-
-	<PackageReleaseNotes>Support DotNET standard 5.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

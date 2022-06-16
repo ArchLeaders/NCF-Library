@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a render info in a FMAT section storing uniform parameters required to render the

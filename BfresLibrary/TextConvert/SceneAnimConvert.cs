@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
-namespace BfresLibrary.TextConvert
+namespace Nintendo.Bfres.TextConvert
 {
     public class SceneAnimConvert
     {

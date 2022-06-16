@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace Yaz0Library
+namespace Nintendo.Yaz0
 {
     /// <summary>
     /// <para><u>Note:</u> to use the fast compressor/decompressor you must have the compiled C library <b><a href="https://github.com/ArchLeaders/NCF-Library/raw/master/Yaz0Library/Yaz0.dll">Yaz0.dll</a></b> in the root build folder.</para>

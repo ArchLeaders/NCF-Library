@@ -1,4 +1,4 @@
-﻿namespace BfresLibrary.Core
+﻿namespace Nintendo.Bfres.Core
 {
     /// <summary>
     /// Represents the common interface for <see cref="BfresFile"/> data instances.

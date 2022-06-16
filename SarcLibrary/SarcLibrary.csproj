@@ -13,9 +13,7 @@
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<VersionPrefix>1.0.4</VersionPrefix>
-	
-		<PackageReleaseNotes>Support DotNET standard 5.0</PackageReleaseNotes>
+		<VersionPrefix>1.0.5</VersionPrefix>
 	</PropertyGroup>
 
 	<ItemGroup>

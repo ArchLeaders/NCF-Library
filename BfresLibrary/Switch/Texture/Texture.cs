@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Syroot.NintenTools.NSW.Bntx;
-using BfresLibrary.Core;
-using BfresLibrary.Swizzling;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres.Swizzling;
 using Syroot.NintenTools.NSW.Bntx.GFX;
 
-namespace BfresLibrary.Switch
+namespace Nintendo.Bfres.Switch
 {
     public class SwitchTexture : TextureShared, IResData
     {

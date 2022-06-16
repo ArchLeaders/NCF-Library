@@ -1,9 +1,9 @@
 ﻿using System.IO;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using Syroot.BinaryData;
 using Syroot.BinaryData.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     public class Brtcamera
     {

@@ -2,7 +2,7 @@
 using System.Text;
 using Syroot.BinaryData;
 
-namespace BfresLibrary.Core
+namespace Nintendo.Bfres.Core
 {
     public static class BinaryStreamExtensions
     {

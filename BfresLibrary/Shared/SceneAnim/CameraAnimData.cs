@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using Syroot.Maths;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents the animatable data of scene cameras.

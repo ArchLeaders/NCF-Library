@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace BfresLibrary.PlatformConverters
+namespace Nintendo.Bfres.PlatformConverters
 {
     internal class MaterialConverter3DW : MaterialConverterBase
     {

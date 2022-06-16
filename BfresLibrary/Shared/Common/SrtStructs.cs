@@ -1,7 +1,7 @@
 ﻿using System;
 using Syroot.Maths;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a 2D transformation.

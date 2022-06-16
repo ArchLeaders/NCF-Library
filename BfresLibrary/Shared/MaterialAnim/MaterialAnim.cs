@@ -4,11 +4,11 @@ using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using BfresLibrary.Core;
-using BfresLibrary.TextConvert;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres.TextConvert;
 using System.ComponentModel;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an FMAA section in a <see cref="BfresFile"/> subfile, storing material animation data.

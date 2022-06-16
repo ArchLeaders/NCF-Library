@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using BfresLibrary.Core;
-using BfresLibrary.GX2;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres.GX2;
 using Syroot.BinaryData;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an attribute of a <see cref="VertexBuffer"/> describing the data format, type and layout of a

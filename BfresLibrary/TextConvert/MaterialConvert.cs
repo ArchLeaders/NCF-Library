@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
-using BfresLibrary.GX2;
+using Nintendo.Bfres.GX2;
 
-namespace BfresLibrary.TextConvert
+namespace Nintendo.Bfres.TextConvert
 {
     public class MaterialConvert
     {

@@ -1,8 +1,8 @@
 ﻿using Syroot.Maths;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using System.ComponentModel;
 
-namespace BfresLibrary.GX2
+namespace Nintendo.Bfres.GX2
 {
     /// <summary>
     /// Represents a GX2 texture sampler controlling how a texture is samples and drawn onto a surface.

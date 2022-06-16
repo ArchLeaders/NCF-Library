@@ -1,7 +1,7 @@
-﻿using BfresLibrary.Core;
+﻿using Nintendo.Bfres.Core;
 using System.ComponentModel;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a node in a <see cref="SubMesh"/> bounding tree to determine when to show which sub mesh of a

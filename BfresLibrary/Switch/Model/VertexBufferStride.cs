@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using BfresLibrary.Core;
-using BfresLibrary;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents stride and size in a <see cref="VertexBuffer"/>

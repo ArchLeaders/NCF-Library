@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BfresLibrary.Core
+namespace Nintendo.Bfres.Core
 {
     /// <summary>
     /// Represents extension methods for <see cref="UInt32"/> instances.

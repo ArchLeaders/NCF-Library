@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Syroot.Maths;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a buffer info section

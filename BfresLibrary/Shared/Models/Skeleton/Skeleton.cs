@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using Syroot.Maths;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using System.IO;
 using System.Linq;
 using System.ComponentModel;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an FSKL section in a <see cref="Model"/> subfile, storing armature data.

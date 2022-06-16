@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using Syroot.BinaryData;
-using BfresLibrary.WiiU.Core;
+using Nintendo.Bfres.WiiU.Core;
 using Syroot.NintenTools.NSW.Bntx;
 using Syroot.NintenTools.NSW.Bntx.GFX;
 
-namespace BfresLibrary.WiiU
+namespace Nintendo.Bfres.WiiU
 {
     public class ResFileParser
     {

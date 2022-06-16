@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a subarray of a <see cref="Mesh"/> section, storing a slice of indices to draw from the index buffer

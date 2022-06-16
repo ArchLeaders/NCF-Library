@@ -1,6 +1,6 @@
-﻿using BfresLibrary.Core;
+﻿using Nintendo.Bfres.Core;
 
-namespace BfresLibrary.GX2
+namespace Nintendo.Bfres.GX2
 {
     /// <summary>
     /// Represents GX2 polygon drawing settings controlling if and how triangles are rendered.

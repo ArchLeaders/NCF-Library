@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 using System.IO;
 using System.Linq;
 using Syroot.BinaryData;
 using Syroot.BinaryData.Core;
 using System.ComponentModel;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents an FMAT subsection of a <see cref="Model"/> subfile, storing information on with which textures and

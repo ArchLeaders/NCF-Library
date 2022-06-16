@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a key shape animation info in a <see cref="VertexShapeAnim"/> instance.

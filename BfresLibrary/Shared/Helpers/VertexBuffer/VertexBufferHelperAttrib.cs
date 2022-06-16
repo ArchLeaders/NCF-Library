@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using Syroot.Maths;
-using BfresLibrary.GX2;
+using Nintendo.Bfres.GX2;
 
-namespace BfresLibrary.Helpers
+namespace Nintendo.Bfres.Helpers
 {
     /// <summary>
     /// Represents an attribute and the data it stores in a <see cref="VertexBufferHelper"/> instance.

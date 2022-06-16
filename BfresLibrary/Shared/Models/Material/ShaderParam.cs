@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using BfresLibrary.Core;
+using Nintendo.Bfres.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a parameter value in a <see cref="UserData"/> section, passing data to shader variables.

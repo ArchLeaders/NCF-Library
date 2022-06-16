@@ -2,7 +2,7 @@
 
 using System;
 
-namespace BfresLibrary.GX2
+namespace Nintendo.Bfres.GX2
 {
     /// <summary>
     /// Represents the AA modes (number of samples) for a surface.

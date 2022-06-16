@@ -1,6 +1,6 @@
-﻿using BfresLibrary.Core;
+﻿using Nintendo.Bfres.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     public class KeyShape : IResData
     {

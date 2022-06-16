@@ -14,8 +14,6 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
 	<VersionPrefix>1.0.4</VersionPrefix>
-	  
-	<PackageReleaseNotes>Support DotNET standard 5.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

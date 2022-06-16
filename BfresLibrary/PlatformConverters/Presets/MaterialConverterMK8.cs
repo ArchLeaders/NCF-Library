@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BfresLibrary.PlatformConverters
+namespace Nintendo.Bfres.PlatformConverters
 {
     internal class MaterialConverterMK8 : MaterialConverterBase
     {

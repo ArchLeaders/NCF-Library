@@ -2,7 +2,7 @@
 using Syroot.Maths;
 using System.ComponentModel;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents a spatial bounding box.

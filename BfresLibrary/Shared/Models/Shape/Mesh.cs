@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using Syroot.BinaryData;
-using BfresLibrary.Core;
-using BfresLibrary.GX2;
+using Nintendo.Bfres.Core;
+using Nintendo.Bfres.GX2;
 using System.Linq;
 using Syroot.BinaryData.Core;
 
-namespace BfresLibrary
+namespace Nintendo.Bfres
 {
     /// <summary>
     /// Represents the surface net of a <see cref="Shape"/> section, storing information on which

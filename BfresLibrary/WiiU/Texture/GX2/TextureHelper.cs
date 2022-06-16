@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BfresLibrary.Swizzling
+namespace Nintendo.Bfres.Swizzling
 {
     class TextureHelper
     {
