@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Data\IO.aamp" />
+    <None Remove="Data\IO.bfres" />
     <None Remove="Data\IO.byml" />
     <None Remove="Data\IO.sarc" />
     <None Remove="Data\IO.sbyml" />
@@ -16,6 +17,9 @@
 
   <ItemGroup>
     <Content Include="Data\IO.aamp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\IO.bfres">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\IO.byml">
@@ -31,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AampLibrary\AampLibrary.csproj" />
+    <ProjectReference Include="..\BfresLibrary\BfresLibrary.csproj" />
     <ProjectReference Include="..\BymlLibrary\BymlLibrary.csproj" />
     <ProjectReference Include="..\SarcLibrary\SarcLibrary.csproj" />
     <ProjectReference Include="..\Yaz0Library\Yaz0Library.csproj" />

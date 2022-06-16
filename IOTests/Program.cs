@@ -1,57 +1,82 @@
-﻿using Nintendo.Byml;
+﻿using BfresLibrary;
+using Nintendo.Aamp;
+using Nintendo.Byml;
+using Nintendo.Sarc;
 using System.Diagnostics;
 using Yaz0Library;
 
 Stopwatch watch = new();
 watch.Start();
 
-// // AAMP I/O
+/// AAMP I/O
 
-// Console.Write("Testing AampIO -->");
+Console.Write("Testing AampIO -->");
 
-// try
-// {
-//     AampFile aamp = new("Data\\IO.aamp");
-//     Debug.WriteLine(aamp.ToString());
+try
+{
+    AampFile aamp = new("Data\\IO.aamp");
+    Debug.WriteLine(aamp.ToString());
 
-//     aamp.WriteBinary("Data\\IO.out.aamp");
-//     Console.Write("\rTesting AampIO --> Success\n");
-// }
-// catch (Exception ex)
-// {
-//     File.AppendAllText("Data\\IO.aamp.log", $"[{DateTime.Now}] {ex}\n\n");
-//     Console.Write("\rTesting AampIO --> Failed\n");
-//     throw;
-// }
+    aamp.WriteBinary("Data\\IO.out.aamp");
+    Console.Write("\rTesting AampIO --> Success\n");
+}
+catch (Exception ex)
+{
+    File.AppendAllText("Data\\IO.aamp.log", $"[{DateTime.Now}] {ex}\n\n");
+    Console.Write("\rTesting AampIO --> Failed\n");
+    throw;
+}
 
-// // SARC I/O
+/// BFRES I/O
 
-// Console.Write("\rTesting SarcIO -->");
+Console.Write("\rTesting BfresIO -->");
 
-// try
-// {
-//     SarcFile sarc = new("Data\\IO.sarc");
+try
+{
+    BfresFile bfres = new("Data\\IO.bfres");
 
-//     foreach (var file in sarc.Files)
-//         Debug.WriteLine(file.Key);
+    foreach (var file in bfres.Models)
+        Debug.WriteLine(file.Value.Name);
 
-//     sarc.Write("Data\\IO.out.sarc");
-//     Console.Write("\rTesting SarcIO --> Success\n");
-// }
-// catch (Exception ex)
-// {
-//     File.WriteAllText("Data\\IO.sarc.log", $"[{DateTime.Now}] {ex}\n\n");
-//     Console.Write("\rTesting SarcIO --> Failed\n");
-//     throw;
-// }
+    bfres.ToBinary("Data\\IO.out.bfres");
+    Console.Write("\rTesting BfresIO --> Success\n");
+}
+catch (Exception ex)
+{
+    File.WriteAllText("Data\\IO.bfres.log", $"[{DateTime.Now}] {ex}\n\n");
+    Console.Write("\rTesting BfresIO --> Failed\n");
+    throw;
+}
 
-// BYML I/O
+/// SARC I/O
 
-Console.WriteLine("Testing BymlIO --> ");
+Console.Write("\rTesting SarcIO -->");
+
+try
+{
+    SarcFile sarc = new("Data\\IO.sarc");
+
+    foreach (var file in sarc.Files)
+        Debug.WriteLine(file.Key);
+
+    sarc.ToBinary("Data\\IO.out.sarc");
+    Console.Write("\rTesting SarcIO --> Success\n");
+}
+catch (Exception ex)
+{
+    File.WriteAllText("Data\\IO.sarc.log", $"[{DateTime.Now}] {ex}\n\n");
+    Console.Write("\rTesting SarcIO --> Failed\n");
+    throw;
+}
+
+/// BYML I/O
+
+Console.WriteLine("Testing BymlIO & Yaz0 --> ");
 
 double lastTracked = 0;
 
-try {
+try
+{
     // Decompress
     byte[] decompressed = Yaz0.DecompressFast("Data\\IO.sbyml");
     Console.WriteLine($"Decompression took {(watch.ElapsedMilliseconds - lastTracked) / 1000.0} seconds.");
@@ -95,7 +120,8 @@ try {
     watch.Stop();
     Console.WriteLine($"Testing BymlIO --> Success (Elapsed seconds: {watch.ElapsedMilliseconds / 1000.0})\n");
 }
-catch (Exception ex) {
+catch (Exception ex)
+{
     File.WriteAllText("Data\\IO.byml.log", $"[{DateTime.Now}] {ex}\n\n");
     Console.WriteLine("\rTesting BymlIO --> Failed\n");
     throw;
