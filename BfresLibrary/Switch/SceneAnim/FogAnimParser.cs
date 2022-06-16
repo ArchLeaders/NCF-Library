@@ -30,7 +30,7 @@ namespace BfresLibrary.Switch
             if (loader.ResFile.VersionMajor2 == 9)
             {
                 fogAnim.FrameCount = loader.ReadInt32();
-                numCurve = loader.ReadByte();
+                numCurve = (byte)loader.ReadByte();
                 fogAnim.DistanceAttnFuncIndex = loader.ReadSByte();
                 numUserData = loader.ReadUInt16();
                 fogAnim.BakedSize = loader.ReadUInt32();
@@ -41,7 +41,7 @@ namespace BfresLibrary.Switch
                 fogAnim.Flags = loader.ReadEnum<FogAnimFlags>(true);
                 loader.Seek(2);
                 fogAnim.FrameCount = loader.ReadInt32();
-                numCurve = loader.ReadByte();
+                numCurve = (byte)loader.ReadByte();
                 fogAnim.DistanceAttnFuncIndex = loader.ReadSByte();
                 numUserData = loader.ReadUInt16();
                 fogAnim.BakedSize = loader.ReadUInt32();

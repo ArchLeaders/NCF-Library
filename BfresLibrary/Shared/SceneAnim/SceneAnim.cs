@@ -6,7 +6,7 @@ using System.IO;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents an FSCN subfile in a <see cref="ResFile"/>, storing scene animations controlling camera, light and
+    /// Represents an FSCN subfile in a <see cref="BfresFile"/>, storing scene animations controlling camera, light and
     /// fog settings.
     /// </summary>
     [DebuggerDisplay(nameof(SceneAnim) + " {" + nameof(Name) + "}")]
@@ -67,7 +67,7 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(string FileName, ResFile ResFile)
+        public void Import(string FileName, BfresFile ResFile)
         {
             if (FileName.EndsWith(".json"))
             {
@@ -77,7 +77,7 @@ namespace BfresLibrary
                 ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile)
+        public void Export(string FileName, BfresFile ResFile)
         {
             if (FileName.EndsWith(".json"))
                 File.WriteAllText(FileName, TextConvert.SceneAnimConvert.ToJson(this));

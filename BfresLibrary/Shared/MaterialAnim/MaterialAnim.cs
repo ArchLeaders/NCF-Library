@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents an FMAA section in a <see cref="ResFile"/> subfile, storing material animation data.
+    /// Represents an FMAA section in a <see cref="BfresFile"/> subfile, storing material animation data.
     /// </summary>
     [DebuggerDisplay(nameof(MaterialAnim) + " {" + nameof(Name) + "}")]
     public class MaterialAnim : IResData, IBinarySection
@@ -143,19 +143,19 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(Stream stream, ResFile ResFile)
+        public void Import(Stream stream, BfresFile ResFile)
         {
             ResFileLoader.ImportSection(stream, this, ResFile);
         }
 
-        public void Import(string FileName, ResFile ResFile) {
+        public void Import(string FileName, BfresFile ResFile) {
             if (FileName.EndsWith(".json"))
                 MaterialAnimConvert.FromJson(this, File.ReadAllText(FileName));
             else
                 ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile) {
+        public void Export(string FileName, BfresFile ResFile) {
             if (FileName.EndsWith(".json"))
                 File.WriteAllText(FileName, MaterialAnimConvert.ToJson(this));
             else

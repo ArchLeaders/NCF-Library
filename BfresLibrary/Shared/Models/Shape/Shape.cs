@@ -217,11 +217,11 @@ namespace BfresLibrary
             return (Shape)this.MemberwiseClone();
         }
 
-        public void Import(string FileName, ResFile ResFile) {
+        public void Import(string FileName, BfresFile ResFile) {
             ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile) {
+        public void Export(string FileName, BfresFile ResFile) {
             ResFileSaver.ExportSection(FileName, this, ResFile);
         }
 
@@ -241,10 +241,10 @@ namespace BfresLibrary
                 BoneIndex = loader.ReadUInt16();
                 VertexBufferIndex = loader.ReadUInt16();
                 ushort numSkinBoneIndex = loader.ReadUInt16();
-                VertexSkinCount = loader.ReadByte();
-                byte numMesh = loader.ReadByte();
-                byte numKeyShape = loader.ReadByte();
-                TargetAttribCount = loader.ReadByte();
+                VertexSkinCount = (byte)loader.ReadByte();
+                byte numMesh = (byte)loader.ReadByte();
+                byte numKeyShape = (byte)loader.ReadByte();
+                TargetAttribCount = (byte)loader.ReadByte();
                 ushort numSubMeshBoundingNodes = loader.ReadUInt16(); // Padding in engine.
 
                 if (loader.ResFile.Version >= 0x04050000)

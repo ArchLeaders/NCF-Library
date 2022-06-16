@@ -1,5 +1,4 @@
 ﻿using BfresLibrary.Core;
-using System.ComponentModel;
 using System.Collections.Generic;
 
 namespace BfresLibrary
@@ -135,15 +134,12 @@ namespace BfresLibrary
         {
             get
             {
-                switch (CurveType)
+                return CurveType switch
                 {
-                    case AnimCurveType.Cubic:
-                        return 4;
-                    case AnimCurveType.Linear:
-                        return 2;
-                    default:
-                        return 1;
-                }
+                    AnimCurveType.Cubic => 4,
+                    AnimCurveType.Linear => 2,
+                    _ => 1,
+                };
             }
         }
 

@@ -27,8 +27,8 @@ namespace BfresLibrary.Switch
             long VertexStrideSizeOffset = loader.ReadOffset();
             long padding = loader.ReadInt64();
             int BufferOffset = loader.ReadInt32();
-            byte numVertexAttrib = loader.ReadByte();
-            byte numBuffer = loader.ReadByte();
+            byte numVertexAttrib = (byte)loader.ReadByte();
+            byte numBuffer = (byte)loader.ReadByte();
             ushort Idx = loader.ReadUInt16();
             uint vertexCount = loader.ReadUInt32();
             vertexBuffer.VertexSkinCount = (byte)loader.ReadUInt32();

@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents an FMDL subfile in a <see cref="ResFile"/>, storing multi-dimensional texture data.
+    /// Represents an FMDL subfile in a <see cref="BfresFile"/>, storing multi-dimensional texture data.
     /// </summary>
     [DebuggerDisplay(nameof(TextureShared) + " {" + nameof(Name) + "}")]
     public class TextureShared : IResData, IBinarySection
@@ -94,15 +94,15 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(System.IO.Stream stream, ResFile ResFile) {
+        public void Import(System.IO.Stream stream, BfresFile ResFile) {
             ResFileLoader.ImportSection(stream, this, ResFile);
         }
 
-        public virtual void Import(string FileName, ResFile ResFile) {
+        public virtual void Import(string FileName, BfresFile ResFile) {
             ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public virtual void Export(string FileName, ResFile ResFile) {
+        public virtual void Export(string FileName, BfresFile ResFile) {
             ResFileSaver.ExportSection(FileName, this, ResFile);
         }
 

@@ -344,10 +344,10 @@ namespace BfresLibrary
                     long unk2 = loader.ReadInt64();
                 }
                 _flags = loader.ReadUInt32();
-                BeginRotate = loader.ReadByte();
-                BeginTranslate = loader.ReadByte();
-                byte numCurve = loader.ReadByte();
-                BeginBaseTranslate = loader.ReadByte();
+                BeginRotate = (byte)loader.ReadByte();
+                BeginTranslate = (byte)loader.ReadByte();
+                byte numCurve = (byte)loader.ReadByte();
+                BeginBaseTranslate = (byte)loader.ReadByte();
                 BeginCurve = loader.ReadInt32();
                 int padding = loader.ReadInt32();
 
@@ -358,10 +358,10 @@ namespace BfresLibrary
             {
                 _flags = loader.ReadUInt32();
                 Name = loader.LoadString();
-                BeginRotate = loader.ReadByte();
-                BeginTranslate = loader.ReadByte();
-                byte numCurve = loader.ReadByte();
-                BeginBaseTranslate = loader.ReadByte();
+                BeginRotate = (byte)loader.ReadByte();
+                BeginTranslate = (byte)loader.ReadByte();
+                byte numCurve = (byte)loader.ReadByte();
+                BeginBaseTranslate = (byte)loader.ReadByte();
                 BeginCurve = loader.ReadByte();
                 loader.Seek(3);
                 Curves = loader.LoadList<AnimCurve>(numCurve);

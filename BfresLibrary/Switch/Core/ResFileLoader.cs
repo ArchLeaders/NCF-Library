@@ -28,17 +28,16 @@ namespace BfresLibrary.Switch.Core
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to load data into.</param>
         /// <param name="stream">The <see cref="Stream"/> to read data from.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after reading, otherwise <c>false</c>.</param>
-        internal ResFileSwitchLoader(ResFile resFile, Stream stream, bool leaveOpen = false)
-            : base(resFile, stream, leaveOpen)
+        internal ResFileSwitchLoader(BfresFile resFile, Stream stream, bool leaveOpen = false) : base(resFile, stream, leaveOpen)
         {
-            ByteOrder = ByteOrder.LittleEndian;
+            ByteConverter = ByteConverter.Little;
             IsSwitch = true;
         }
 
-        internal ResFileSwitchLoader(IResData resData, ResFile resFile, Stream stream, bool leaveOpen = false)
+        internal ResFileSwitchLoader(IResData resData, BfresFile resFile, Stream stream, bool leaveOpen = false)
     : base(resData, resFile, stream, leaveOpen)
         {
-            ByteOrder = ByteOrder.LittleEndian;
+            ByteConverter = ByteConverter.Little;
             IsSwitch = true;
         }
 
@@ -48,17 +47,15 @@ namespace BfresLibrary.Switch.Core
         /// </summary>
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to load data into.</param>
         /// <param name="fileName">The name of the file to load the data from.</param>
-        internal ResFileSwitchLoader(ResFile resFile, string fileName)
-            : base(resFile, fileName)
+        internal ResFileSwitchLoader(BfresFile resFile, string fileName) : base(resFile, fileName)
         {
-            ByteOrder = ByteOrder.LittleEndian;
+            ByteConverter = ByteConverter.Little;
             IsSwitch = true;
         }
 
-        internal ResFileSwitchLoader(IResData resData, ResFile resFile, string fileName)
-            : base(resData, resFile, fileName)
+        internal ResFileSwitchLoader(IResData resData, BfresFile resFile, string fileName) : base(resData, resFile, fileName)
         {
-            ByteOrder = ByteOrder.LittleEndian;
+            ByteConverter = ByteConverter.Little;
             IsSwitch = true;
         }
 
@@ -108,7 +105,7 @@ namespace BfresLibrary.Switch.Core
 
         public override string ReadString(Encoding encoding = null) {
             short size = ReadInt16();
-            return ReadString(BinaryStringFormat.ZeroTerminated, encoding);
+            return this.ReadString(StringCoding.ZeroTerminated, encoding);
         }
     }
 }

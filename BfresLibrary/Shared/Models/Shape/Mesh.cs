@@ -5,6 +5,7 @@ using Syroot.BinaryData;
 using BfresLibrary.Core;
 using BfresLibrary.GX2;
 using System.Linq;
+using Syroot.BinaryData.Core;
 
 namespace BfresLibrary
 {
@@ -102,7 +103,7 @@ namespace BfresLibrary
             }
         }
 
-        internal ByteOrder FormatByteOrder
+        internal Endian FormatEndian
         {
             get
             {
@@ -110,10 +111,10 @@ namespace BfresLibrary
                 {
                     case GX2IndexFormat.UInt16LittleEndian:
                     case GX2IndexFormat.UInt32LittleEndian:
-                        return ByteOrder.LittleEndian;
+                        return Endian.Little;
                     case GX2IndexFormat.UInt16:
                     case GX2IndexFormat.UInt32:
-                        return ByteOrder.BigEndian;
+                        return Endian.Big;
                     default:
                         throw new ArgumentException($"Invalid {nameof(GX2IndexFormat)} {IndexFormat}.", nameof(IndexFormat));
                 }
@@ -128,9 +129,9 @@ namespace BfresLibrary
         /// <returns>The indices stored in the <see cref="IndexBuffer"/>.</returns>
         public IEnumerable<uint> GetIndices()
         {
-            using (BinaryDataReader reader = new BinaryDataReader(new MemoryStream(IndexBuffer.Data[0])))
+            using (BinaryStream reader = new BinaryStream(new MemoryStream(IndexBuffer.Data[0])))
             {
-                reader.ByteOrder = FormatByteOrder;
+                reader.ByteConverter = ByteConverter.GetConverter(FormatEndian);
 
                 // Read and return the elements.
                 uint elementCount = IndexCount;
@@ -164,9 +165,9 @@ namespace BfresLibrary
         {
             IndexFormat = format ?? IndexFormat;
             IndexBuffer.Data = new byte[1][] { new byte[indices.Count * FormatSize] };
-            using (BinaryDataWriter writer = new BinaryDataWriter(new MemoryStream(IndexBuffer.Data[0], true)))
+            using (BinaryStream writer = new BinaryStream(new MemoryStream(IndexBuffer.Data[0], true)))
             {
-                writer.ByteOrder = FormatByteOrder;
+                writer.ByteConverter = ByteConverter.GetConverter(FormatEndian);
 
                 // Write the elements.
                 switch (IndexFormat)
@@ -263,10 +264,10 @@ namespace BfresLibrary
             }
         }
 
-        public void UpdateIndexBufferByteOrder(ByteOrder byteOrder)
+        public void UpdateIndexBufferEndian(Endian Endian)
         {
             var indices = GetIndices();
-            if (byteOrder == ByteOrder.BigEndian)
+            if (Endian == Endian.Big)
             {
                 if (IndexFormat == GX2IndexFormat.UInt16 || IndexFormat == GX2IndexFormat.UInt16LittleEndian)
                     SetIndices(indices.ToList(), GX2IndexFormat.UInt16);

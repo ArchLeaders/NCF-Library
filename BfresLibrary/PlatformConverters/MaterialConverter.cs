@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BfresLibrary.PlatformConverters
+﻿namespace BfresLibrary.PlatformConverters
 {
     /// <summary>
     /// The conversion handler to process how to convert shaders and other data per game profile.
@@ -15,14 +9,17 @@ namespace BfresLibrary.PlatformConverters
         /// Defaults to not using a game preset.
         /// </summary>
         DEFAULT,
+
         /// <summary>
         /// Uses BOTW game preset.
         /// </summary>
         BOTW,
+
         /// <summary>
         /// Uses MK8 game preset.
         /// </summary>
         MK8,
+
         /// <summary>
         /// Uses 3DW game preset.
         /// </summary>

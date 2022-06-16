@@ -55,9 +55,9 @@ namespace BfresLibrary
             if (loader.IsSwitch)
             {
                 Name = loader.LoadString();
-                loader.ByteOrder = ByteOrder.BigEndian;
+                loader.ByteConverter = ByteConverter.Big;
                 Format = ConvertToGX2(loader.ReadEnum<SwitchAttribFormat>(true));
-                loader.ByteOrder = ByteOrder.LittleEndian;
+                loader.ByteConverter = ByteConverter.Little;
                 loader.Seek(2); //padding
                 Offset = loader.ReadUInt16();
                 BufferIndex = (byte)loader.ReadUInt16();
@@ -65,7 +65,7 @@ namespace BfresLibrary
             else
             {
                 Name = loader.LoadString();
-                BufferIndex = loader.ReadByte();
+                BufferIndex = (byte)loader.ReadByte();
                 loader.Seek(1);
                 Offset = loader.ReadUInt16();
                 Format = loader.ReadEnum<GX2AttribFormat>(true);
@@ -77,9 +77,9 @@ namespace BfresLibrary
             if (saver.IsSwitch)
             {
                 saver.SaveString(Name);
-                saver.ByteOrder = ByteOrder.BigEndian;
+                saver.ByteConverter = ByteConverter.Big;
                 saver.Write(ConvertFromGX2(Format), true);
-                saver.ByteOrder = ByteOrder.LittleEndian;
+                saver.ByteConverter = ByteConverter.Little;
                 saver.Write((short)0);
                 saver.Write(Offset);
                 saver.Write(BufferIndex);

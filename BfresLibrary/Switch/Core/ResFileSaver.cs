@@ -8,6 +8,7 @@ using System.Text;
 using Syroot.BinaryData;
 using Syroot.Maths;
 using BfresLibrary.Core;
+using Syroot.BinaryData.Core;
 
 namespace BfresLibrary.Switch.Core
 {
@@ -72,17 +73,16 @@ namespace BfresLibrary.Switch.Core
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to save data from.</param>
         /// <param name="stream">The <see cref="Stream"/> to save data into.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after writing, otherwise <c>false</c>.</param>
-        internal ResFileSwitchSaver(ResFile resFile, Stream stream, bool leaveOpen)
+        internal ResFileSwitchSaver(BfresFile resFile, Stream stream, bool leaveOpen)
     : base(resFile, stream, leaveOpen)
         {
-            ByteOrder = ByteOrder.LittleEndian;
+            ByteConverter = ByteConverter.Little;
             IsSwitch = true;
         }
 
-        internal ResFileSwitchSaver(IResData resData, ResFile resFile, Stream stream, bool leaveOpen)
-    : base(resData, resFile, stream, leaveOpen)
+        internal ResFileSwitchSaver(IResData resData, BfresFile resFile, Stream stream, bool leaveOpen) : base(resData, resFile, stream, leaveOpen)
         {
-            ByteOrder = ByteOrder.LittleEndian;
+            ByteConverter = ByteConverter.Little;
             IsSwitch = true;
         }
 
@@ -92,17 +92,17 @@ namespace BfresLibrary.Switch.Core
         /// </summary>
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to save.</param>
         /// <param name="fileName">The name of the file to save the data into.</param>
-        internal ResFileSwitchSaver(ResFile resFile, string fileName)
+        internal ResFileSwitchSaver(BfresFile resFile, string fileName)
     : base(resFile, fileName)
         {
-            ByteOrder = ByteOrder.LittleEndian;
+            ByteConverter = ByteConverter.Little;
             IsSwitch = true;
         }
 
-        internal ResFileSwitchSaver(IResData resData, ResFile resFile, string fileName)
+        internal ResFileSwitchSaver(IResData resData, BfresFile resFile, string fileName)
     : base(resData, resFile, fileName)
         {
-            ByteOrder = ByteOrder.LittleEndian;
+            ByteConverter = ByteConverter.Little;
             IsSwitch = true;
         }
 
@@ -421,7 +421,7 @@ namespace BfresLibrary.Switch.Core
         #region SectionSave
 
         /// <summary>
-        /// Starts serializing the data from the <see cref="ResFile"/> root.
+        /// Starts serializing the data from the <see cref="BfresFile"/> root.
         /// </summary>
         public override void Execute()
         {
@@ -1773,7 +1773,7 @@ namespace BfresLibrary.Switch.Core
                 Write((short)entry.Key.Length);
 
                 // Write the name.
-                Write(entry.Key, BinaryStringFormat.ZeroTerminated, entry.Value.Encoding ?? Encoding);
+                this.Write(entry.Key, StringCoding.ZeroTerminated, entry.Value.Encoding ?? Encoding);
                 Align(2);
             }
 

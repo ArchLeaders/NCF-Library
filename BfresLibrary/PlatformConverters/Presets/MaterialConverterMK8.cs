@@ -1,58 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BfresLibrary.PlatformConverters
 {
     internal class MaterialConverterMK8 : MaterialConverterBase
     {
-        //MK8D changes:
+        /// 
+        /// MK8D changes:
+        /// 
 
-        //NEW RENDER INFO
-        //gsys_bake_normal_map
-        //gsys_bake_emission_map
-        //gsys_render_state_display_face
-        //gsys_render_state_mode
-        //gsys_depth_test_enable
-        //gsys_depth_test_func
-        //gsys_depth_test_write
-        //gsys_alpha_test_enable
-        //gsys_alpha_test_func
-        //gsys_alpha_test_value
-        //gsys_render_state_blend_mode
-        //gsys_color_blend_rgb_op
-        //gsys_color_blend_rgb_src_func
-        //gsys_color_blend_rgb_dst_func
-        //gsys_color_blend_alpha_op
-        //gsys_color_blend_alpha_src_func
-        //gsys_color_blend_alpha_dst_func
-        //gsys_color_blend_const_color
+        /// NEW RENDER INFO
+        // gsys_bake_normal_map
+        // gsys_bake_emission_map
+        // gsys_render_state_display_face
+        // gsys_render_state_mode
+        // gsys_depth_test_enable
+        // gsys_depth_test_func
+        // gsys_depth_test_write
+        // gsys_alpha_test_enable
+        // gsys_alpha_test_func
+        // gsys_alpha_test_value
+        // gsys_render_state_blend_mode
+        // gsys_color_blend_rgb_op
+        // gsys_color_blend_rgb_src_func
+        // gsys_color_blend_rgb_dst_func
+        // gsys_color_blend_alpha_op
+        // gsys_color_blend_alpha_src_func
+        // gsys_color_blend_alpha_dst_func
+        // gsys_color_blend_const_color
 
-        //REMOVED RENDER INFO
-        //gsys_model_fx##
+        /// REMOVED RENDER INFO
+        // gsys_model_fx##
 
-        //NEW PARAMS
-        //gsys_alpha_test_ref_value
-        //gsys_xlu_zprepass_alpha
-        //screen_fake_scale_begin_ratio
-        //screen_fake_scale_factor
+        /// NEW PARAMS
+        // gsys_alpha_test_ref_value
+        // gsys_xlu_zprepass_alpha
+        // screen_fake_scale_begin_ratio
+        // screen_fake_scale_factor
 
-        //REMOVED PARAMS
-        //effect_normal_offset
-        //gsys_model_fx_ratio
-        //gsys_specular_roughness
-        //zprepass_shadow_rate
+        /// REMOVED PARAMS
+        // effect_normal_offset
+        // gsys_model_fx_ratio
+        // gsys_specular_roughness
+        // zprepass_shadow_rate
 
-        //NEW OPTIONS:
-        //gsys_alpha_test_enable
-        //gsys_alpha_test_func
-        //enable_screen_fake_scale
+        /// NEW OPTIONS:
+        // gsys_alpha_test_enable
+        // gsys_alpha_test_func
+        // enable_screen_fake_scale
 
-        //REMOVED OPTIONS:
-        //bake_calc_type
-        //enable_effect_normal_offset
+        /// REMOVED OPTIONS:
+        // bake_calc_type
+        // enable_effect_normal_offset
 
         internal override void ConvertToWiiUMaterial(Material material)
         {

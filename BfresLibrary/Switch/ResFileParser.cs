@@ -11,15 +11,15 @@ namespace BfresLibrary.Switch
 {
     public class ResFileParser
     {
-        public static void Load(ResFileSwitchLoader loader, ResFile resFile)
+        public static void Load(ResFileSwitchLoader loader, BfresFile resFile)
         {
             loader.CheckSignature("FRES");
             uint padding = loader.ReadUInt32();
             resFile.Version = loader.ReadUInt32();
             resFile.SetVersionInfo(resFile.Version);
-            resFile.ByteOrder = loader.ReadByteOrder();
-            resFile.Alignment = loader.ReadByte();
-            resFile.TargetAddressSize = loader.ReadByte(); //Thanks MasterF0X for pointing out the layout of the these
+            resFile.Endian = loader.ReadEndian();
+            resFile.Alignment = (uint)loader.ReadByte();
+            resFile.TargetAddressSize = (uint)loader.ReadByte(); //Thanks MasterF0X for pointing out the layout of the these
             uint OffsetToFileName = loader.ReadUInt32();
             resFile.Flag = loader.ReadUInt16();
             resFile.BlockOffset = loader.ReadUInt16();
@@ -105,7 +105,7 @@ namespace BfresLibrary.Switch
             }
         }
 
-        public static void Save(ResFileSwitchSaver saver, ResFile resFile)
+        public static void Save(ResFileSwitchSaver saver, BfresFile resFile)
         {
             if (resFile.Models.Count > 0 && resFile.Models.Values.Any(x => x.Shapes.Count > 0)) {
                 resFile.MemoryPool = new MemoryPool();
@@ -115,7 +115,7 @@ namespace BfresLibrary.Switch
             saver.WriteSignature("FRES");
             saver.Write(0x20202020);
             saver.Write(resFile.Version);
-            saver.WriteByteOrder(resFile.ByteOrder);
+            saver.WriteEndian(resFile.Endian);
             saver.Write((byte)resFile.Alignment);
             saver.Write((byte)resFile.TargetAddressSize);
             saver.SaveFileNameString(resFile.Name);

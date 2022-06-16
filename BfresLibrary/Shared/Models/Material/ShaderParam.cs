@@ -90,7 +90,7 @@ namespace BfresLibrary
                 long callbackPointer = loader.ReadInt64();
                 Name = loader.LoadString();
                 Type = loader.ReadEnum<ShaderParamType>(true);
-                byte sizData = loader.ReadByte();
+                byte sizData = (byte)loader.ReadByte();
                 DataOffset = loader.ReadUInt16();
                 int offset = loader.ReadInt32(); // Uniform variable offset.
                 DependedIndex = loader.ReadUInt16();
@@ -100,7 +100,7 @@ namespace BfresLibrary
             else
             {
                 Type = loader.ReadEnum<ShaderParamType>(true);
-                byte sizData = loader.ReadByte();
+                byte sizData = (byte)loader.ReadByte();
 
                 if (sizData != (byte)DataSize && sizData > DataSize)
                 {

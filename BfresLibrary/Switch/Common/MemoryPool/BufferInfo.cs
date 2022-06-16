@@ -6,7 +6,7 @@ using BfresLibrary.Switch.Core;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents an buffer info section in a <see cref="ResFile"/> subfile. References vertex and index buffers
+    /// Represents an buffer info section in a <see cref="BfresFile"/> subfile. References vertex and index buffers
     /// </summary>
     public class BufferInfo : IResData
     {

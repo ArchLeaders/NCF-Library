@@ -7,7 +7,7 @@ using BfresLibrary.Core;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents an FSHA subfile in a <see cref="ResFile"/>, storing shape animations of a <see cref="Model"/>
+    /// Represents an FSHA subfile in a <see cref="BfresFile"/>, storing shape animations of a <see cref="Model"/>
     /// instance.
     /// </summary>
     [DebuggerDisplay(nameof(ShapeAnim) + " {" + nameof(Name) + "}")]
@@ -86,11 +86,11 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(string FileName, ResFile ResFile) {
+        public void Import(string FileName, BfresFile ResFile) {
             ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile) {
+        public void Export(string FileName, BfresFile ResFile) {
             ResFileSaver.ExportSection(FileName, this, ResFile);
         }
 

@@ -32,7 +32,7 @@ namespace BfresLibrary.Switch
             if (loader.ResFile.VersionMajor2 == 9)
             {
                 lightAnim.FrameCount = loader.ReadInt32();
-                numCurve = loader.ReadByte();
+                numCurve = (byte)loader.ReadByte();
                 lightAnim.LightTypeIndex = loader.ReadSByte();
                 lightAnim.DistanceAttnFuncIndex = loader.ReadSByte();
                 lightAnim.AngleAttnFuncIndex = loader.ReadSByte();
@@ -45,7 +45,7 @@ namespace BfresLibrary.Switch
                 lightAnim.Flags = loader.ReadEnum<LightAnimFlags>(true);
                 numUserData = loader.ReadUInt16();
                 lightAnim.FrameCount = loader.ReadInt32();
-                numCurve = loader.ReadByte();
+                numCurve = (byte)loader.ReadByte();
                 lightAnim.LightTypeIndex = loader.ReadSByte();
                 lightAnim.DistanceAttnFuncIndex = loader.ReadSByte();
                 lightAnim.AngleAttnFuncIndex = loader.ReadSByte();

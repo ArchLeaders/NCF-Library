@@ -8,7 +8,7 @@ using BfresLibrary.Core;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents an FVIS subfile in a <see cref="ResFile"/>, storing visibility animations of <see cref="Bone"/> or
+    /// Represents an FVIS subfile in a <see cref="BfresFile"/>, storing visibility animations of <see cref="Bone"/> or
     /// <see cref="Material"/> instances.
     /// </summary>
     [DebuggerDisplay(nameof(VisibilityAnim) + " {" + nameof(Name) + "}")]
@@ -164,7 +164,7 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(string FileName, ResFile ResFile)
+        public void Import(string FileName, BfresFile ResFile)
         {
             if (FileName.EndsWith(".json"))
             {
@@ -174,7 +174,7 @@ namespace BfresLibrary
                 ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile)
+        public void Export(string FileName, BfresFile ResFile)
         {
             if (FileName.EndsWith(".json"))
                 File.WriteAllText(FileName, TextConvert.BoneVisibilityAnimConvert.ToJson(this));
@@ -224,7 +224,7 @@ namespace BfresLibrary
                     int i = 0;
                     while (i < numAnim)
                     {
-                        byte b = loader.ReadByte();
+                        byte b = (byte)loader.ReadByte();
                         baseDataBytes.Add(b);
                         for (int j = 0; j < 8 && i < numAnim; j++)
                         {

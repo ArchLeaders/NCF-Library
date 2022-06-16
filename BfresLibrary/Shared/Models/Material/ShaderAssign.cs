@@ -78,15 +78,15 @@ namespace BfresLibrary
                 SamplerAssigns = loader.LoadDictValues<ResString>();
                 ShaderOptions = loader.LoadDictValues<ResString>();
                 Revision = loader.ReadUInt32();
-                byte numAttribAssign = loader.ReadByte();
-                byte numSamplerAssign = loader.ReadByte();
+                byte numAttribAssign = (byte)loader.ReadByte();
+                byte numSamplerAssign = (byte)loader.ReadByte();
                 ushort numShaderOption = loader.ReadUInt16();
             }
             else
             {
                 Revision = loader.ReadUInt32();
-                byte numAttribAssign = loader.ReadByte();
-                byte numSamplerAssign = loader.ReadByte();
+                byte numAttribAssign = (byte)loader.ReadByte();
+                byte numSamplerAssign = (byte)loader.ReadByte();
                 ushort numShaderOption = loader.ReadUInt16();
                 AttribAssigns = loader.LoadDict<ResString>();
                 SamplerAssigns = loader.LoadDict<ResString>();

@@ -71,11 +71,11 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(string FileName, ResFile ResFile) {
+        public void Import(string FileName, BfresFile ResFile) {
             ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile) {
+        public void Export(string FileName, BfresFile ResFile) {
             ResFileSaver.ExportSection(FileName, this, ResFile);
         }
 
@@ -91,7 +91,7 @@ namespace BfresLibrary
                 Flags = loader.ReadEnum<CameraAnimFlags>(false);
                 loader.Seek(2);
                 FrameCount = loader.ReadInt32();
-                byte numCurve = loader.ReadByte();
+                byte numCurve = (byte)loader.ReadByte();
                 loader.Seek(1);
                 ushort numUserData = loader.ReadUInt16();
                 BakedSize = loader.ReadUInt32();

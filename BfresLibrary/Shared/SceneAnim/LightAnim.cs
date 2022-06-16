@@ -127,11 +127,11 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(string FileName, ResFile ResFile) {
+        public void Import(string FileName, BfresFile ResFile) {
             ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile) {
+        public void Export(string FileName, BfresFile ResFile) {
             ResFileSaver.ExportSection(FileName, this, ResFile);
         }
 
@@ -147,7 +147,7 @@ namespace BfresLibrary
                 Flags = loader.ReadEnum<LightAnimFlags>(true);
                 ushort numUserData = loader.ReadUInt16();
                 FrameCount = loader.ReadInt32();
-                byte numCurve = loader.ReadByte();
+                byte numCurve = (byte)loader.ReadByte();
                 LightTypeIndex = loader.ReadSByte();
                 DistanceAttnFuncIndex = loader.ReadSByte();
                 AngleAttnFuncIndex = loader.ReadSByte();

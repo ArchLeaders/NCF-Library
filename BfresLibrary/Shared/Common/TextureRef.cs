@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using BfresLibrary.Core;
 
 namespace BfresLibrary
@@ -13,10 +12,7 @@ namespace BfresLibrary
         /// <summary>
         /// Initializes a new instance of the <see cref="TextureRef"/> class.
         /// </summary>
-        public TextureRef()
-        {
-            Name = "";
-        }
+        public TextureRef() => Name = "";
 
         // ---- PROPERTIES ---------------------------------------------------------------------------------------------
 

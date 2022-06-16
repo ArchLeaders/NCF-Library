@@ -24,21 +24,14 @@ namespace BfresLibrary
         /// <summary>
         /// Initializes a new instance of the <see cref="ResDict"/> class.
         /// </summary>
-        protected ResDict()
-        {
-            // Create root node.
-            _nodes = new List<Node> { new Node() };
-        }
+        protected ResDict() => _nodes = new List<Node> { new Node() };
 
         // ---- PROPERTIES ---------------------------------------------------------------------------------------------
 
         /// <summary>
         /// Gets the number of instances stored.
         /// </summary>
-        public int Count
-        {
-            get { return _nodes.Count - 1; }
-        }
+        public new int Count => _nodes.Count - 1;
 
         /// <summary>
         /// Gets all keys under which instances are stored.
@@ -48,9 +41,7 @@ namespace BfresLibrary
             get
             {
                 for (int i = 1; i < _nodes.Count; i++)
-                {
                     yield return _nodes[i].Key;
-                }
             }
         }
 
@@ -62,9 +53,7 @@ namespace BfresLibrary
             get
             {
                 for (int i = 1; i < _nodes.Count; i++)
-                {
                     yield return _nodes[i].Value;
-                }
             }
         }
 
@@ -76,9 +65,7 @@ namespace BfresLibrary
             get
             {
                 for (int i = 1; i < _nodes.Count; i++)
-                {
                     yield return _nodes[i];
-                }
             }
         }
 
@@ -172,7 +159,7 @@ namespace BfresLibrary
         /// <summary>
         /// Removes all elements from the dictionary.
         /// </summary>
-        public void Clear()
+        public new void Clear()
         {
             // Create new collection with root node.
             _nodes.Clear();
@@ -184,10 +171,7 @@ namespace BfresLibrary
         /// </summary>
         /// <param name="key">The textual key to locate in the dictionary. The value can be <c>null</c>.</param>
         /// <returns><c>true</c> if <paramref name="key"/> was found in the dictionary; otherwise <c>false</c>.</returns>
-        public bool ContainsKey(string key)
-        {
-            return Lookup(key, out Node node, out int index, false);
-        }
+        public bool ContainsKey(string key) => Lookup(key, out Node node, out int index, false);
 
         /// <summary>
         /// Searches for the specified <paramref name="key"/> and returns the zero-based index of the first occurrence
@@ -196,10 +180,7 @@ namespace BfresLibrary
         /// <param name="key">The textual key to locate in the dictionary. The value can be <c>null</c>.</param>
         /// <returns>The zero-based index of the first occurence of <paramref name="key"/> within the entire dictionary
         /// if found; otherwise <c>-1</c>.</returns>
-        public int IndexOf(string key)
-        {
-            return Lookup(key, out Node node, out int index, false) ? index : -1;
-        }
+        public int IndexOf(string key) => Lookup(key, out Node node, out int index, false) ? index : -1;
 
         /// <summary>
         /// Changes the key of the instance currently saved under the given <paramref name="key"/> to the
@@ -250,7 +231,7 @@ namespace BfresLibrary
         /// <param name="index">The zero-based index of the instance to remove.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 or equal to or greater
         /// than <see cref="Count"/>.</exception>
-        public void RemoveAt(int index)
+        public new void RemoveAt(int index)
         {
             // Throw if index out of bounds.
             Lookup(index, out Node node, true);
@@ -305,10 +286,7 @@ namespace BfresLibrary
         /// <c>null</c>.</param>
         /// <returns><c>true</c> if <paramref name="value"/> was found in the dictionary; otherwise <c>false</c>.
         /// </returns>
-        internal bool ContainsValue(IResData value)
-        {
-            return Lookup(value, out Node node, out int index, false);
-        }
+        internal bool ContainsValue(IResData value) => Lookup(value, out Node node, out int index, false);
 
         /// <summary>
         /// Searches for the specified <paramref name="value"/> and returns the zero-based index of the first occurrence
@@ -318,10 +296,7 @@ namespace BfresLibrary
         /// <c>null</c>.</param>
         /// <returns>The zero-based index of the first occurence of <paramref name="value"/> within the entire
         /// dictionary if found; otherwise <c>-1</c>.</returns>
-        internal int IndexOf(IResData value)
-        {
-            return Lookup(value, out Node node, out int index, false) ? index : -1;
-        }
+        internal int IndexOf(IResData value) => Lookup(value, out Node node, out int index, false) ? index : -1;
 
         /// <summary>
         /// Removes the first occurrence of a specific <paramref name="value"/> from the dictionary.
@@ -337,10 +312,7 @@ namespace BfresLibrary
                 _nodes.Remove(node);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            else return false;
         }
 
         /// <summary>
@@ -391,9 +363,7 @@ namespace BfresLibrary
         IEnumerator<KeyValuePair<string, IResData>> IEnumerable<KeyValuePair<string, IResData>>.GetEnumerator()
         {
             foreach (Node node in Nodes)
-            {
                 yield return new KeyValuePair<string, IResData>(node.Key, node.Value);
-            }
         }
 
         /// <summary>
@@ -403,9 +373,7 @@ namespace BfresLibrary
         IEnumerator IEnumerable.GetEnumerator()
         {
             foreach (Node node in Nodes)
-            {
                 yield return new KeyValuePair<string, IResData>(node.Key, node.Value);
-            }
         }
 
         void IResData.Load(ResFileLoader loader)
@@ -446,7 +414,6 @@ namespace BfresLibrary
                 saver.Write(Count);
 
                 // Write nodes.
-                int index = -1; // Start at -1 due to root node.
                 int curNode = 0;
                 foreach (Node node in _nodes)
                 {
@@ -716,10 +683,7 @@ namespace BfresLibrary
             internal string Key;
             internal IResData Value;
 
-            internal Node()
-            {
-                Reference = UInt32.MaxValue;
-            }
+            internal Node() => Reference = UInt32.MaxValue;
 
             internal Node(string key, IResData value) : this()
             {
@@ -731,17 +695,10 @@ namespace BfresLibrary
         private class TypeProxy
         {
             private ResDict _dict;
-
-            internal TypeProxy(ResDict dict)
-            {
-                _dict = dict;
-            }
+            internal TypeProxy(ResDict dict) => _dict = dict;
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public KeyValuePair<string, IResData>[] Items
-            {
-                get { return _dict.ToArray(); }
-            }
+            public KeyValuePair<string, IResData>[] Items => _dict.ToArray();
         }
     }
 }

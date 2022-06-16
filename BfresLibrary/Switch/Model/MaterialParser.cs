@@ -36,8 +36,8 @@ namespace BfresLibrary.Switch
                 mat.Flags = loader.ReadEnum<MaterialFlags>(true);
             ushort idx = loader.ReadUInt16();
             ushort numRenderInfo = loader.ReadUInt16();
-            byte numTextureRef = loader.ReadByte();
-            byte numSampler = loader.ReadByte();
+            byte numTextureRef = (byte)loader.ReadByte();
+            byte numSampler = (byte)loader.ReadByte();
             ushort numShaderParam = loader.ReadUInt16();
             ushort numShaderParamVolatile = loader.ReadUInt16();
             ushort sizParamSource = loader.ReadUInt16();

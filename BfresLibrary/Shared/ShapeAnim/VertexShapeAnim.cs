@@ -77,8 +77,8 @@ namespace BfresLibrary
                 }
                 else
                 {
-                    numCurve = loader.ReadByte();
-                    numKeyShapeAnim = loader.ReadByte();
+                    numCurve = (ushort)loader.ReadByte();
+                    numKeyShapeAnim = (ushort)loader.ReadByte();
                     unk = loader.ReadUInt16();
                 }
 

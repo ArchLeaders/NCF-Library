@@ -12,7 +12,7 @@ using System.Runtime.Serialization;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents an FSKA subfile in a <see cref="ResFile"/>, storing armature animations of <see cref="Bone"/>
+    /// Represents an FSKA subfile in a <see cref="BfresFile"/>, storing armature animations of <see cref="Bone"/>
     /// instances in a <see cref="Skeleton"/>.
     /// </summary>
     [DebuggerDisplay(nameof(SkeletalAnim) + " {" + nameof(Name) + "}")]
@@ -178,7 +178,7 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(string FileName, ResFile ResFile) {
+        public void Import(string FileName, BfresFile ResFile) {
             if (FileName.EndsWith(".json")) {
                Helpers.SkeletalAnimHelper.FromJson(this, File.ReadAllText(FileName));
             }
@@ -186,7 +186,7 @@ namespace BfresLibrary
                 ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile) {
+        public void Export(string FileName, BfresFile ResFile) {
             if (FileName.EndsWith(".json"))
                 File.WriteAllText(FileName, Helpers.SkeletalAnimHelper.ToJson(this));
             else

@@ -3,7 +3,7 @@
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents an exception raised when handling <see cref="ResFile"/> data.
+    /// Represents an exception raised when handling <see cref="BfresFile"/> data.
     /// </summary>
     public class ResException : Exception
     {

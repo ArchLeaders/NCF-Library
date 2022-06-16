@@ -1,66 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
+﻿using System.IO;
+using BfresLibrary.Core;
 using Syroot.BinaryData;
+using Syroot.BinaryData.Core;
 
 namespace BfresLibrary
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class Brtcamera
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public char[] Name { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        public byte[] Name { get; set; }
         public uint FrameCount { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public KeyFrame[] KeyFrames { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public float UnknownValue { get; set; }
+        public bool IsBigEndian { get; set; } = true;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsBigEndian = true;
-
-        /// <summary>
-        /// 
-        /// </summary>
         public Brtcamera(Stream stream, bool bigEndian) {
             IsBigEndian = bigEndian;
-            using (var reader = new BinaryDataReader(stream)) {
+            using (var reader = new BinaryStream(stream)) {
                 Read(reader);
             }
         }
 
         public void Save(Stream stream)
         {
-            using (var writer = new BinaryDataWriter(stream)) {
+            using (var writer = new BinaryStream(stream)) {
                 Write(writer);
             }
         }
 
-        private void Read(BinaryDataReader reader)
+        private void Read(BinaryStream reader)
         {
-            reader.ByteOrder = ByteOrder.LittleEndian;
+            reader.ByteConverter = ByteConverter.Little;
             if (IsBigEndian)
-                reader.ByteOrder = ByteOrder.BigEndian;
+                reader.ByteConverter = ByteConverter.Big;
 
-            Name = reader.ReadChars(64);
+            Name = reader.ReadBytes(64);
             uint count = reader.ReadUInt32();
             FrameCount = reader.ReadUInt32();
             UnknownValue = reader.ReadSingle();
@@ -77,11 +50,11 @@ namespace BfresLibrary
             }
         }
 
-        private void Write(BinaryDataWriter writer)
+        private void Write(BinaryStream writer)
         {
-            writer.ByteOrder = ByteOrder.LittleEndian;
+            writer.ByteConverter = ByteConverter.Little;
             if (IsBigEndian)
-                writer.ByteOrder = ByteOrder.BigEndian;
+                writer.ByteConverter = ByteConverter.Big;
             writer.Write(Name);
             writer.Write(KeyFrames.Length);
             writer.Write(FrameCount);
@@ -94,25 +67,11 @@ namespace BfresLibrary
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public class KeyFrame
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            public uint Flag;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public float Frame;
-
-            /// <summary>
-            /// 
-            /// </summary>
-            public float[] Data = new float[8];
+            public uint Flag { get; set; }
+            public float Frame { get; set; }
+            public float[] Data { get; set; } = new float[8];
         }
     }
 }

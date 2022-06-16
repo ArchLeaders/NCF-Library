@@ -37,16 +37,14 @@ namespace BfresLibrary.WiiU.Core
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to save data from.</param>
         /// <param name="stream">The <see cref="Stream"/> to save data into.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after writing, otherwise <c>false</c>.</param>
-        internal ResFileWiiUSaver(ResFile resFile, Stream stream, bool leaveOpen)
-    : base(resFile, stream, leaveOpen)
+        internal ResFileWiiUSaver(BfresFile resFile, Stream stream, bool leaveOpen) : base(resFile, stream, leaveOpen)
         {
-            ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
         }
 
-        internal ResFileWiiUSaver(IResData resData, ResFile resFile, Stream stream, bool leaveOpen)
-    : base(resData, resFile, stream, leaveOpen)
+        internal ResFileWiiUSaver(IResData resData, BfresFile resFile, Stream stream, bool leaveOpen) : base(resData, resFile, stream, leaveOpen)
         {
-            ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
         }
 
         /// <summary>
@@ -55,15 +53,8 @@ namespace BfresLibrary.WiiU.Core
         /// </summary>
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to save.</param>
         /// <param name="fileName">The name of the file to save the data into.</param>
-        internal ResFileWiiUSaver(ResFile resFile, string fileName)
-    : base(resFile, fileName)
-        {
-        }
-
-        internal ResFileWiiUSaver(IResData resData, ResFile resFile, string fileName)
-    : base(resData, resFile, fileName)
-        {
-        }
+        internal ResFileWiiUSaver(BfresFile resFile, string fileName) : base(resFile, fileName) { }
+        internal ResFileWiiUSaver(IResData resData, BfresFile resFile, string fileName) : base(resData, resFile, fileName) { }
 
         // ---- PROPERTIES ---------------------------------------------------------------------------------------------
 
@@ -94,7 +85,7 @@ namespace BfresLibrary.WiiU.Core
         // ---- METHODS (PRIVAYE) -------------------------------------------------------------------------------------
 
         /// <summary>
-        /// Starts serializing the data from the <see cref="ResFile"/> root.
+        /// Starts serializing the data from the <see cref="BfresFile"/> root.
         /// </summary>
         public override void Execute()
         {
@@ -238,7 +229,7 @@ namespace BfresLibrary.WiiU.Core
                 }
 
                 // Write the name.
-                Write(entry.Key, BinaryStringFormat.ZeroTerminated, entry.Value.Encoding ?? Encoding);
+                this.Write(entry.Key, StringCoding.ZeroTerminated, entry.Value.Encoding ?? Encoding);
                 Align(4);
             }
             BaseStream.SetLength(Position); // Workaround to make last alignment expand the file if nothing follows.

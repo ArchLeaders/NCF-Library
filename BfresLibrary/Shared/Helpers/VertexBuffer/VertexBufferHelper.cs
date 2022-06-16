@@ -5,6 +5,7 @@ using Syroot.BinaryData;
 using Syroot.Maths;
 using BfresLibrary.Core;
 using System.Linq;
+using Syroot.BinaryData.Core;
 
 namespace BfresLibrary.Helpers
 {
@@ -20,21 +21,21 @@ namespace BfresLibrary.Helpers
         /// </summary>
         public VertexBufferHelper()
         {
-            ByteOrder = ByteOrderHelper.SystemByteOrder;
+            endian = Endian.System;
             Attributes = new List<VertexBufferHelperAttrib>();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VertexBufferHelper"/> class with data read from the given
-        /// <paramref name="vertexBuffer"/>. The data is available in the <paramref name="byteOrder"/>, which defaults
+        /// <paramref name="vertexBuffer"/>. The data is available in the <paramref name="endian"/>, which defaults
         /// to system byte order.
         /// </summary>
         /// <param name="vertexBuffer">The <see cref="VertexBuffer"/> to initially read data from.</param>
-        /// <param name="byteOrder">The <see cref="ByteOrder"/> in which vertex data is available. <c>null</c> to use
+        /// <param name="endian">The <see cref="endian"/> in which vertex data is available. <c>null</c> to use
         /// system byte order.</param>
-        public VertexBufferHelper(VertexBuffer vertexBuffer, ByteOrder? byteOrder = null)
+        public VertexBufferHelper(VertexBuffer vertexBuffer, Endian? endian = null)
         {
-            ByteOrder = byteOrder ?? ByteOrderHelper.SystemByteOrder;
+            endian = endian ?? Endian.System;
             VertexSkinCount = vertexBuffer.VertexSkinCount;
 
             Attributes = new List<VertexBufferHelperAttrib>(vertexBuffer.Attributes.Count);
@@ -54,11 +55,11 @@ namespace BfresLibrary.Helpers
         // ---- PROPERTIES ---------------------------------------------------------------------------------------------
 
         /// <summary>
-        /// Gets or sets the <see cref="ByteOrder"/> in which vertex data will be stored when calling
-        /// <see cref="ToVertexBuffer()"/>. This should be the same as the remainder of the <see cref="ResFile"/> in
+        /// Gets or sets the <see cref="endian"/> in which vertex data will be stored when calling
+        /// <see cref="ToVertexBuffer()"/>. This should be the same as the remainder of the <see cref="BfresFile"/> in
         /// which it will be stored.
         /// </summary>
-        public ByteOrder ByteOrder { get; set; }
+        public Endian endian { get; set; }
 
         /// <summary>
         /// Gets or sets the number of bones influencing the vertices stored in the buffer. 0 influences equal
@@ -222,12 +223,12 @@ namespace BfresLibrary.Helpers
         {
             // Create a reader on the raw bytes of the correct endianness.
             Buffer buffer = vertexBuffer.Buffers[attrib.BufferIndex];
-            using (BinaryDataReader reader = new BinaryDataReader(new MemoryStream(buffer.Data[0])))
+            using (BinaryStream reader = new BinaryStream(new MemoryStream(buffer.Data[0])))
             {
-                reader.ByteOrder = ByteOrder;
+                reader.ByteConverter = ByteConverter.GetConverter(endian);
 
                 // Get a conversion callback transforming the raw data into a Vector4F instance.
-                Func<BinaryDataReader, Vector4F> callback = reader.GetGX2AttribCallback(attrib.Format);
+                Func<BinaryStream, Vector4F> callback = reader.ReadGX2AttribCallback(attrib.Format);
 
                 // Read the elements.
                 Vector4F[] elements = new Vector4F[vertexBuffer.VertexCount];
@@ -249,9 +250,9 @@ namespace BfresLibrary.Helpers
 
             // Create a write for the raw bytes of the correct endianness.
             byte[] raw = new byte[length];
-            using (BinaryDataWriter writer = new BinaryDataWriter(new MemoryStream(raw, true)))
+            using (BinaryStream writer = new BinaryStream(new MemoryStream(raw, true)))
             {
-                writer.ByteOrder = ByteOrder;
+                writer.ByteConverter = ByteConverter.GetConverter(endian);
 
                 for (int v = 0; v < helperAttribs[0].Data.Length; v++)
                 {
@@ -260,7 +261,7 @@ namespace BfresLibrary.Helpers
                         long pos = writer.Position;
 
                         // Get a conversion callback transforming the Vector4F instances into raw data.
-                        Action<BinaryDataWriter, Vector4F> callback = writer.GetGX2AttribCallback(helperAttribs[i].Format);
+                        Action<BinaryStream, Vector4F> callback = writer.WriteGX2AttribCallback(helperAttribs[i].Format);
                         callback.Invoke(writer, helperAttribs[i].Data[v]);
 
                         writer.Seek(pos + helperAttribs[i].Stride, SeekOrigin.Begin);
@@ -274,12 +275,12 @@ namespace BfresLibrary.Helpers
         {
             // Create a write for the raw bytes of the correct endianness.
             byte[] raw = new byte[helperAttrib.Data.Length * helperAttrib.Stride];
-            using (BinaryDataWriter writer = new BinaryDataWriter(new MemoryStream(raw, true)))
+            using (BinaryStream writer = new BinaryStream(new MemoryStream(raw, true)))
             {
-                writer.ByteOrder = ByteOrder;
+                writer.ByteConverter = ByteConverter.GetConverter(endian);
 
                 // Get a conversion callback transforming the Vector4F instances into raw data.
-                Action<BinaryDataWriter, Vector4F> callback = writer.GetGX2AttribCallback(helperAttrib.Format);
+                Action<BinaryStream, Vector4F> callback = writer.WriteGX2AttribCallback(helperAttrib.Format);
 
                 // Write the elements.
                 foreach (Vector4F element in helperAttrib.Data)

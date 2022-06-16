@@ -1,37 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BfresLibrary.PlatformConverters
 {
     internal class MaterialConverterBOTW : MaterialConverterBase
     {
-        //Changes with Switch BOTW
+        /// 
+        /// Changes with Switch BOTW
+        /// 
 
-        //RENDER INFO ADDED
-        //gsys_render_state_mode
-        //gsys_render_state_display_face
-        //gsys_render_state_blend_mode
-        //gsys_depth_test_enable
-        //gsys_depth_test_write
-        //gsys_depth_test_func
-        //gsys_color_blend_rgb_src_func
-        //gsys_color_blend_rgb_dst_func
-        //gsys_color_blend_rgb_op
-        //gsys_color_blend_alpha_src_func
-        //gsys_color_blend_alpha_dst_func
-        //gsys_color_blend_alpha_op
-        //gsys_alpha_test_enable
-        //gsys_alpha_test_func
-        //gsys_color_blend_const_color
-        //gsys_alpha_test_value
+        /// RENDER INFO ADDED
+        // gsys_render_state_mode
+        // gsys_render_state_display_face
+        // gsys_render_state_blend_mode
+        // gsys_depth_test_enable
+        // gsys_depth_test_write
+        // gsys_depth_test_func
+        // gsys_color_blend_rgb_src_func
+        // gsys_color_blend_rgb_dst_func
+        // gsys_color_blend_rgb_op
+        // gsys_color_blend_alpha_src_func
+        // gsys_color_blend_alpha_dst_func
+        // gsys_color_blend_alpha_op
+        // gsys_alpha_test_enable
+        // gsys_alpha_test_func
+        // gsys_color_blend_const_color
+        // gsys_alpha_test_value
 
-        internal override void ConvertToWiiUMaterial(Material material)
-        {
-
-        }
+        internal override void ConvertToWiiUMaterial(Material material) { }
 
         internal override void ConvertToSwitchMaterial(Material material)
         {

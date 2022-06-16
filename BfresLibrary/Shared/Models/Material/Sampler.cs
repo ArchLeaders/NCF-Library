@@ -49,7 +49,7 @@ namespace BfresLibrary
                 TexSampler = new TexSampler(loader.ReadUInt32s(3));
                 uint handle = loader.ReadUInt32();
                 Name = loader.LoadString();
-                byte idx = loader.ReadByte();
+                byte idx = (byte)loader.ReadByte();
                 loader.Seek(3);
             }
         }

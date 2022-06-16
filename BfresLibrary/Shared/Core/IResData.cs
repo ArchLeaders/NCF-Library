@@ -1,7 +1,7 @@
 ﻿namespace BfresLibrary.Core
 {
     /// <summary>
-    /// Represents the common interface for <see cref="ResFile"/> data instances.
+    /// Represents the common interface for <see cref="BfresFile"/> data instances.
     /// </summary>
     public interface IResData
     {

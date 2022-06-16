@@ -4,7 +4,7 @@ using BfresLibrary.Core;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents a file attachment to a <see cref="ResFile"/> which can be of arbitrary data.
+    /// Represents a file attachment to a <see cref="BfresFile"/> which can be of arbitrary data.
     /// </summary>
     public class ExternalFile : IResData
     {

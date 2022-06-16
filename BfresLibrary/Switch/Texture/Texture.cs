@@ -75,12 +75,12 @@ namespace BfresLibrary.Switch
             Texture = texture;
         }
 
-        public override void Import(string FileName, ResFile ResFile)
+        public override void Import(string FileName, BfresFile ResFile)
         {
             Texture.Import(FileName);
         }
 
-        public override void Export(string FileName, ResFile ResFile)
+        public override void Export(string FileName, BfresFile ResFile)
         {
             Texture.Export(FileName, BntxFile);
         }

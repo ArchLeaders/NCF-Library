@@ -23,32 +23,32 @@ namespace BfresLibrary
         /// <summary>
         /// Represents the smallest positive <see cref="Half"/> value greater than zero.
         /// </summary>
-        public static readonly Half Epsilon = new Half(1);
+        public static readonly Half Epsilon = new(1);
 
         /// <summary>
         /// Represents the largest possible value of <see cref="Half"/>.
         /// </summary>
-        public static readonly Half MaxValue = new Half(0b01111011_11111111);
+        public static readonly Half MaxValue = new(0b01111011_11111111);
 
         /// <summary>
         /// Represents the smallest possible value of <see cref="Half"/>.
         /// </summary>
-        public static readonly Half MinValue = new Half(0b11111011_11111111);
+        public static readonly Half MinValue = new(0b11111011_11111111);
 
         /// <summary>
         /// Represents not a number (NaN).
         /// </summary>
-        public static readonly Half NaN = new Half(0b11111110_00000000);
+        public static readonly Half NaN = new(0b11111110_00000000);
 
         /// <summary>
         /// Represents negative infinity.
         /// </summary>
-        public static readonly Half NegativeInfinity = new Half(0b11111100_00000000);
+        public static readonly Half NegativeInfinity = new(0b11111100_00000000);
 
         /// <summary>
         /// Represents positive infinity.
         /// </summary>
-        public static readonly Half PositiveInfinity = new Half(0b01111100_00000000);
+        public static readonly Half PositiveInfinity = new(0b01111100_00000000);
 
         private static uint[] _mantissaTable;
         private static uint[] _exponentTable;
@@ -63,11 +63,7 @@ namespace BfresLibrary
         /// representation.
         /// </summary>
         /// <param name="raw">The raw representation of the internally stored bits.</param>
-        internal Half(ushort raw)
-        {
-            Raw = raw;
-        }
-
+        internal Half(ushort raw) => Raw = raw;
         static Half()
         {
             int i;
@@ -200,10 +196,7 @@ namespace BfresLibrary
         /// </summary>
         /// <param name="a">The <see cref="Half"/>.</param>
         /// <returns>The result.</returns>
-        public static Half operator +(Half a)
-        {
-            return a;
-        }
+        public static Half operator +(Half a) => a;
 
         /// <summary>
         /// Adds the first <see cref="Half"/> to the second one.
@@ -211,20 +204,14 @@ namespace BfresLibrary
         /// <param name="a">The first <see cref="Half"/>.</param>
         /// <param name="b">The second <see cref="Half"/>.</param>
         /// <returns>The addition result.</returns>
-        public static Half operator +(Half a, Half b)
-        {
-            return (Half)((float)a + (float)b);
-        }
+        public static Half operator +(Half a, Half b) => (Half)((float)a + (float)b);
 
         /// <summary>
         /// Negates the given <see cref="Half"/>.
         /// </summary>
         /// <param name="a">The <see cref="Half"/> to negate.</param>
         /// <returns>The negated result.</returns>
-        public static Half operator -(Half a)
-        {
-            return new Half((ushort)(a.Raw ^ 0x8000));
-        }
+        public static Half operator -(Half a) => new Half((ushort)(a.Raw ^ 0x8000));
 
         /// <summary>
         /// Subtracts the first <see cref="Half"/> from the second one.
@@ -232,10 +219,7 @@ namespace BfresLibrary
         /// <param name="a">The first <see cref="Half"/>.</param>
         /// <param name="b">The second <see cref="Half"/>.</param>
         /// <returns>The subtraction result.</returns>
-        public static Half operator -(Half a, Half b)
-        {
-            return (Half)((float)a - (float)b);
-        }
+        public static Half operator -(Half a, Half b) => (Half)((float)a - (float)b);
 
         /// <summary>
         /// Multiplicates the first <see cref="Half"/> by the second one.
@@ -243,10 +227,7 @@ namespace BfresLibrary
         /// <param name="a">The first <see cref="Half"/>.</param>
         /// <param name="b">The second <see cref="Half"/>.</param>
         /// <returns>The multiplication result.</returns>
-        public static Half operator *(Half a, Half b)
-        {
-            return (Half)((float)a * (float)b);
-        }
+        public static Half operator *(Half a, Half b) => (Half)((float)a * (float)b);
 
         /// <summary>
         /// Divides the first <see cref="Half"/> through the second one.
@@ -254,10 +235,7 @@ namespace BfresLibrary
         /// <param name="a">The first <see cref="Half"/>.</param>
         /// <param name="b">The second <see cref="Half"/>.</param>
         /// <returns>The division result.</returns>
-        public static Half operator /(Half a, Half b)
-        {
-            return (Half)((float)a / (float)b);
-        }
+        public static Half operator /(Half a, Half b) => (Half)((float)a / (float)b);
 
         /// <summary>
         /// Gets a value indicating whether the first specified <see cref="Half"/> is the same as the second
@@ -266,10 +244,7 @@ namespace BfresLibrary
         /// <param name="a">The first <see cref="Half"/> to compare.</param>
         /// <param name="b">The second <see cref="Half"/> to compare.</param>
         /// <returns>true, if both <see cref="Half"/> are the same.</returns>
-        public static bool operator ==(Half a, Half b)
-        {
-            return a.Equals(b);
-        }
+        public static bool operator ==(Half a, Half b) => a.Equals(b);
 
         /// <summary>
         /// Gets a value indicating whether the first specified <see cref="Half"/> is not the same as the second
@@ -278,30 +253,21 @@ namespace BfresLibrary
         /// <param name="a">The first <see cref="Half"/> to compare.</param>
         /// <param name="b">The second <see cref="Half"/> to compare.</param>
         /// <returns>true, if both <see cref="Half"/> are not the same.</returns>
-        public static bool operator !=(Half a, Half b)
-        {
-            return !a.Equals(b);
-        }
+        public static bool operator !=(Half a, Half b) => !a.Equals(b);
 
         /// <summary>
         /// Converts the given <paramref name="value"/> value to a <see cref="Half"/> instance.
         /// </summary>
         /// <param name="value">The <see cref="Int32"/> value to represent in the new <see cref="Half"/>
         /// instance.</param>
-        public static explicit operator Half(Int32 value)
-        {
-            return (Half)(float)value;
-        }
+        public static explicit operator Half(Int32 value) => (Half)(float)value;
 
         /// <summary>
         /// Converts the given <paramref name="value"/> value to a <see cref="Half"/> instance.
         /// </summary>
         /// <param name="value">The <see cref="Double"/> value to represent in the new <see cref="Half"/>
         /// instance.</param>
-        public static explicit operator Half(Double value)
-        {
-            return (Half)(float)value;
-        }
+        public static explicit operator Half(Double value) => (Half)(float)value;
 
         /// <summary>
         /// Converts the given <paramref name="value"/> value to a <see cref="Half"/> instance.
@@ -320,20 +286,14 @@ namespace BfresLibrary
         /// </summary>
         /// <param name="value">The <see cref="Half"/> value to represent in the new <see cref="Double"/>
         /// instance.</param>
-        public static implicit operator Double(Half value)
-        {
-            return (float)value;
-        }
+        public static implicit operator Double(Half value) => (float)value;
 
         /// <summary>
         /// Converts the given <paramref name="value"/> value to a <see cref="Int32"/> instance.
         /// </summary>
         /// <param name="value">The <see cref="Half"/> value to represent in the new <see cref="Int32"/>
         /// instance.</param>
-        public static explicit operator Int32(Half value)
-        {
-            return (int)(float)value;
-        }
+        public static explicit operator Int32(Half value) => (int)(float)value;
 
         /// <summary>
         /// Converts the given <paramref name="value"/> value to a <see cref="Single"/> instance.
@@ -369,19 +329,13 @@ namespace BfresLibrary
         /// Gets a hash code as an indication for object equality.
         /// </summary>
         /// <returns>The hash code.</returns>
-        public override int GetHashCode()
-        {
-            return Raw;
-        }
+        public override int GetHashCode() => Raw;
 
         /// <summary>
         /// Gets a string describing this <see cref="Half"/>.
         /// </summary>
         /// <returns>A string describing this <see cref="Half"/>.</returns>
-        public override string ToString()
-        {
-            return ((double)this).ToString();
-        }
+        public override string ToString() => ((double)this).ToString();
 
         /// <summary>
         /// Indicates whether the current <see cref="Half"/> is equal to another <see cref="Half"/>.
@@ -389,20 +343,14 @@ namespace BfresLibrary
         /// <param name="other">A <see cref="Half"/> to compare with this <see cref="Half"/>.</param>
         /// <returns>true if the current <see cref="Half"/> is equal to the other parameter; otherwise, false.
         /// </returns>
-        public bool Equals(Half other)
-        {
-            return Equals(Raw == other.Raw);
-        }
+        public bool Equals(Half other) => Equals(Raw == other.Raw);
 
         /// <summary>
         /// Returns a value indicating whether the specified number evaluates to not a number (<see cref="NaN"/>).
         /// </summary>
         /// <param name="half">A half-precision floating-point number.</param>
         /// <returns><c>true</c> if value evaluates to not a number (<see cref="NaN"/>); otherwise <c>false</c>.</returns>
-        public static bool IsNaN(Half half)
-        {
-            return (half.Raw & 0x7FFF) > PositiveInfinity.Raw;
-        }
+        public static bool IsNaN(Half half) => (half.Raw & 0x7FFF) > PositiveInfinity.Raw;
 
         /// <summary>
         /// Returns a value indicating whether the specified number evaluates to negative or positive infinity.
@@ -410,29 +358,20 @@ namespace BfresLibrary
         /// <param name="half">A half-precision floating-point number.</param>
         /// <returns><c>true</c> if half evaluates to <see cref="PositiveInfinity"/> or <see cref="NegativeInfinity"/>;
         /// otherwise <c>false</c>.</returns>
-        public static bool IsInfinity(Half half)
-        {
-            return (half.Raw & 0x7FFF) == PositiveInfinity.Raw;
-        }
+        public static bool IsInfinity(Half half) => (half.Raw & 0x7FFF) == PositiveInfinity.Raw;
 
         /// <summary>
         /// Returns a value indicating whether the specified number evaluates to negative infinity.
         /// </summary>
         /// <param name="half">A half-precision floating-point number.</param>
         /// <returns><c>true</c> if half evaluates to <see cref="NegativeInfinity"/>; otherwise <c>false</c>.</returns>
-        public static bool IsNegativeInfinity(Half half)
-        {
-            return half.Raw == NegativeInfinity.Raw;
-        }
+        public static bool IsNegativeInfinity(Half half) => half.Raw == NegativeInfinity.Raw;
 
         /// <summary>
         /// Returns a value indicating whether the specified number evaluates to positive infinity.
         /// </summary>
         /// <param name="half">A half-precision floating-point number.</param>
         /// <returns><c>true</c> if half evaluates to <see cref="PositiveInfinity"/>; otherwise <c>false</c>.</returns>
-        public static bool IsPositiveInfinity(Half half)
-        {
-            return half.Raw == PositiveInfinity.Raw;
-        }
+        public static bool IsPositiveInfinity(Half half) => half.Raw == PositiveInfinity.Raw;
     }
 }

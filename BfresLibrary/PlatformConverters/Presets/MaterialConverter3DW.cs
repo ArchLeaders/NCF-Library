@@ -5,32 +5,32 @@ namespace BfresLibrary.PlatformConverters
 {
     internal class MaterialConverter3DW : MaterialConverterBase
     {
-        // Basic changes with Switch 3DW+BF
+        /// 
+        /// Basic changes with Switch 3DW+BF
+        /// 
+        
+        /// Parameters
+        // alpha_test_value (Seems to be const "0,5")
 
-        // Parameters
-        //alpha_test_value (Seems to be const "0,5")
 
-        // Render Info
-        //color_blend_alpha_dst_func
-        //color_blend_alpha_op
-        //color_blend_alpha_src_func
-        //color_blend_const_color
-        //color_blend_rgb_dst_func
-        //color_blend_rgb_op
-        //color_blend_rgb_src_func
-        //depth_test_func
-        //display_face
-        //enable_depth_test
-        //enable_depth_write
+        /// Render Info
+        // color_blend_alpha_dst_func
+        // color_blend_alpha_op
+        // color_blend_alpha_src_func
+        // color_blend_const_color
+        // color_blend_rgb_dst_func
+        // color_blend_rgb_op
+        // color_blend_rgb_src_func
+        // depth_test_func
+        // display_face
+        // enable_depth_test
+        // enable_depth_write
 
-        // Shader Options
-        //enable_alphamask
-        //alpha_test_func (Seems to be const "60")
+        /// Shader Options
+        // enable_alphamask
+        // alpha_test_func (Seems to be const "60")
 
-        internal override void ConvertToWiiUMaterial(Material material)
-        {
-        }
-
+        internal override void ConvertToWiiUMaterial(Material material) { }
         internal override void ConvertToSwitchMaterial(Material material) 
         {
             material.SetShaderParameter("alpha_test_value", ShaderParamType.Float, 0.5f);

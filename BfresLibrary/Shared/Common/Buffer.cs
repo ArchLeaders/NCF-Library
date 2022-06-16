@@ -25,9 +25,8 @@ namespace BfresLibrary
             get { return (uint)Data.Sum(x => x.Length); }
         }
 
-        public uint Flags;
-
-        public long BufferOffset;
+        public uint Flags { get; set; }
+        public long BufferOffset { get; set; }
 
         // ---- METHODS ------------------------------------------------------------------------------------------------
 

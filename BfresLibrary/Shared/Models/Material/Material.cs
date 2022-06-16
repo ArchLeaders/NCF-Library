@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using BfresLibrary.Core;
 using System.IO;
-using System.ComponentModel;
 using System.Linq;
 using Syroot.BinaryData;
+using Syroot.BinaryData.Core;
+using System.ComponentModel;
 
 namespace BfresLibrary
 {
@@ -132,11 +133,11 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(Stream stream, ResFile ResFile) {
+        public void Import(Stream stream, BfresFile ResFile) {
             ResFileLoader.ImportSection(stream, this, ResFile);
         }
 
-        public void Import(string FileName, ResFile ResFile) {
+        public void Import(string FileName, BfresFile ResFile) {
             string ext = Path.GetExtension(FileName);
             if (ext == ".json")
                 TextConvert.MaterialConvert.FromJson(this, File.ReadAllText(FileName));
@@ -144,7 +145,7 @@ namespace BfresLibrary
                 ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile) {
+        public void Export(string FileName, BfresFile ResFile) {
             var model = ResFile.Models[0];
 
             string ext = Path.GetExtension(FileName);
@@ -231,8 +232,8 @@ namespace BfresLibrary
                 Flags = loader.ReadEnum<MaterialFlags>(true);
                 ushort idx = loader.ReadUInt16();
                 ushort numRenderInfo = loader.ReadUInt16();
-                byte numSampler = loader.ReadByte();
-                byte numTextureRef = loader.ReadByte();
+                byte numSampler = (byte)loader.ReadByte();
+                byte numTextureRef = (byte)loader.ReadByte();
                 ushort numShaderParam = loader.ReadUInt16();
                 ushort numShaderParamVolatile = loader.ReadUInt16();
                 ushort sizParamSource = loader.ReadUInt16();
@@ -252,12 +253,12 @@ namespace BfresLibrary
                 uint userPointer = loader.ReadUInt32();
             }
 
-            ReadShaderParams(ShaderParamData, loader.IsSwitch ? ByteOrder.LittleEndian: ByteOrder.BigEndian);
+            ReadShaderParams(ShaderParamData, loader.IsSwitch ? Endian.Little: Endian.Big);
         }
 
         void IResData.Save(ResFileSaver saver)
         {
-            ShaderParamData = WriteShaderParams(saver.IsSwitch ? ByteOrder.LittleEndian : ByteOrder.BigEndian);
+            ShaderParamData = WriteShaderParams(saver.IsSwitch ? Endian.Little : Endian.Big);
 
             TextureSlotArray = FillSlots(TextureRefs.Count);
             SamplerSlotArray = FillSlots(Samplers.Count);
@@ -301,13 +302,13 @@ namespace BfresLibrary
             }
         }
 
-        private void ReadShaderParams(byte[] data, ByteOrder byteOrder)
+        private void ReadShaderParams(byte[] data, Endian endian)
         {
             if (data == null)
                 return;
 
-            using (var reader = new BinaryDataReader(new MemoryStream(data))) {
-                reader.ByteOrder = byteOrder;
+            using (var reader = new BinaryStream(new MemoryStream(data))) {
+                reader.ByteConverter = Syroot.BinaryData.ByteConverter.GetConverter(endian);
                 foreach (var param in ShaderParams.Values)
                 {
                     reader.BaseStream.Seek(param.DataOffset, SeekOrigin.Begin);
@@ -316,7 +317,7 @@ namespace BfresLibrary
             }
         }
 
-        private object ReadParamData(ShaderParamType type, BinaryDataReader reader)
+        private object ReadParamData(ShaderParamType type, BinaryStream reader)
         {
             switch (type)
             {
@@ -375,11 +376,11 @@ namespace BfresLibrary
             return 0;
         }
 
-        private byte[] WriteShaderParams(ByteOrder byteOrder)
+        private byte[] WriteShaderParams(Endian endian)
         {
             var mem = new MemoryStream();
-            using (var writer = new BinaryDataWriter(mem)) {
-                writer.ByteOrder = byteOrder;
+            using (var writer = new BinaryStream(mem)) {
+                writer.ByteConverter = Syroot.BinaryData.ByteConverter.GetConverter(endian);
 
                 int index = 0;
 
@@ -399,7 +400,7 @@ namespace BfresLibrary
             return mem.ToArray();
         }
 
-        private void WriteParamData(BinaryDataWriter writer, ShaderParamType type, object data)
+        private void WriteParamData(BinaryStream writer, ShaderParamType type, object data)
         {
             if (data is float) writer.Write((float)data);
             else if (data is uint) writer.Write((uint)data);

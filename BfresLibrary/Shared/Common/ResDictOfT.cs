@@ -10,17 +10,14 @@ namespace BfresLibrary
     /// <typeparamref name="T"/> via key or index.
     /// </summary>
     /// <typeparam name="T">The specialized type of the <see cref="IResData"/> instances.</typeparam>
-    public sealed class ResDict<T> : ResDict, IEnumerable<KeyValuePair<string, T>>
-        where T : IResData, new()
+    public sealed class ResDict<T> : ResDict, IEnumerable<KeyValuePair<string, T>> where T : IResData, new()
     {
         // ---- CONSTRUCTORS & DESTRUCTOR ------------------------------------------------------------------------------
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResDict{T}"/> class.
         /// </summary>
-        public ResDict() : base()
-        {
-        }
+        public ResDict() : base() { }
 
         // ---- PROPERTIES ---------------------------------------------------------------------------------------------
 
@@ -32,9 +29,7 @@ namespace BfresLibrary
             get
             {
                 foreach (Node node in Nodes)
-                {
                     yield return (T)node.Value;
-                }
             }
         }
 
@@ -49,8 +44,8 @@ namespace BfresLibrary
         /// <see cref="ResDict.Count"/>.</exception>
         public new T this[int index]
         {
-            get { return (T)base[index]; }
-            set { base[index] = value; }
+            get => (T)base[index];
+            set => base[index] = value;
         }
 
         /// <summary>
@@ -64,8 +59,8 @@ namespace BfresLibrary
         /// </exception>
         public new T this[string key]
         {
-            get { return (T)base[key]; }
-            set { base[key] = value; }
+            get => (T)base[key];
+            set => base[key] = value;
         }
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
@@ -77,10 +72,7 @@ namespace BfresLibrary
         /// <param name="value">The <see cref="IResData"/> to add.</param>
         /// <exception cref="ArgumentException">An <see cref="IResData"/> instance with the same <paramref name="key"/>
         /// already exists.</exception>
-        public void Add(string key, T value)
-        {
-            Add(key, (IResData)value);
-        }
+        public void Add(string key, T value) => Add(key, (IResData)value);
 
         /// <summary>
         /// Determines whether the given <paramref name="value"/> is in the dictionary.
@@ -89,10 +81,7 @@ namespace BfresLibrary
         /// <c>null</c>.</param>
         /// <returns><c>true</c> if <paramref name="value"/> was found in the dictionary; otherwise <c>false</c>.
         /// </returns>
-        public bool ContainsValue(T value)
-        {
-            return ContainsValue((IResData)value);
-        }
+        public bool ContainsValue(T value) => ContainsValue((IResData)value);
 
         /// <summary>
         /// Returns a generic <see cref="IEnumerator"/> which can be used to iterate over the items in the dictionary.
@@ -101,9 +90,7 @@ namespace BfresLibrary
         public IEnumerator<KeyValuePair<string, T>> GetEnumerator()
         {
             foreach (Node node in Nodes)
-            {
                 yield return new KeyValuePair<string, T>(node.Key, (T)node.Value);
-            }
         }
 
         /// <summary>
@@ -114,10 +101,7 @@ namespace BfresLibrary
         /// <c>null</c>.</param>
         /// <returns>The zero-based index of the first occurence of <paramref name="value"/> within the entire
         /// dictionary if found; otherwise <c>-1</c>.</returns>
-        public int IndexOf(T value)
-        {
-            return IndexOf((IResData)value);
-        }
+        public int IndexOf(T value) => IndexOf((IResData)value);
 
         /// <summary>
         /// Removes the first occurrence of a specific <paramref name="value"/> from the dictionary.
@@ -126,10 +110,7 @@ namespace BfresLibrary
         /// <c>null</c>.</param>
         /// <returns><c>true</c> if <paramref name="value"/> was successfully removed; otherwise <c>false</c>. This
         /// method also returns <c>false</c> if <paramref name="value"/> was not found in the dictionary.</returns>
-        public bool Remove(T value)
-        {
-            return Remove((IResData)value);
-        }
+        public bool Remove(T value) => Remove((IResData)value);
 
         /// <summary>
         /// Copies the elements of the dictionary as <see cref="KeyValuePair{String, IResDat}"/> instances to a new
@@ -156,10 +137,7 @@ namespace BfresLibrary
         /// <param name="value">The <see cref="IResData"/> to look up a key for.</param>
         /// <param name="key">The variable receiving the found key or <c>null</c>.</param>
         /// <returns><c>true</c> if a key was found and assigned; otherwise <c>false</c>.</returns>
-        public bool TryGetKey(T value, out string key)
-        {
-            return TryGetKey((IResData)value, out key);
-        }
+        public bool TryGetKey(T value, out string key) => TryGetKey((IResData)value, out key);
 
         /// <summary>
         /// Returns <c>true</c> if an instance was stored under the given <paramref name="key"/> and has been assigned
@@ -190,9 +168,6 @@ namespace BfresLibrary
         /// </summary>
         /// <param name="loader">The <see cref="ResFileLoader"/> to load the instance with.</param>
         /// <returns>The loaded <see cref="IResData"/> instance.</returns>
-        protected override IResData LoadNodeValue(ResFileLoader loader)
-        {
-            return loader.Load<T>();
-        }
+        protected override IResData LoadNodeValue(ResFileLoader loader) => loader.Load<T>();
     }
 }

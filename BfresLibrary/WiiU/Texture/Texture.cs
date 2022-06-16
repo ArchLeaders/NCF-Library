@@ -10,7 +10,7 @@ using BfresLibrary.Swizzling;
 namespace BfresLibrary.WiiU
 {
     /// <summary>
-    /// Represents an FTEX subfile in a <see cref="ResFile"/>, storing multi-dimensional texture data.
+    /// Represents an FTEX subfile in a <see cref="BfresFile"/>, storing multi-dimensional texture data.
     /// </summary>
     [DebuggerDisplay(nameof(Texture) + " {" + nameof(Name) + "}")]
     public class Texture : TextureShared, IResData
@@ -367,7 +367,7 @@ namespace BfresLibrary.WiiU
             CompSelA = loader.ReadEnum<GX2CompSel>(true);
             Regs = loader.ReadUInt32s(5);
             uint handle = loader.ReadUInt32();
-            ArrayLength = loader.ReadByte(); // Possibly just a byte.
+            ArrayLength = (uint)loader.ReadByte(); // Possibly just a byte.
             loader.Seek(3, System.IO.SeekOrigin.Current);
             Name = loader.LoadString();
             Path = loader.LoadString();

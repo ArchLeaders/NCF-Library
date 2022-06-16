@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using Syroot.Maths;
 using Syroot.BinaryData;
+using Syroot.BinaryData.Core;
 
 namespace BfresLibrary.Core
 {
     /// <summary>
     /// Loads the hierachy and data of a <see cref="Bfres.ResFile"/>.
     /// </summary>
-    public class ResFileLoader : BinaryDataReader
+    public class ResFileLoader : BinaryStream
     {
         // ---- FIELDS -------------------------------------------------------------------------------------------------
 
@@ -27,15 +28,13 @@ namespace BfresLibrary.Core
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to load data into.</param>
         /// <param name="stream">The <see cref="Stream"/> to read data from.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after reading, otherwise <c>false</c>.</param>
-        internal ResFileLoader(ResFile resFile, Stream stream, bool leaveOpen = false)
-            : base(stream, Encoding.ASCII, leaveOpen)
+        internal ResFileLoader(BfresFile resFile, Stream stream, bool leaveOpen = false) : base(stream, encoding: Encoding.ASCII, leaveOpen: leaveOpen)
         {
             ResFile = resFile;
             _dataMap = new Dictionary<uint, IResData>();
         }
 
-        internal ResFileLoader(IResData resData, ResFile resFile, Stream stream, bool leaveOpen = false)
-    : base(stream, Encoding.ASCII, leaveOpen)
+        internal ResFileLoader(IResData resData, BfresFile resFile, Stream stream, bool leaveOpen = false) : base(stream, encoding: Encoding.ASCII, leaveOpen: leaveOpen)
         {
             ResFile = resFile;
             _dataMap = new Dictionary<uint, IResData>();
@@ -48,15 +47,9 @@ namespace BfresLibrary.Core
         /// </summary>
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to load data into.</param>
         /// <param name="fileName">The name of the file to load the data from.</param>
-        internal ResFileLoader(ResFile resFile, string fileName)
-            : this(resFile, new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-        {
-        }
+        internal ResFileLoader(BfresFile resFile, string fileName) : this(resFile, new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) { }
 
-        internal ResFileLoader(IResData resData, ResFile resFile, string fileName)
-    : this(resData, resFile, new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-        {
-        }
+        internal ResFileLoader(IResData resData, BfresFile resFile, string fileName) : this(resData, resFile, new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) { }
 
         // ---- PROPERTIES ---------------------------------------------------------------------------------------------
 
@@ -65,21 +58,21 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Gets the loaded <see cref="Bfres.ResFile"/> instance.
         /// </summary>
-        internal ResFile ResFile { get; }
+        internal BfresFile ResFile { get; }
 
         internal IResData ImportableFile { get; }
 
         // ---- METHODS (INTERNAL) -------------------------------------------------------------------------------------
 
-        static internal void ImportSection(string fileName, IResData resData, ResFile resFile) {
+        internal static void ImportSection(string fileName, IResData resData, BfresFile resFile) {
             ImportSection(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read), resData, resFile);
         }
 
-        static internal void ImportSection(Stream stream, IResData resData, ResFile resFile)
+        internal static void ImportSection(Stream stream, IResData resData, BfresFile resFile)
         {
             bool platformSwitch = false;
 
-            using (var reader = new BinaryDataReader(stream, true)) {
+            using (var reader = new BinaryStream(stream, leaveOpen: true)) {
                 reader.Seek(24, SeekOrigin.Begin);
                 platformSwitch = reader.ReadUInt32() != 0;
             }
@@ -123,30 +116,30 @@ namespace BfresLibrary.Core
 
         private void ReadImportedFileHeader()
         {
-            this.ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
 
             Seek(8, SeekOrigin.Begin); //SUB MAGIC
             ResFile.Version = ReadUInt32();
             ResFile.SetVersionInfo(ResFile.Version);
 
-            string sectionMagic = ReadString(8, Encoding.ASCII);
+            string sectionMagic = this.ReadString(8, Encoding.ASCII);
             uint offset = ReadUInt32();
             uint platformFlag = ReadUInt32();
             ReadUInt32();
-            this.ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
 
             if (platformFlag != 0)
             {
                 Seek(0x30, SeekOrigin.Begin);
-                this.ByteOrder = ByteOrder.LittleEndian;
+                ByteConverter = ByteConverter.Little;
             }
         }
 
-        internal ByteOrder ReadByteOrder()
+        internal Endian ReadEndian()
         {
-            this.ByteOrder = ByteOrder.BigEndian;
-            var bom = ReadEnum<ByteOrder>(true);
-            this.ByteOrder = bom;
+            ByteConverter = ByteConverter.Big;
+            var bom = ReadEnum<Endian>(true);
+            ByteConverter = ByteConverter.GetConverter(bom);
             return bom;
         }
 
@@ -344,7 +337,7 @@ namespace BfresLibrary.Core
         public virtual uint ReadSize() => ReadUInt32();
 
         public virtual string ReadString(Encoding encoding = null) {
-            return ReadString(BinaryStringFormat.ZeroTerminated, encoding);
+            return this.ReadString(StringCoding.ZeroTerminated, encoding);
         }
 
         /// <summary>
@@ -355,7 +348,7 @@ namespace BfresLibrary.Core
         internal void CheckSignature(string validSignature)
         {
             // Read the actual signature and compare it.
-            string signature = ReadString(sizeof(uint), Encoding.ASCII);
+            string signature = this.ReadString(sizeof(uint), Encoding.ASCII);
             if (signature != validSignature)
             {
                  System.Console.WriteLine($"Invalid signature, expected '{validSignature}' but got '{signature}' at position {Position}.");

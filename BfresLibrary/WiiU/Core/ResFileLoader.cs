@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using Syroot.BinaryData;
-using Syroot.Maths;
 using BfresLibrary.Core;
 
 namespace BfresLibrary.WiiU.Core
@@ -27,16 +22,14 @@ namespace BfresLibrary.WiiU.Core
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to load data into.</param>
         /// <param name="stream">The <see cref="Stream"/> to read data from.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after reading, otherwise <c>false</c>.</param>
-        internal ResFileWiiULoader(ResFile resFile, Stream stream, bool leaveOpen = false)
-            : base(resFile, stream, leaveOpen)
+        internal ResFileWiiULoader(BfresFile resFile, Stream stream, bool leaveOpen = false) : base(resFile, stream, leaveOpen)
         {
-            ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
         }
 
-        internal ResFileWiiULoader(IResData resData, ResFile resFile, Stream stream, bool leaveOpen = false)
-    : base(resData, resFile, stream, leaveOpen)
+        internal ResFileWiiULoader(IResData resData, BfresFile resFile, Stream stream, bool leaveOpen = false) : base(resData, resFile, stream, leaveOpen)
         {
-            ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
         }
 
         /// <summary>
@@ -45,16 +38,14 @@ namespace BfresLibrary.WiiU.Core
         /// </summary>
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to load data into.</param>
         /// <param name="fileName">The name of the file to load the data from.</param>
-        internal ResFileWiiULoader(ResFile resFile, string fileName)
-            : base(resFile, fileName)
+        internal ResFileWiiULoader(BfresFile resFile, string fileName) : base(resFile, fileName)
         {
-            ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
         }
 
-        internal ResFileWiiULoader(IResData resData, ResFile resFile, string fileName)
-            : base(resData, resFile, fileName)
+        internal ResFileWiiULoader(IResData resData, BfresFile resFile, string fileName) : base(resData, resFile, fileName)
         {
-            ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
         }
 
         // ---- PROPERTIES ---------------------------------------------------------------------------------------------

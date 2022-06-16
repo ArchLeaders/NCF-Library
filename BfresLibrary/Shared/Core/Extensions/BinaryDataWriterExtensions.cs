@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using Syroot.BinaryData;
 using Syroot.Maths;
-using BfresLibrary;
 using BfresLibrary.GX2;
 
 namespace BfresLibrary.Core
 {
     /// <summary>
-    /// Represents extension methods for the <see cref="BinaryDataWriter"/> class.
+    /// Represents extension methods for the <see cref="BinaryStream"/> class.
     /// </summary>
     public static class BinaryDataWriterExtensions
     {
@@ -17,9 +16,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="AnimConstant"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="AnimConstant"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, AnimConstant value)
+        public static void Write(this BinaryStream self, AnimConstant value)
         {
             self.Write(value.AnimDataOffset);
             self.Write(value.Value);
@@ -28,9 +27,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="AnimConstant"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="AnimConstant"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<AnimConstant> values)
+        public static void Write(this BinaryStream self, IEnumerable<AnimConstant> values)
         {
             foreach (AnimConstant value in values)
             {
@@ -42,9 +41,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Bounding"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Bounding"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Bounding value)
+        public static void Write(this BinaryStream self, Bounding value)
         {
             self.Write(value.Center);
             self.Write(value.Extent);
@@ -53,9 +52,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Bounding"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Bounding"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Bounding> values)
+        public static void Write(this BinaryStream self, IEnumerable<Bounding> values)
         {
             foreach (Bounding value in values)
             {
@@ -67,9 +66,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Decimal10x5"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Decimal10x5"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Decimal10x5 value)
+        public static void Write(this BinaryStream self, Decimal10x5 value)
         {
             self.Write(value.Raw);
         }
@@ -77,9 +76,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Decimal10x5"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Decimal10x5"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Decimal10x5> values)
+        public static void Write(this BinaryStream self, IEnumerable<Decimal10x5> values)
         {
             foreach (Decimal10x5 value in values)
             {
@@ -91,9 +90,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Half"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Half"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Half value)
+        public static void Write(this BinaryStream self, Half value)
         {
             self.Write(value.Raw);
         }
@@ -101,9 +100,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Half"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Half"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Half> values)
+        public static void Write(this BinaryStream self, IEnumerable<Half> values)
         {
             foreach (Half value in values)
             {
@@ -115,9 +114,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Matrix3x4"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Matrix3x4"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Matrix3x4 value)
+        public static void Write(this BinaryStream self, Matrix3x4 value)
         {
             self.Write(value.M11); self.Write(value.M12); self.Write(value.M13); self.Write(value.M14);
             self.Write(value.M21); self.Write(value.M22); self.Write(value.M23); self.Write(value.M24);
@@ -127,9 +126,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Matrix3x4"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Matrix3x4"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Matrix3x4> values)
+        public static void Write(this BinaryStream self, IEnumerable<Matrix3x4> values)
         {
             foreach (Matrix3x4 value in values)
             {
@@ -141,11 +140,11 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector2Bool"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector2Bool"/> instance.</param>
-        /// <param name="format">The <see cref="BinaryBooleanFormat"/> in which values are stored.</param>
-        public static void Write(this BinaryDataWriter self, Vector2Bool value,
-            BinaryBooleanFormat format = BinaryBooleanFormat.NonZeroByte)
+        /// <param name="format">The <see cref="BooleanCoding"/> in which values are stored.</param>
+        public static void Write(this BinaryStream self, Vector2Bool value,
+            BooleanCoding format = BooleanCoding.Byte)
         {
             self.Write(value.X, format);
             self.Write(value.Y, format);
@@ -154,11 +153,11 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector2Bool"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector2Bool"/> instances.</param>
-        /// <param name="format">The <see cref="BinaryBooleanFormat"/> in which values are stored.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector2Bool> values,
-            BinaryBooleanFormat format = BinaryBooleanFormat.NonZeroByte)
+        /// <param name="format">The <see cref="BooleanCoding"/> in which values are stored.</param>
+        public static void Write(this BinaryStream self, IEnumerable<Vector2Bool> values,
+            BooleanCoding format = BooleanCoding.Byte)
         {
             foreach (Vector2Bool value in values)
             {
@@ -170,9 +169,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector2F"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector2F"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Vector2F value)
+        public static void Write(this BinaryStream self, Vector2F value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -181,9 +180,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector2F"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector2F"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector2F> values)
+        public static void Write(this BinaryStream self, IEnumerable<Vector2F> values)
         {
             foreach (Vector2F value in values)
             {
@@ -195,9 +194,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector2U"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector2U"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Vector2U value)
+        public static void Write(this BinaryStream self, Vector2U value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -206,9 +205,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector2U"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector2U"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector2U> values)
+        public static void Write(this BinaryStream self, IEnumerable<Vector2U> values)
         {
             foreach (Vector2U value in values)
             {
@@ -220,9 +219,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector3"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector3"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Vector3 value)
+        public static void Write(this BinaryStream self, Vector3 value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -232,9 +231,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector3"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector3"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector3> values)
+        public static void Write(this BinaryStream self, IEnumerable<Vector3> values)
         {
             foreach (Vector3 value in values)
             {
@@ -246,11 +245,11 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector3Bool"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector3Bool"/> instance.</param>
-        /// <param name="format">The <see cref="BinaryBooleanFormat"/> in which values are stored.</param>
-        public static void Write(this BinaryDataWriter self, Vector3Bool value,
-            BinaryBooleanFormat format = BinaryBooleanFormat.NonZeroByte)
+        /// <param name="format">The <see cref="BooleanCoding"/> in which values are stored.</param>
+        public static void Write(this BinaryStream self, Vector3Bool value,
+            BooleanCoding format = BooleanCoding.Byte)
         {
             self.Write(value.X, format);
             self.Write(value.Y, format);
@@ -260,11 +259,11 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector3Bool"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector3Bool"/> instances.</param>
-        /// <param name="format">The <see cref="BinaryBooleanFormat"/> in which values are stored.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector3Bool> values,
-            BinaryBooleanFormat format = BinaryBooleanFormat.NonZeroByte)
+        /// <param name="format">The <see cref="BooleanCoding"/> in which values are stored.</param>
+        public static void Write(this BinaryStream self, IEnumerable<Vector3Bool> values,
+            BooleanCoding format = BooleanCoding.Byte)
         {
             foreach (Vector3Bool value in values)
             {
@@ -276,9 +275,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector3F"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector3F"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Vector3F value)
+        public static void Write(this BinaryStream self, Vector3F value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -288,9 +287,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector3F"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector3F"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector3F> values)
+        public static void Write(this BinaryStream self, IEnumerable<Vector3F> values)
         {
             foreach (Vector3F value in values)
             {
@@ -302,9 +301,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector3U"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector3U"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Vector3U value)
+        public static void Write(this BinaryStream self, Vector3U value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -314,9 +313,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector3U"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector3U"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector3U> values)
+        public static void Write(this BinaryStream self, IEnumerable<Vector3U> values)
         {
             foreach (Vector3U value in values)
             {
@@ -328,9 +327,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector4"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector4"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Vector4 value)
+        public static void Write(this BinaryStream self, Vector4 value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -341,9 +340,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector4"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector4"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector4> values)
+        public static void Write(this BinaryStream self, IEnumerable<Vector4> values)
         {
             foreach (Vector4 value in values)
             {
@@ -355,11 +354,11 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector4Bool"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector4Bool"/> instance.</param>
-        /// <param name="format">The <see cref="BinaryBooleanFormat"/> in which values are stored.</param>
-        public static void Write(this BinaryDataWriter self, Vector4Bool value,
-            BinaryBooleanFormat format = BinaryBooleanFormat.NonZeroByte)
+        /// <param name="format">The <see cref="BooleanCoding"/> in which values are stored.</param>
+        public static void Write(this BinaryStream self, Vector4Bool value,
+            BooleanCoding format = BooleanCoding.Byte)
         {
             self.Write(value.X, format);
             self.Write(value.Y, format);
@@ -370,11 +369,11 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector4Bool"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector4Bool"/> instances.</param>
-        /// <param name="format">The <see cref="BinaryBooleanFormat"/> in which values are stored.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector4Bool> values,
-            BinaryBooleanFormat format = BinaryBooleanFormat.NonZeroByte)
+        /// <param name="format">The <see cref="BooleanCoding"/> in which values are stored.</param>
+        public static void Write(this BinaryStream self, IEnumerable<Vector4Bool> values,
+            BooleanCoding format = BooleanCoding.Byte)
         {
             foreach (Vector4Bool value in values)
             {
@@ -386,9 +385,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector4F"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector4F"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Vector4F value)
+        public static void Write(this BinaryStream self, Vector4F value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -399,9 +398,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector4F"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector4F"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector4F> values)
+        public static void Write(this BinaryStream self, IEnumerable<Vector4F> values)
         {
             foreach (Vector4F value in values)
             {
@@ -413,9 +412,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes a <see cref="Vector4U"/> instance into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector4U"/> instance.</param>
-        public static void Write(this BinaryDataWriter self, Vector4U value)
+        public static void Write(this BinaryStream self, Vector4U value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -426,9 +425,9 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Writes <see cref="Vector4U"/> instances into the current stream.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector4U"/> instances.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector4U> values)
+        public static void Write(this BinaryStream self, IEnumerable<Vector4U> values)
         {
             foreach (Vector4U value in values)
             {
@@ -441,11 +440,10 @@ namespace BfresLibrary.Core
         /// Returns the conversion delegate for converting data available in the given <paramref name="attribFormat"/>
         /// from a <see cref="Vector4F"/> instance. Useful to prevent repetitive lookup for multiple values.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="attribFormat">The <see cref="GX2AttribFormat"/> of the data.</param>
         /// <returns>A conversion delegate for the data.</returns>
-        public static Action<BinaryDataWriter, Vector4F> GetGX2AttribCallback(this BinaryDataWriter self,
-            GX2AttribFormat attribFormat)
+        public static Action<BinaryStream, Vector4F> WriteGX2AttribCallback(this BinaryStream self, GX2AttribFormat attribFormat)
         {
             switch (attribFormat)
             {
@@ -529,25 +527,25 @@ namespace BfresLibrary.Core
         /// Writes a <see cref="Vector4U"/> instance into the current stream with the given
         /// <paramref name="attribFormat"/>.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="value">The <see cref="Vector4F"/> instance.</param>
         /// <param name="attribFormat">The <see cref="GX2AttribFormat"/> of the data.</param>
-        public static void Write(this BinaryDataWriter self, Vector4F value, GX2AttribFormat attribFormat)
+        public static void Write(this BinaryStream self, Vector4F value, GX2AttribFormat attribFormat)
         {
-            self.GetGX2AttribCallback(attribFormat).Invoke(self, value);
+            self.WriteGX2AttribCallback(attribFormat).Invoke(self, value);
         }
 
         /// <summary>
         /// Writes <see cref="Vector4U"/> instances into the current stream with the given
         /// <paramref name="attribFormat"/>.
         /// </summary>
-        /// <param name="self">The extended <see cref="BinaryDataWriter"/>.</param>
+        /// <param name="self">The extended <see cref="BinaryStream"/>.</param>
         /// <param name="values">The <see cref="Vector4U"/> instances.</param>
         /// <param name="attribFormat">The <see cref="GX2AttribFormat"/> of the data.</param>
-        public static void Write(this BinaryDataWriter self, IEnumerable<Vector4F> values,
+        public static void Write(this BinaryStream self, IEnumerable<Vector4F> values,
             GX2AttribFormat attribFormat)
         {
-            Action<BinaryDataWriter, Vector4F> callback = self.GetGX2AttribCallback(attribFormat);
+            Action<BinaryStream, Vector4F> callback = self.WriteGX2AttribCallback(attribFormat);
             foreach (Vector4F value in values)
             {
                 callback.Invoke(self, value);
@@ -558,39 +556,39 @@ namespace BfresLibrary.Core
 
         // ---- 8-bit (8 x 1) ----
 
-        private static void Write_8_UNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_UNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((byte)(Algebra.Clamp(value.X, 0, 1) * 255));
         }
 
-        private static void Write_8_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((byte)value.X);
         }
 
-        private static void Write_8_SNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_SNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((sbyte)(Algebra.Clamp(value.X, -1, 1) * 127));
         }
 
-        private static void Write_8_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((sbyte)value.X);
         }
 
-        private static void Write_8_UIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_UIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((byte)value.X);
         }
 
-        private static void Write_8_SIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_SIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((sbyte)value.X);
         }
 
         // ---- 8-bit (4 x 2) ----
 
-        private static void Write_4_4_UNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_4_4_UNorm(this BinaryStream self, Vector4F value)
         {
             byte x = (byte)(Algebra.Clamp(value.X, 0, 1) * 127);
             byte y = (byte)(Algebra.Clamp(value.Y, 0, 1) * 127);
@@ -599,74 +597,74 @@ namespace BfresLibrary.Core
 
         // ---- 16-bit (16 x 1) ----
 
-        private static void Write_16_UNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_UNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((ushort)(Algebra.Clamp(value.X, 0, 1) * 65535));
         }
 
-        private static void Write_16_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((ushort)value.X);
         }
 
-        private static void Write_16_SNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_SNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((short)(Algebra.Clamp(value.X, -1, 1) * 32767));
         }
 
-        private static void Write_16_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((short)value.X);
         }
 
-        private static void Write_16_Single(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_Single(this BinaryStream self, Vector4F value)
         {
             Write(self, (Half)value.X);
         }
 
-        private static void Write_16_UIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_UIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((ushort)value.X);
         }
 
-        private static void Write_16_SIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_SIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((short)value.X);
         }
 
         // ---- 16-bit (8 x 2) ----
 
-        private static void Write_8_8_UNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_UNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((byte)(Algebra.Clamp(value.X, 0, 1) * 255));
             self.Write((byte)(Algebra.Clamp(value.Y, 0, 1) * 255));
         }
 
-        private static void Write_8_8_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((byte)value.X);
             self.Write((byte)value.Y);
         }
 
-        private static void Write_8_8_SNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_SNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((sbyte)(Algebra.Clamp(value.X, -1, 1) * 127));
             self.Write((sbyte)(Algebra.Clamp(value.Y, -1, 1) * 127));
         }
 
-        private static void Write_8_8_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((sbyte)value.X);
             self.Write((sbyte)value.Y);
         }
 
-        private static void Write_8_8_UIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_UIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((byte)value.X);
             self.Write((byte)value.Y);
         }
 
-        private static void Write_8_8_SIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_SIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((sbyte)value.X);
             self.Write((sbyte)value.Y);
@@ -674,60 +672,60 @@ namespace BfresLibrary.Core
 
         // ---- 32-bit (32 x 1) ----
 
-        private static void Write_32_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((uint)value.X);
         }
 
-        private static void Write_32_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((int)value.X);
         }
 
-        private static void Write_32_Single(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_Single(this BinaryStream self, Vector4F value)
         {
             self.Write(value.X);
         }
 
         // ---- 32-bit (16 x 2) ----
 
-        private static void Write_16_16_UNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_UNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((ushort)(Algebra.Clamp(value.X, 0, 1) * 65535));
             self.Write((ushort)(Algebra.Clamp(value.Y, 0, 1) * 65535));
         }
 
-        private static void Write_16_16_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((ushort)value.X);
             self.Write((ushort)value.Y);
         }
 
-        private static void Write_16_16_SNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_SNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((short)(Algebra.Clamp(value.X, -1, 1) * 32767));
             self.Write((short)(Algebra.Clamp(value.Y, -1, 1) * 32767));
         }
 
-        private static void Write_16_16_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((short)value.X);
             self.Write((short)value.Y);
         }
 
-        private static void Write_16_16_Single(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_Single(this BinaryStream self, Vector4F value)
         {
             Write(self, (Half)value.X);
             Write(self, (Half)value.Y);
         }
 
-        private static void Write_16_16_UIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_UIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((ushort)value.X);
             self.Write((ushort)value.Y);
         }
 
-        private static void Write_16_16_SIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_SIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((short)value.X);
             self.Write((short)value.Y);
@@ -735,14 +733,14 @@ namespace BfresLibrary.Core
 
         // ---- 32-bit (10/11 x 3) ----
 
-        private static void Write_10_11_11_Single(this BinaryDataWriter self, Vector4F value)
+        private static void Write_10_11_11_Single(this BinaryStream self, Vector4F value)
         {
             throw new NotImplementedException("10-bit and 11-bit Single values have not yet been implemented.");
         }
 
         // ---- 32-bit (8 x 4) ----
 
-        private static void Write_8_8_8_8_UNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_8_8_UNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((byte)(Algebra.Clamp(value.X, 0, 1) * 255));
             self.Write((byte)(Algebra.Clamp(value.Y, 0, 1) * 255));
@@ -750,7 +748,7 @@ namespace BfresLibrary.Core
             self.Write((byte)(Algebra.Clamp(value.W, 0, 1) * 255));
         }
 
-        private static void Write_8_8_8_8_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_8_8_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((byte)value.X);
             self.Write((byte)value.Y);
@@ -758,7 +756,7 @@ namespace BfresLibrary.Core
             self.Write((byte)value.W);
         }
 
-        private static void Write_8_8_8_8_SNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_8_8_SNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((sbyte)(Algebra.Clamp(value.X, -1, 1) * 127));
             self.Write((sbyte)(Algebra.Clamp(value.Y, -1, 1) * 127));
@@ -766,7 +764,7 @@ namespace BfresLibrary.Core
             self.Write((sbyte)(Algebra.Clamp(value.W, -1, 1) * 127));
         }
 
-        private static void Write_8_8_8_8_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_8_8_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((sbyte)value.X);
             self.Write((sbyte)value.Y);
@@ -774,7 +772,7 @@ namespace BfresLibrary.Core
             self.Write((sbyte)value.W);
         }
 
-        private static void Write_8_8_8_8_UIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_8_8_UIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((byte)value.X);
             self.Write((byte)value.Y);
@@ -782,7 +780,7 @@ namespace BfresLibrary.Core
             self.Write((byte)value.W);
         }
 
-        private static void Write_8_8_8_8_SIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_8_8_8_8_SIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((sbyte)value.X);
             self.Write((sbyte)value.Y);
@@ -792,7 +790,7 @@ namespace BfresLibrary.Core
 
         // ---- 32-bit (10 x 3 + 2) ----
 
-        private static void Write_10_10_10_2_UNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_10_10_10_2_UNorm(this BinaryStream self, Vector4F value)
         {
             uint x = SingleToUInt10(Algebra.Clamp(value.X, 0, 1) * 1023);
             uint y = SingleToUInt10(Algebra.Clamp(value.Y, 0, 1) * 1023);
@@ -801,7 +799,7 @@ namespace BfresLibrary.Core
             self.Write(x | (y << 10) | (z << 20) | (w << 30));
         }
 
-        private static void Write_10_10_10_2_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_10_10_10_2_UInt(this BinaryStream self, Vector4F value)
         {
             uint x = SingleToUInt10(value.X);
             uint y = SingleToUInt10(value.Y);
@@ -810,7 +808,7 @@ namespace BfresLibrary.Core
             self.Write(x | (y << 10) | (z << 20) | (w << 30));
         }
 
-        private static void Write_10_10_10_2_SNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_10_10_10_2_SNorm(this BinaryStream self, Vector4F value)
         {
             int x = SingleToInt10(Algebra.Clamp(value.X, -1, 1) * 511);
             int y = SingleToInt10(Algebra.Clamp(value.Y, -1, 1) * 511);
@@ -819,7 +817,7 @@ namespace BfresLibrary.Core
             self.Write(x | (y << 10) | (z << 20) | (w << 30));
         }
 
-        private static void Write_10_10_10_2_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_10_10_10_2_SInt(this BinaryStream self, Vector4F value)
         {
             int x = SingleToInt10(value.X);
             int y = SingleToInt10(value.Y);
@@ -830,19 +828,19 @@ namespace BfresLibrary.Core
 
         // ---- 64-bit (32 x 2) ----
 
-        private static void Write_32_32_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_32_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((uint)value.X);
             self.Write((uint)value.Y);
         }
 
-        private static void Write_32_32_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_32_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((int)value.X);
             self.Write((int)value.Y);
         }
 
-        private static void Write_32_32_Single(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_32_Single(this BinaryStream self, Vector4F value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -850,7 +848,7 @@ namespace BfresLibrary.Core
 
         // ---- 64-bit (16 x 4) ----
 
-        private static void Write_16_16_16_16_UNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_16_16_UNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((ushort)(Algebra.Clamp(value.X, 0, 1) * 65535));
             self.Write((ushort)(Algebra.Clamp(value.Y, 0, 1) * 65535));
@@ -858,7 +856,7 @@ namespace BfresLibrary.Core
             self.Write((ushort)(Algebra.Clamp(value.W, 0, 1) * 65535));
         }
 
-        private static void Write_16_16_16_16_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_16_16_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((ushort)value.X);
             self.Write((ushort)value.Y);
@@ -866,7 +864,7 @@ namespace BfresLibrary.Core
             self.Write((ushort)value.W);
         }
 
-        private static void Write_16_16_16_16_SNorm(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_16_16_SNorm(this BinaryStream self, Vector4F value)
         {
             self.Write((short)(Algebra.Clamp(value.X, -1, 1) * 32767));
             self.Write((short)(Algebra.Clamp(value.Y, -1, 1) * 32767));
@@ -874,7 +872,7 @@ namespace BfresLibrary.Core
             self.Write((short)(Algebra.Clamp(value.W, -1, 1) * 32767));
         }
 
-        private static void Write_16_16_16_16_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_16_16_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((short)value.X);
             self.Write((short)value.Y);
@@ -882,7 +880,7 @@ namespace BfresLibrary.Core
             self.Write((short)value.W);
         }
 
-        private static void Write_16_16_16_16_Single(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_16_16_Single(this BinaryStream self, Vector4F value)
         {
             Write(self, (Half)value.X);
             Write(self, (Half)value.Y);
@@ -890,7 +888,7 @@ namespace BfresLibrary.Core
             Write(self, (Half)value.W);
         }
 
-        private static void Write_16_16_16_16_UIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_16_16_UIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((ushort)value.X);
             self.Write((ushort)value.Y);
@@ -898,7 +896,7 @@ namespace BfresLibrary.Core
             self.Write((ushort)value.W);
         }
 
-        private static void Write_16_16_16_16_SIntToSingle(this BinaryDataWriter self, Vector4F value)
+        private static void Write_16_16_16_16_SIntToSingle(this BinaryStream self, Vector4F value)
         {
             self.Write((short)value.X);
             self.Write((short)value.Y);
@@ -908,21 +906,21 @@ namespace BfresLibrary.Core
 
         // --- 96-bit (32 x 3) ----
 
-        private static void Write_32_32_32_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_32_32_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((uint)value.X);
             self.Write((uint)value.Y);
             self.Write((uint)value.Z);
         }
 
-        private static void Write_32_32_32_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_32_32_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((int)value.X);
             self.Write((int)value.Y);
             self.Write((int)value.Z);
         }
 
-        private static void Write_32_32_32_Single(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_32_32_Single(this BinaryStream self, Vector4F value)
         {
             self.Write(value.X);
             self.Write(value.Y);
@@ -931,7 +929,7 @@ namespace BfresLibrary.Core
 
         // ---- 128-bit (32 x 4) ----
 
-        private static void Write_32_32_32_32_UInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_32_32_32_UInt(this BinaryStream self, Vector4F value)
         {
             self.Write((uint)value.X);
             self.Write((uint)value.Y);
@@ -939,7 +937,7 @@ namespace BfresLibrary.Core
             self.Write((uint)value.W);
         }
 
-        private static void Write_32_32_32_32_SInt(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_32_32_32_SInt(this BinaryStream self, Vector4F value)
         {
             self.Write((int)value.X);
             self.Write((int)value.Y);
@@ -947,7 +945,7 @@ namespace BfresLibrary.Core
             self.Write((int)value.W);
         }
 
-        private static void Write_32_32_32_32_Single(this BinaryDataWriter self, Vector4F value)
+        private static void Write_32_32_32_32_Single(this BinaryStream self, Vector4F value)
         {
             self.Write(value.X);
             self.Write(value.Y);

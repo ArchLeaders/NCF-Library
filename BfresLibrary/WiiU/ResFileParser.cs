@@ -13,12 +13,12 @@ namespace BfresLibrary.WiiU
 {
     public class ResFileParser
     {
-        public static void Load(ResFileLoader loader, ResFile resFile)
+        public static void Load(ResFileLoader loader, BfresFile resFile)
         {
             loader.CheckSignature("FRES");
             resFile.Version = loader.ReadUInt32();
             resFile.SetVersionInfo(resFile.Version);
-            resFile.ByteOrder = loader.ReadByteOrder();
+            resFile.Endian = loader.ReadEndian();
             ushort sizHeader = loader.ReadUInt16();
             uint sizFile = loader.ReadUInt32();
             resFile.Alignment = loader.ReadUInt32();
@@ -68,11 +68,11 @@ namespace BfresLibrary.WiiU
             }
         }
 
-        public static void Save(ResFileWiiUSaver saver, ResFile resFile)
+        public static void Save(ResFileWiiUSaver saver, BfresFile resFile)
         {
             saver.WriteSignature("FRES");
             saver.Write(resFile.Version);
-            saver.Write(resFile.ByteOrder, true);
+            saver.Write(resFile.Endian, true);
             saver.Write((ushort)0x0010); // SizHeader
             saver.SaveFieldFileSize();
             saver.Write(resFile.Alignment);

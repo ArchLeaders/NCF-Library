@@ -42,10 +42,10 @@ namespace BfresLibrary.Switch
             shape.BoneIndex = loader.ReadUInt16();
             shape.VertexBufferIndex = loader.ReadUInt16();
             ushort numSkinBoneIndex = loader.ReadUInt16();
-            shape.VertexSkinCount = loader.ReadByte();
-            byte numMesh = loader.ReadByte();
-            byte numKeys = loader.ReadByte();
-            byte numTargetAttr = loader.ReadByte();
+            shape.VertexSkinCount = (byte)loader.ReadByte();
+            byte numMesh = (byte)loader.ReadByte();
+            byte numKeys = (byte)loader.ReadByte();
+            byte numTargetAttr = (byte)loader.ReadByte();
             if (loader.ResFile.VersionMajor2 <= 2 && loader.ResFile.VersionMajor == 0)
                 loader.Seek(2); //padding
             else if (loader.ResFile.VersionMajor2 == 9)

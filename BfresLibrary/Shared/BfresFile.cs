@@ -5,25 +5,26 @@ using System.Linq;
 using Syroot.BinaryData;
 using BfresLibrary.Core;
 using System.ComponentModel;
+using Syroot.BinaryData.Core;
 
 namespace BfresLibrary
 {
     /// <summary>
     /// Represents a NintendoWare for Cafe (NW4F) graphics data archive file.
     /// </summary>
-    [DebuggerDisplay(nameof(ResFile) + " {" + nameof(Name) + "}")]
-    public class ResFile : IResData
+    [DebuggerDisplay(nameof(BfresFile) + " {" + nameof(Name) + "}")]
+    public class BfresFile : IResData
     {
         // ---- CONSTANTS ----------------------------------------------------------------------------------------------
 
-        private const string _signature = "FRES";
+        private const string Magic = "FRES";
 
         // ---- CONSTRUCTORS & DESTRUCTOR ------------------------------------------------------------------------------
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResFile"/> class.
+        /// Initializes a new instance of the <see cref="BfresFile"/> class.
         /// </summary>
-        public ResFile()
+        internal BfresFile()
         {
             Name = "";
             DataAlignment = 8192;
@@ -35,12 +36,12 @@ namespace BfresLibrary
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResFile"/> class from the given <paramref name="stream"/> which
+        /// Initializes a new instance of the <see cref="BfresFile"/> class from the given <paramref name="stream"/> which
         /// is optionally left open.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to load the data from.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after reading, otherwise <c>false</c>.</param>
-        public ResFile(Stream stream, bool leaveOpen = false) : base()
+        public BfresFile(Stream stream, bool leaveOpen = false) : base()
         {
             if (IsSwitchBinary(stream))
             {
@@ -57,11 +58,11 @@ namespace BfresLibrary
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResFile"/> class from the file with the given
+        /// Initializes a new instance of the <see cref="BfresFile"/> class from the file with the given
         /// <paramref name="fileName"/>.
         /// </summary>
         /// <param name="fileName">The name of the file to load the data from.</param>
-        public ResFile(string fileName) : base()
+        public BfresFile(string fileName) : base()
         {
             if (IsSwitchBinary(fileName))
             {
@@ -84,7 +85,7 @@ namespace BfresLibrary
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to save the contents into.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after writing, otherwise <c>false</c>.</param>
-        public void Save(Stream stream, bool leaveOpen = false)
+        public void ToBinary(Stream stream, bool leaveOpen = false)
         {
             if (IsPlatformSwitch) {
                 using (ResFileSaver saver = new Switch.Core.ResFileSwitchSaver(this, stream, leaveOpen)) {
@@ -103,7 +104,7 @@ namespace BfresLibrary
         /// Saves the contents in the file with the given <paramref name="fileName"/>.
         /// </summary>
         /// <param name="fileName">The name of the file to save the contents into.</param>
-        public void Save(string fileName)
+        public void ToBinary(string fileName)
         {
             if (IsPlatformSwitch) {
                 using (ResFileSaver saver = new Switch.Core.ResFileSwitchSaver(this, fileName)) {
@@ -118,20 +119,12 @@ namespace BfresLibrary
             }
         }
 
-        internal uint SaveVersion()
-        {
-            return VersionMajor << 24 | VersionMajor2 << 16 | VersionMinor << 8 | VersionMinor2;
-        }
-
-
-        public static bool IsSwitchBinary(string fileName) {
-            return IsSwitchBinary(File.OpenRead(fileName));
-        }
-
+        internal uint SaveVersion() => VersionMajor << 24 | VersionMajor2 << 16 | VersionMinor << 8 | VersionMinor2;
+        public static bool IsSwitchBinary(string fileName) => IsSwitchBinary(File.OpenRead(fileName));
         public static bool IsSwitchBinary(Stream stream)
         {
-            using (var reader = new BinaryDataReader(stream, true)) {
-                reader.ByteOrder = ByteOrder.LittleEndian;
+            using (var reader = new BinaryStream(stream, leaveOpen: true)) {
+                reader.ByteConverter = Syroot.BinaryData.ByteConverter.Little;
 
                 reader.Seek(4, SeekOrigin.Begin);
                 uint paddingCheck = reader.ReadUInt32();
@@ -225,13 +218,7 @@ namespace BfresLibrary
         [ReadOnly(true)]
         [Category("Version")]
         [DisplayName("Version Major")]
-        public string VersioFull
-        {
-            get
-            {
-                return $"{VersionMajor},{VersionMajor2},{VersionMinor},{VersionMinor2}";
-            }
-        }
+        public string VersioFull => $"{VersionMajor},{VersionMajor2},{VersionMinor},{VersionMinor2}";
 
         /// <summary>
         /// Gets or sets the major revision of the BFRES structure formats.
@@ -240,6 +227,7 @@ namespace BfresLibrary
         [Category("Version")]
         [DisplayName("Version Major")]
         public uint VersionMajor { get; set; }
+
         /// <summary>
         /// Gets or sets the second major revision of the BFRES structure formats.
         /// </summary>
@@ -247,6 +235,7 @@ namespace BfresLibrary
         [Category("Version")]
         [DisplayName("Version Major 2")]
         public uint VersionMajor2 { get; set; }
+
         /// <summary>
         /// Gets or sets the minor revision of the BFRES structure formats.
         /// </summary>
@@ -254,6 +243,7 @@ namespace BfresLibrary
         [Category("Version")]
         [DisplayName("Version Minor")]
         public uint VersionMinor { get; set; }
+
         /// <summary>
         /// Gets or sets the second minor revision of the BFRES structure formats.
         /// </summary>
@@ -266,7 +256,7 @@ namespace BfresLibrary
         /// Gets the byte order in which data is stored. Must be the endianness of the target platform.
         /// </summary>
         [Browsable(false)]
-        public ByteOrder ByteOrder { get; set; } = ByteOrder.BigEndian;
+        public Endian Endian { get; set; } = Endian.Big;
 
         /// <summary>
         /// Gets or sets the stored <see cref="Model"/> (FMDL) instances.
@@ -396,9 +386,9 @@ namespace BfresLibrary
             }
 
             //Order to read the existing data
-            ByteOrder byteOrder = IsPlatformSwitch ? ByteOrder.LittleEndian : ByteOrder.BigEndian;
+            Endian Endian = IsPlatformSwitch ? Endian.Little : Endian.Big;
             //Order to set the target data
-            ByteOrder targetOrder = isSwitch ? ByteOrder.LittleEndian : ByteOrder.BigEndian;
+            Endian targetOrder = isSwitch ? Endian.Little : Endian.Big;
 
             IsPlatformSwitch = isSwitch;
             DataAlignment = alignment;
@@ -406,14 +396,14 @@ namespace BfresLibrary
             VersionMajor2 = versionB;
             VersionMinor = versionC;
             VersionMinor2 = versionD;
-            this.ByteOrder = targetOrder;
+            this.Endian = targetOrder;
 
             foreach (var model in Models.Values)
             {
-                UpdateVertexBufferByteOrder(model, byteOrder, targetOrder);
+                UpdateVertexBufferEndian(model, Endian, targetOrder);
                 foreach (var shp in model.Shapes.Values) {
                     foreach (var mesh in shp.Meshes) {
-                        mesh.UpdateIndexBufferByteOrder(targetOrder);
+                        mesh.UpdateIndexBufferEndian(targetOrder);
                     }
                 }
                 foreach (var mat in model.Materials.Values)
@@ -640,7 +630,6 @@ namespace BfresLibrary
             foreach (var anim in MatVisibilityAnims.Values)
             {
                 int curveIndex = 0;
-                int infoIndex = 0;
                 if (calculateBakeSizes)
                     anim.BakedSize = 0;
                 foreach (var subAnim in anim.MaterialAnimDataList)
@@ -714,10 +703,10 @@ namespace BfresLibrary
             }
         }
 
-        private void UpdateVertexBufferByteOrder(Model model, ByteOrder byteOrder, ByteOrder target)
+        private void UpdateVertexBufferEndian(Model model, Endian Endian, Endian target)
         {
             foreach (var buffer in model.VertexBuffers)
-                buffer.UpdateVertexBufferByteOrder(byteOrder, target);
+                buffer.UpdateVertexBufferEndian(Endian, target);
         }
 
         private void ConvertTexturesToBntx(List<TextureShared> textures)
@@ -739,7 +728,7 @@ namespace BfresLibrary
             });
         }
 
-        //Reserved for saving offsets 
+        // Reserved for saving offsets
         internal long ModelOffset = 0;
         internal long SkeletonAnimationOffset = 0;
         internal long MaterialAnimationOffset = 0;

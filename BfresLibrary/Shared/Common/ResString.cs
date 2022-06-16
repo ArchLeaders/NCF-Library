@@ -6,7 +6,7 @@ using BfresLibrary.Core;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents a <see cref="String"/> which is stored in a <see cref="ResFile"/>.
+    /// Represents a <see cref="String"/> which is stored in a <see cref="BfresFile"/>.
     /// </summary>
     [DebuggerDisplay("{" + nameof(String) + "}")]
     public class ResString : IResData
@@ -16,18 +16,12 @@ namespace BfresLibrary
         /// <summary>
         /// The textual <see cref="String"/> represented by this instance.
         /// </summary>
-        public string String
-        {
-            get; set;
-        }
+        public string String { get; set; }
 
         /// <summary>
         /// The <see cref="Encoding"/> with which this string was read or will be written.
         /// </summary>
-        public Encoding Encoding
-        {
-            get; set;
-        }
+        public Encoding Encoding { get; set; }
 
         // ---- OPERATORS ----------------------------------------------------------------------------------------------
 
@@ -36,20 +30,14 @@ namespace BfresLibrary
         /// </summary>
         /// <param name="value">The <see cref="String"/> value to represent in the new <see cref="ResString"/> instance.
         /// </param>
-        public static implicit operator ResString(string value)
-        {
-            return new ResString() { String = value };
-        }
+        public static implicit operator ResString(string value) => new ResString() { String = value };
 
         /// <summary>
         /// Converts the given <paramref name="value"/> value to an <see cref="String"/> instance.
         /// </summary>
         /// <param name="value">The <see cref="ResString"/> value to represent in the new <see cref="String"/> instance.
         /// </param>
-        public static implicit operator string(ResString value)
-        {
-            return value.String;
-        }
+        public static implicit operator string(ResString value) => value.String;
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
@@ -57,10 +45,7 @@ namespace BfresLibrary
         /// Returns the value of the <see cref="String"/> property.
         /// </summary>
         /// <returns>The value of the <see cref="String"/> property.</returns>
-        public override string ToString()
-        {
-            return String;
-        }
+        public override string ToString() => String;
 
         // ---- METHODS ------------------------------------------------------------------------------------------------
 
@@ -69,12 +54,9 @@ namespace BfresLibrary
             if (loader.IsSwitch)
                 String = loader.LoadString(Encoding ?? loader.Encoding);
             else
-                String = loader.ReadString(BinaryStringFormat.ZeroTerminated, Encoding ?? loader.Encoding);
+                String = loader.ReadString(StringCoding.ZeroTerminated, Encoding ?? loader.Encoding);
         }
 
-        void IResData.Save(ResFileSaver saver)
-        {
-            saver.SaveString(String, Encoding);
-        }
+        void IResData.Save(ResFileSaver saver) => saver.SaveString(String, Encoding);
     }
 }

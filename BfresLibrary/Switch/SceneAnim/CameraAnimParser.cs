@@ -30,7 +30,7 @@ namespace BfresLibrary.Switch
                 cameraAnim.FrameCount = loader.ReadInt32();
                 cameraAnim.BakedSize = loader.ReadUInt32();
                 ushort numUserData = loader.ReadUInt16();
-                numCurve = loader.ReadByte();
+                numCurve = (byte)loader.ReadByte();
                 loader.Seek(1);
                 loader.Seek(4);
             }
@@ -39,7 +39,7 @@ namespace BfresLibrary.Switch
                 cameraAnim.Flags = loader.ReadEnum<CameraAnimFlags>(true);
                 loader.Seek(2);
                 cameraAnim.FrameCount = loader.ReadInt32();
-                numCurve = loader.ReadByte();
+                numCurve = (byte)loader.ReadByte();
                 loader.Seek(1);
                 ushort numUserData = loader.ReadUInt16();
                 cameraAnim.BakedSize = loader.ReadUInt32();

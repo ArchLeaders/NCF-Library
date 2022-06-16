@@ -4,6 +4,7 @@ using Syroot.BinaryData;
 using BfresLibrary.Core;
 using BfresLibrary.Helpers;
 using Syroot.Maths;
+using Syroot.BinaryData.Core;
 
 namespace BfresLibrary
 {
@@ -25,7 +26,7 @@ namespace BfresLibrary
 
         public void CreateEmptyVertexBuffer()
         {
-            VertexBufferHelper helper = new VertexBufferHelper(new VertexBuffer(), Syroot.BinaryData.ByteOrder.BigEndian);
+            VertexBufferHelper helper = new VertexBufferHelper(new VertexBuffer(), Endian.Big);
             List<VertexBufferHelperAttrib> atrib = new List<VertexBufferHelperAttrib>();
 
             var positions = new Vector4F[4];
@@ -121,11 +122,11 @@ namespace BfresLibrary
             }
             else
             {
-                byte numVertexAttrib = loader.ReadByte();
-                byte numBuffer = loader.ReadByte();
+                byte numVertexAttrib = (byte)loader.ReadByte();
+                byte numBuffer = (byte)loader.ReadByte();
                 ushort idx = loader.ReadUInt16();
                 uint vertexCount = loader.ReadUInt32();
-                VertexSkinCount = loader.ReadByte();
+                VertexSkinCount = (byte)loader.ReadByte();
                 loader.Seek(3);
                 uint ofsVertexAttribList = loader.ReadOffset(); // Only load dict.
                 Attributes = loader.LoadDict<VertexAttrib>();
@@ -156,11 +157,11 @@ namespace BfresLibrary
             }
         }
 
-        public void UpdateVertexBufferByteOrder(ByteOrder byteOrder, ByteOrder target)
+        public void UpdateVertexBufferEndian(Endian endian, Endian target)
         {
             //Swap existing byte orders
-            VertexBufferHelper helper = new VertexBufferHelper(this, byteOrder);
-            helper.ByteOrder = target;
+            VertexBufferHelper helper = new VertexBufferHelper(this, endian);
+            helper.endian = target;
 
             var newBuffer = helper.ToVertexBuffer();
             this.Buffers = new List<Buffer>();

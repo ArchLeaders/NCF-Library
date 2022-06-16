@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents an FMDL subfile in a <see cref="ResFile"/>, storing model vertex data, skeletons and used materials.
+    /// Represents an FMDL subfile in a <see cref="BfresFile"/>, storing model vertex data, skeletons and used materials.
     /// </summary>
     [DebuggerDisplay(nameof(Model) + " {" + nameof(Name) + "}")]
     public class Model : IResData, IBinarySection
@@ -96,11 +96,11 @@ namespace BfresLibrary
 
         // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
 
-        public void Import(string FileName, ResFile ResFile) {
+        public void Import(string FileName, BfresFile ResFile) {
             ResFileLoader.ImportSection(FileName, this, ResFile);
         }
 
-        public void Export(string FileName, ResFile ResFile) {
+        public void Export(string FileName, BfresFile ResFile) {
             ResFileSaver.ExportSection(FileName, this, ResFile);
         }
 

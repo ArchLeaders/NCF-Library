@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,14 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Syroot.BinaryData;
-using Syroot.Maths;
+using Syroot.BinaryData.Core;
 
 namespace BfresLibrary.Core
 {
     /// <summary>
     /// Saves the hierachy and data of a <see cref="Bfres.ResFile"/>.
     /// </summary>
-    public class ResFileSaver : BinaryDataWriter
+    public class ResFileSaver : BinaryStream
     {
         // ---- CONSTANTS ----------------------------------------------------------------------------------------------
 
@@ -39,17 +39,9 @@ namespace BfresLibrary.Core
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to save data from.</param>
         /// <param name="stream">The <see cref="Stream"/> to save data into.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after writing, otherwise <c>false</c>.</param>
-        internal ResFileSaver(ResFile resFile, Stream stream, bool leaveOpen)
-            : base(stream, Encoding.ASCII, leaveOpen)
+        internal ResFileSaver(BfresFile resFile, Stream stream, bool leaveOpen) : base(stream, ByteConverter.Big, Encoding.ASCII, leaveOpen: leaveOpen) => ResFile = resFile;
+        internal ResFileSaver(IResData resData, BfresFile resFile, Stream stream, bool leaveOpen) : base(stream, ByteConverter.Big, Encoding.ASCII, leaveOpen: leaveOpen)
         {
-            ByteOrder = ByteOrder.BigEndian;
-            ResFile = resFile;
-        }
-
-        internal ResFileSaver(IResData resData, ResFile resFile, Stream stream, bool leaveOpen)
-    : base(stream, Encoding.ASCII, leaveOpen)
-        {
-            ByteOrder = ByteOrder.BigEndian;
             ExportableData = resData;
             ResFile = resFile;
         }
@@ -60,17 +52,10 @@ namespace BfresLibrary.Core
         /// </summary>
         /// <param name="resFile">The <see cref="Bfres.ResFile"/> instance to save.</param>
         /// <param name="fileName">The name of the file to save the data into.</param>
-        internal ResFileSaver(ResFile resFile, string fileName)
-            : this(resFile, new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read), false)
-        {
-        }
+        internal ResFileSaver(BfresFile resFile, string fileName) : this(resFile, new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read), false) { }
+        internal ResFileSaver(IResData resData, BfresFile resFile, string fileName) : this(resData, resFile, new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read), false) { }
 
-        internal ResFileSaver(IResData resData, ResFile resFile, string fileName)
-    : this(resData, resFile, new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read), false)
-        {
-        }
-
-        static internal void ExportSection(string fileName, IResData resData, ResFile resFile)
+        static internal void ExportSection(string fileName, IResData resData, BfresFile resFile)
         {
             if (resFile.IsPlatformSwitch)
             {
@@ -93,7 +78,7 @@ namespace BfresLibrary.Core
 
         internal void WriteHeader(string SubSection, string Magic, int Offset = 32)
         {
-            ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
 
             // Create queues fetching the names for the string pool and data blocks to store behind the headers.
             _savedItems = new List<ItemEntry>();
@@ -108,12 +93,12 @@ namespace BfresLibrary.Core
             Write((int)(Offset - Position));
             Write(IsSwitch ? 1 : 0); //Detects platform. 0 = Wii U, 1 == Switch
             Write(0);
-            ByteOrder = ByteOrder.BigEndian;
+            ByteConverter = ByteConverter.Big;
 
             if (IsSwitch)
             {
                 Seek(0x30, SeekOrigin.Begin);
-                ByteOrder = ByteOrder.LittleEndian;
+                ByteConverter = ByteConverter.Little;
             }
         }
 
@@ -138,7 +123,7 @@ namespace BfresLibrary.Core
         /// <summary>
         /// Gets the saved <see cref="Bfres.ResFile"/> instance.
         /// </summary>
-        internal ResFile ResFile { get; }
+        internal BfresFile ResFile { get; }
 
         /// <summary>
         /// Gets the saved <see cref="Bfres.IResData"/> instance used for exporting data.
@@ -500,7 +485,7 @@ namespace BfresLibrary.Core
                 }
 
                 // Write the name.
-                Write(entry.Key, BinaryStringFormat.ZeroTerminated, entry.Value.Encoding ?? Encoding);
+                this.Write(entry.Key, StringCoding.ZeroTerminated, entry.Value.Encoding ?? Encoding);
                 Align(4);
             }
             BaseStream.SetLength(Position); // Workaround to make last alignment expand the file if nothing follows.
@@ -545,11 +530,11 @@ namespace BfresLibrary.Core
             }
         }
 
-        internal void WriteByteOrder(ByteOrder byteOrder)
+        internal void WriteEndian(Endian endian)
         {
-            ByteOrder = ByteOrder.BigEndian;
-            Write(byteOrder, true);
-            ByteOrder = byteOrder;
+            ByteConverter = ByteConverter.Big;
+            this.Write(endian, true);
+            ByteConverter = ByteConverter.GetConverter(endian);
         }
 
         public virtual void SatisfyOffsets(List<uint> offsets, uint target)

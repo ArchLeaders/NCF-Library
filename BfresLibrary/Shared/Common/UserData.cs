@@ -6,7 +6,7 @@ using BfresLibrary.Core;
 namespace BfresLibrary
 {
     /// <summary>
-    /// Represents custom user variables which can be attached to many sections and subfiles of a <see cref="ResFile"/>.
+    /// Represents custom user variables which can be attached to many sections and subfiles of a <see cref="BfresFile"/>.
     /// </summary>
     [DebuggerDisplay(nameof(UserData) + " {" + nameof(Name) + "}")]
     public class UserData : IResData
@@ -47,10 +47,7 @@ namespace BfresLibrary
         /// <see cref="UserDataType.Int32"/>.
         /// </summary>
         /// <returns>The typed value.</returns>
-        public int[] GetValueInt32Array()
-        {
-            return (int[])_value;
-        }
+        public int[] GetValueInt32Array() => (int[])_value;
 
         /// <summary>
         /// Returns the stored value as an array of <see cref="Single"/> instances when the <see cref="Type"/> is
@@ -143,8 +140,9 @@ namespace BfresLibrary
         public UserData Copy()
         {
             UserData usd = new UserData();
-            usd.Name = this.Name;
-            switch (this.Type)
+            usd.Name = Name;
+
+            switch (Type)
             {
                 case UserDataType.Byte:
                     usd.SetValue(this.GetValueByteArray());
@@ -176,7 +174,7 @@ namespace BfresLibrary
                 uint count = 0;
                 if (loader.ResFile.VersionMajor2 <= 2 && loader.ResFile.VersionMajor == 0)
                 {
-                    char[] Reserved = loader.ReadChars(8);
+                    byte[] Reserved = loader.ReadBytes(8);
                     count = loader.ReadUInt32();
                     Type = (UserDataType)loader.ReadUInt32();
                 }
@@ -184,7 +182,7 @@ namespace BfresLibrary
                 {
                     count = loader.ReadUInt32();
                     Type = loader.ReadEnum<UserDataType>(true);
-                    char[] Reserved = loader.ReadChars(43);
+                    byte[] Reserved = loader.ReadBytes(43);
                 }
 
                 switch (Type)
@@ -240,14 +238,14 @@ namespace BfresLibrary
                 saver.SaveString(Name);
                 DataOffset = saver.SaveOffset();
                 saver.Write(_value != null ? ((Array)_value).Length : 0); // Unsafe cast, but _value should always be Array.
-                saver.Write(Type, true);
+                saver.WriteEnum(typeof(Type), Type, true);
                 saver.Seek(43);
             }
             else
             {
                 saver.SaveString(Name);
                 saver.Write((ushort)((Array)_value).Length); // Unsafe cast, but _value should always be Array.
-                saver.Write(Type, true);
+                saver.WriteEnum(typeof(Type), Type, true);
                 saver.Seek(1);
                 switch (Type)
                 {
