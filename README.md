@@ -1,4 +1,4 @@
-# <ins>N</ins>intendo <ins>C</ins>ommon <ins>F</ins>ormats Library
+# Nintendo Common Formats Library
 
 A single library constructed from several other libraries for manipulating common Nintendo file formats in C#.
 
