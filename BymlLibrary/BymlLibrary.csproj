@@ -31,10 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interop\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\docs\resources\icons\BymlIcon-128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

@@ -1,6 +1,4 @@
-﻿#pragma warning disable IDE0150 // Prefer 'null' check over type check
-
-using SharpYaml.Serialization;
+﻿using SharpYaml.Serialization;
 using System.Globalization;
 using System.Diagnostics;
 using Byml.Security.Cryptography;
@@ -57,7 +55,7 @@ namespace Nintendo.Byml.Parser
             return byml;
         }
 
-        static dynamic? ParseNode(YamlNode node)
+        static dynamic ParseNode(YamlNode node)
         {
             if (node is YamlMappingNode castMappingNode) {
                 var values = new Dictionary<string, dynamic>();
@@ -104,7 +102,7 @@ namespace Nintendo.Byml.Parser
 
         static bool IsValidReference(YamlNode node) => node.Tag != null && node.Tag.Contains("!ref") && !ReferenceNodes.ContainsKey(node.Tag);
 
-        static dynamic? ConvertValue(string value, string tag)
+        static dynamic ConvertValue(string value, string tag)
         {
             if (tag == null)
                 tag = "";

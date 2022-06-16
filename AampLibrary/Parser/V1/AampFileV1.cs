@@ -11,7 +11,7 @@ namespace Nintendo.Aamp.Parser
         public AampFileV1(string FileName) => Read(new FileReader(new FileStream(FileName, FileMode.Open)));
         public AampFileV1(Stream Stream) => Read(new FileReader(Stream));
 
-        internal byte[]? EffectName { get; set; }
+        internal byte[] EffectName { get; set; }
 
         internal void Read(FileReader reader)
         {

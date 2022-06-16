@@ -1,7 +1,4 @@
-﻿#pragma warning disable CS8601 // Possible null reference assignment.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-
-using Nintendo.Byml.Collections;
+﻿using Nintendo.Byml.Collections;
 using Syroot.BinaryData;
 using Syroot.BinaryData.Core;
 using Syroot.Maths;
@@ -15,8 +12,8 @@ namespace Nintendo.Byml.IO
 {
     internal class BymlReader : BymlFile
     {
-        private List<string>? NameArray { get; set; } = new();
-        List<string>? StringArray { get; set; } = new();
+        private List<string> NameArray { get; set; } = new();
+        List<string> StringArray { get; set; } = new();
         private Dictionary<uint, dynamic> ReadNodes { get; set; } = new();
         List<List<BymlPathPoint>> PathArray { get; set; } = new();
 
@@ -79,6 +76,7 @@ namespace Nintendo.Byml.IO
                     RootNode = ReadEnumerableNode(reader, rootNodeOffset);
             }
 
+            stream.Dispose();
             return this;
         }
 
@@ -86,12 +84,12 @@ namespace Nintendo.Byml.IO
         private uint Get3LsbBytes(uint value) => Endianness == Endian.Big ? value & 0x00FFFFFF : value >> 8;
         private uint Get3MsbBytes(uint value) => Endianness == Endian.Little ? value & 0x00FFFFFF : value >> 8;
 
-        private dynamic? ReadEnumerableNode(BinaryStream reader, uint offset)
+        private dynamic ReadEnumerableNode(BinaryStream reader, uint offset)
         {
             if (ReadNodes.ContainsKey(offset))
                 return ReadNodes[offset];
 
-            object? node = null;
+            object node = null;
             if (offset > 0 && !ReadNodes.TryGetValue(offset, out node))
             {
                 using (reader.TemporarySeek(offset, SeekOrigin.Begin))
@@ -123,7 +121,7 @@ namespace Nintendo.Byml.IO
 
             foreach (NodeType type in types)
             {
-                dynamic? value = ReadNode(reader, type);
+                dynamic value = ReadNode(reader, type);
                 if (type.IsEnumerable())
                     array.Add(ReadEnumerableNode(reader, value));
                 else
@@ -147,7 +145,7 @@ namespace Nintendo.Byml.IO
                 NodeType type = (NodeType)Get1MsbByte(indexAndType);
 
                 string name = NameArray[nodeNameIndex];
-                dynamic? value = ReadNode(reader, type);
+                dynamic value = ReadNode(reader, type);
 
                 if (type.IsEnumerable())
                     dictionary.Add(name, ReadEnumerableNode(reader, value));
@@ -200,7 +198,7 @@ namespace Nintendo.Byml.IO
             return pathArray;
         }
 
-        private dynamic? ReadNode(BinaryStream reader, NodeType nodeType)
+        private dynamic ReadNode(BinaryStream reader, NodeType nodeType)
         {
             // Read the following UInt32 which is representing the value directly.
             return nodeType switch
@@ -223,7 +221,7 @@ namespace Nintendo.Byml.IO
                 return PathArray != null && PathArray.Count > index ? PathArray[index] : new BymlPathIndex();
             }
 
-            dynamic? HandleNullInline()
+            dynamic HandleNullInline()
             {
                 reader.Seek(0x4);
                 return null;

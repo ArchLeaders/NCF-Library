@@ -83,7 +83,7 @@ namespace Nintendo.Byml
         public static void ToBinary(BymlFile byml, Stream stream) => new BymlWriter(byml).Write(stream, Encoding.UTF8);
         public static byte[] ToBinary(BymlFile byml)
         {
-            MemoryStream ms = new();
+            using MemoryStream ms = new();
             ToBinary(byml, ms);
             return ms.ToArray();
         }

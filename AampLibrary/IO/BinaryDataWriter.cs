@@ -12,9 +12,7 @@ namespace Nintendo.Aamp.IO
         internal void WriteSize(long EndPosition, long startPosition)
         {
             using (TemporarySeek(startPosition, SeekOrigin.Begin))
-            {
                 Write((uint)(EndPosition - startPosition));
-            }
         }
 
         internal new void WriteBoolean(bool boolean) => Write(boolean == false ? 0 : 1);

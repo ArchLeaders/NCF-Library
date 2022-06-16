@@ -32,8 +32,8 @@ namespace Nintendo.Sarc.Parser
 		{
 			int align = _align >= 0 ? _align : (int)NestedFile.GuessAlignment(sarcFile.Files);
 
-			MemoryStream memoryStream = new();
-			BinaryStream writer = new(memoryStream, ByteConverter.GetConverter(sarcFile.Endianness), leaveOpen: false);
+			using MemoryStream memoryStream = new();
+            using BinaryStream writer = new(memoryStream, ByteConverter.GetConverter(sarcFile.Endianness), leaveOpen: false);
 
 			writer.Write("SARC", StringCoding.Raw);
 			writer.Write((ushort)0x14); // Chunk length
@@ -100,7 +100,7 @@ namespace Nintendo.Sarc.Parser
         internal static SarcFile DecompileSarc(Stream stream)
 		{
 			Dictionary<string, byte[]> res = new();
-			BinaryStream br = new(stream, ByteConverter.Little, leaveOpen: false);
+            using BinaryStream br = new(stream, ByteConverter.Little, leaveOpen: false);
 
 			// Get endienness
 			br.BaseStream.Position = 6;
@@ -148,6 +148,7 @@ namespace Nintendo.Sarc.Parser
 					res.Add(sfat.Nodes[m].Hash.ToString("X8") + NestedFile.GuessExtension(temp), temp);
 			}
 
+            stream.Dispose();
 			return new SarcFile(res, br.ByteConverter.Endian, HashOnly);
 		}
 	}

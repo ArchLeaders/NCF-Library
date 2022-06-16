@@ -11,7 +11,7 @@ namespace Nintendo.Byml
         internal Resource(string resourceName)
         {
             Assembly assembly = Assembly.GetCallingAssembly();
-            Stream? resStream = assembly.GetManifestResourceStream("BymlLibrary." + resourceName);
+            Stream resStream = assembly.GetManifestResourceStream("BymlLibrary." + resourceName);
 
             if (resStream == null)
                 return;

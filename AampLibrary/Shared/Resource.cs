@@ -11,13 +11,15 @@ namespace Nintendo.Aamp
         internal Resource(string resourceName)
         {
             Assembly assembly = Assembly.GetCallingAssembly();
-            Stream? resStream = assembly.GetManifestResourceStream("AampLibrary." + resourceName);
+            using (Stream resStream = assembly.GetManifestResourceStream("AampLibrary." + resourceName)) {
 
-            if (resStream == null)
-                return;
+                if (resStream == null)
+                    return;
 
-            using BinaryReader reader = new(resStream);
-            Data = reader.ReadBytes((int)resStream.Length);
+                using (BinaryReader reader = new(resStream)) {
+                    Data = reader.ReadBytes((int)resStream.Length);
+                }
+            }
         }
 
         /// <summary>

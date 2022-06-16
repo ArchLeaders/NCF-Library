@@ -1,80 +1,77 @@
-﻿#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8604 // Possible null reference argument.
-
-using Nintendo.Byml.IO;
-using Syroot.BinaryData;
-using Syroot.BinaryData.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Nintendo.Byml.IO;
+using Syroot.BinaryData.Core;
 
 namespace Nintendo.Byml.Parser
 {
-	internal static class XmlConverter
-	{
-		public static string ToXml(BymlFile data)
-		{
-			var stream = new MemoryStream();
+    internal static class XmlConverter
+    {
+        public static string ToXml(BymlFile data)
+        {
+            using var stream = new MemoryStream();
+            using XmlTextWriter xr = new(stream, Encoding.Unicode);
 
-			XmlTextWriter xr = new(stream, Encoding.Unicode);
-			xr.Formatting = Formatting.Indented;
+            xr.Formatting = Formatting.Indented;
 
-			xr.WriteStartDocument();
-			xr.WriteStartElement("Root");
-			xr.WriteStartElement("isBigEndian");
-			xr.WriteAttributeString("Value", (data.Endianness == Endian.Big).ToString());
-			xr.WriteEndElement();
-			xr.WriteStartElement("BymlFormatVersion");
-			xr.WriteAttributeString("Value", data.Version.ToString());
-			xr.WriteEndElement();
-			xr.WriteStartElement("SupportPaths");
-			xr.WriteAttributeString("Value", data.SupportPaths.ToString());
-			xr.WriteEndElement();
+            xr.WriteStartDocument();
+            xr.WriteStartElement("Root");
+            xr.WriteStartElement("isBigEndian");
+            xr.WriteAttributeString("Value", (data.Endianness == Endian.Big).ToString());
+            xr.WriteEndElement();
+            xr.WriteStartElement("BymlFormatVersion");
+            xr.WriteAttributeString("Value", data.Version.ToString());
+            xr.WriteEndElement();
+            xr.WriteStartElement("SupportPaths");
+            xr.WriteAttributeString("Value", data.SupportPaths.ToString());
+            xr.WriteEndElement();
 
-			xr.WriteStartElement("BymlRoot");
-			WriteNode(data.RootNode, null, xr);		
-			xr.WriteEndElement();
+            xr.WriteStartElement("BymlRoot");
+            WriteNode(data.RootNode, null, xr);
+            xr.WriteEndElement();
 
-			xr.WriteEndElement();
-			xr.Close();
-			return Encoding.Unicode.GetString(stream.ToArray());
-		}
+            xr.WriteEndElement();
+            xr.Close();
+            return Encoding.Unicode.GetString(stream.ToArray());
+        }
 
         public static BymlFile FromXml(string xmlString)
-		{
-			BymlFile byml = new();
-			XmlDocument xml = new();
-			xml.LoadXml(xmlString);
+        {
+            BymlFile byml = new();
+            XmlDocument xml = new();
+            xml.LoadXml(xmlString);
             XmlNode n = xml.SelectSingleNode("/Root/isBigEndian");
             byml.Endianness = n.Attributes["Value"].Value.ToLower() == "true" ? Endian.Big : Endian.Little;
             n = xml.SelectSingleNode("/Root/BymlFormatVersion");
-			byml.Version = ushort.Parse(n.Attributes["Value"].Value);
-			n = xml.SelectSingleNode("/Root/SupportPaths");
-			byml.SupportPaths = n.Attributes["Value"].Value.ToLower() == "true";
+            byml.Version = ushort.Parse(n.Attributes["Value"].Value);
+            n = xml.SelectSingleNode("/Root/SupportPaths");
+            byml.SupportPaths = n.Attributes["Value"].Value.ToLower() == "true";
 
-			n = xml.SelectSingleNode("/Root/BymlRoot");
-			if (n.ChildNodes.Count != 1) throw new Exception("A byml can have only one root");
+            n = xml.SelectSingleNode("/Root/BymlRoot");
+            if (n.ChildNodes.Count != 1) throw new Exception("A byml can have only one root");
             byml.RootNode = ParseNode(n.FirstChild);
 
             return byml;
-		}
+        }
 
-		// Xml Writer
+        //
+        // Xml Writer
+        #region Expand
 
-		static void WriteNode(dynamic node, string name, XmlTextWriter xmlWriter)
-		{
-			if (node == null)
-			{
-				if (name == null) return;
-				xmlWriter.WriteStartElement("NULL");
-				xmlWriter.WriteAttributeString("N", name);
-				xmlWriter.WriteEndElement();
-			}
-			else if (node is IList<dynamic> castListNode)
+        static void WriteNode(dynamic node, string name, XmlTextWriter xmlWriter)
+        {
+            if (node == null)
+            {
+                if (name == null) return;
+                xmlWriter.WriteStartElement("NULL");
+                xmlWriter.WriteAttributeString("N", name);
+                xmlWriter.WriteEndElement();
+            }
+            else if (node is IList<dynamic> castListNode)
             {
                 WriteArrNode(castListNode, name, xmlWriter);
             }
@@ -91,42 +88,46 @@ namespace Nintendo.Byml.Parser
                 xmlWriter.WriteAttributeString("V", node.ToString());
                 xmlWriter.WriteEndElement();
             }
-		}
+        }
 
-		static void WriteArrNode(IList<dynamic> node, string name, XmlTextWriter xmlWriter)
-		{
-			xmlWriter.WriteStartElement(GetNodeName(node));
-			if (name != null)
-				xmlWriter.WriteAttributeString("N", name);
+        static void WriteArrNode(IList<dynamic> node, string name, XmlTextWriter xmlWriter)
+        {
+            xmlWriter.WriteStartElement(GetNodeName(node));
+            if (name != null)
+                xmlWriter.WriteAttributeString("N", name);
 
-			for (int i = 0; i < node.Count; i++)
-				WriteNode(node[i], null, xmlWriter);
+            for (int i = 0; i < node.Count; i++)
+                WriteNode(node[i], null, xmlWriter);
 
-			xmlWriter.WriteEndElement();
-		}
+            xmlWriter.WriteEndElement();
+        }
 
-		static void WriteDictNode(IDictionary<string, dynamic> node, string name, XmlTextWriter xmlWriter)
-		{
-			xmlWriter.WriteStartElement(GetNodeName(node));
-			if (name != null)
-				xmlWriter.WriteAttributeString("N", name);
+        static void WriteDictNode(IDictionary<string, dynamic> node, string name, XmlTextWriter xmlWriter)
+        {
+            xmlWriter.WriteStartElement(GetNodeName(node));
+            if (name != null)
+                xmlWriter.WriteAttributeString("N", name);
 
-			var keys = node.Keys.ToArray();
-			for (int i = 0; i < keys.Length; i++)
-				WriteNode(node[keys[i]], keys[i], xmlWriter);
+            var keys = node.Keys.ToArray();
+            for (int i = 0; i < keys.Length; i++)
+                WriteNode(node[keys[i]], keys[i], xmlWriter);
 
-			xmlWriter.WriteEndElement();
-		}
+            xmlWriter.WriteEndElement();
+        }
 
-		static string GetNodeName(dynamic node) => "T" + ((byte)NodeTypeExtension.GetNodeType(node)).ToString();
+        static string GetNodeName(dynamic node) => "T" + ((byte)NodeTypeExtension.GetNodeType(node)).ToString();
 
-		// XML Reader
+#endregion
 
-		internal static dynamic? ParseNode(XmlNode xmlNode)
-		{
-			if (xmlNode.Name == "NULL") return null;
+        //
+        // XML Reader
+        #region Expand
 
-			NodeType nodeType = (NodeType)byte.Parse(xmlNode.Name[1..]);
+        internal static dynamic ParseNode(XmlNode xmlNode)
+        {
+            if (xmlNode.Name == "NULL") return null;
+
+            NodeType nodeType = (NodeType)byte.Parse(xmlNode.Name[1..]);
 
             return nodeType switch
             {
@@ -136,25 +137,27 @@ namespace Nintendo.Byml.Parser
             };
         }
 
-		internal static IDictionary<string, dynamic> ParseDictNode(XmlNode xmlNode)
-		{
-			Dictionary<string, dynamic> res = new();
-			for (int i = 0; i < xmlNode.ChildNodes.Count; i++)
-			{
-				var c = xmlNode.ChildNodes[i];
-				res.Add(c.Attributes["N"].Value, ParseNode(c));
-			}
+        internal static IDictionary<string, dynamic> ParseDictNode(XmlNode xmlNode)
+        {
+            Dictionary<string, dynamic> res = new();
+            for (int i = 0; i < xmlNode.ChildNodes.Count; i++)
+            {
+                var c = xmlNode.ChildNodes[i];
+                res.Add(c.Attributes["N"].Value, ParseNode(c));
+            }
 
-			return res;
-		}
+            return res;
+        }
 
-		internal static IList<dynamic> ParseArrNode(XmlNode n)
-		{
-			List<dynamic> res = new();
-			for (int i = 0; i < n.ChildNodes.Count; i++)
-				res.Add(ParseNode(n.ChildNodes[i]));
+        internal static IList<dynamic> ParseArrNode(XmlNode n)
+        {
+            List<dynamic> res = new();
+            for (int i = 0; i < n.ChildNodes.Count; i++)
+                res.Add(ParseNode(n.ChildNodes[i]));
 
-			return res;
-		}
-	}
+            return res;
+        }
+
+        #endregion
+    }
 }
