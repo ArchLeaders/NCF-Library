@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-
-using Nintendo.Aamp.IO;
+﻿using Nintendo.Aamp.IO;
 using Nintendo.Aamp.Parser;
 using Nintendo.Aamp.Shared;
 using Newtonsoft.Json;
