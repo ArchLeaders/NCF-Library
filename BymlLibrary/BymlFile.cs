@@ -74,8 +74,16 @@ namespace Nintendo.Byml
         // 
         #region Expand
 
-        public static BymlFile FromBinary(string fileName) => new BymlReader().Read(File.OpenRead(fileName), Encoding.UTF8);
-        public static BymlFile FromBinary(byte[] bytes) => new BymlReader().Read(new MemoryStream(bytes), Encoding.UTF8);
+        public static BymlFile FromBinary(string fileName)
+        {
+            using FileStream stream = File.OpenRead(fileName);
+            return new BymlReader().Read(stream, Encoding.UTF8);
+        }
+        public static BymlFile FromBinary(byte[] bytes)
+        {
+            using MemoryStream stream = new(bytes);
+            return new BymlReader().Read(stream, Encoding.UTF8);
+        }
         public static BymlFile FromBinary(Stream stream) => new BymlReader().Read(stream, Encoding.UTF8);
 
         public static BymlFile FromYaml(string text) => YamlConverter.FromYaml(text);

@@ -120,8 +120,16 @@ namespace Nintendo.Aamp
             return reader.ReadUInt32();
         }
 
-        public static AampFile FromBinary(string fileName) => FromBinary(File.OpenRead(fileName));
-        public static AampFile FromBinary(byte[] bytes) => FromBinary(new MemoryStream(bytes));
+        public static AampFile FromBinary(string fileName)
+        {
+            using FileStream stream = File.OpenRead(fileName);
+            return FromBinary(stream);
+        }
+        public static AampFile FromBinary(byte[] bytes)
+        {
+            using MemoryStream stream = new(bytes);
+            return FromBinary(stream);
+        }
         public static AampFile FromBinary(Stream stream)
         {
             uint version = CheckVersion(stream);
