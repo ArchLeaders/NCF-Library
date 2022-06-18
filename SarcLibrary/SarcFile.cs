@@ -9,8 +9,16 @@ namespace Nintendo.Sarc
     {
         internal SarcFile() { }
         public SarcFile(Stream stream) => Setter(SARC.DecompileSarc(stream));
-        public SarcFile(string file) => Setter(SARC.DecompileSarc(File.OpenRead(file)));
-        public SarcFile(byte[] bytes) => Setter(SARC.DecompileSarc(new MemoryStream(bytes)));
+        public SarcFile(string file)
+        {
+            using FileStream stream = File.OpenRead(file);
+            Setter(SARC.DecompileSarc(stream));
+        }
+        public SarcFile(byte[] bytes)
+        {
+            using MemoryStream stream = new(bytes);
+            Setter(SARC.DecompileSarc(stream));
+        }
         public SarcFile(Dictionary<string, byte[]> files, Endian endianness = Endian.Little, bool hashOnly = false)
         {
             Files = files;

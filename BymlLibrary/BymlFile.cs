@@ -15,8 +15,12 @@ namespace Nintendo.Byml
         #region Expand
 
         internal BymlFile() { }
-        public BymlFile(string fileName) => Setter(FromBinary(File.OpenRead(fileName)));
-        public BymlFile(byte[] bytes) => Setter(FromBinary(new MemoryStream(bytes)));
+        public BymlFile(string fileName) => Setter(FromBinary(File.ReadAllBytes(fileName)));
+        public BymlFile(byte[] bytes)
+        {
+            using MemoryStream stream = new(bytes);
+            Setter(FromBinary(stream));
+        }
         public BymlFile(Stream stream) => Setter(FromBinary(stream));
 
         #endregion

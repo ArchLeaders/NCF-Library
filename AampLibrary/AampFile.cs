@@ -19,8 +19,17 @@ namespace Nintendo.Aamp
         #region Expand
 
         internal AampFile() { }
-        public AampFile(string fileName) => Setter(FromBinary(File.OpenRead(fileName)));
-        public AampFile(byte[] bytes) => Setter(FromBinary(new MemoryStream(bytes)));
+        public AampFile(string fileName)
+        {
+            using FileStream stream = File.OpenRead(fileName);
+            Setter(FromBinary(stream));
+        }
+        public AampFile(byte[] bytes)
+        {
+            using MemoryStream stream = new(bytes);
+            Setter(FromBinary(stream));
+        }
+
         public AampFile(Stream stream) => Setter(FromBinary(stream));
 
         #endregion
