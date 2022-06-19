@@ -366,7 +366,7 @@ namespace Nintendo.Aamp
 
         private static void WriteParamObject(TextWriter writer, ParamObject paramObj, int IndentAmount)
         {
-            writer.WriteLine($"{YamlHashStr(paramObj.HashString)} : !obj".Indent(IndentAmount));
+            writer.WriteLine($"{YamlHashStr(paramObj.HashString)}: !obj".Indent(IndentAmount));
             foreach (var entry in paramObj.ParamEntries)
             {
                 writer.WriteLine($"{WriteParamData(entry)}".Indent(IndentAmount + 2));
