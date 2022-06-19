@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Syroot.BinaryData.Core;
 using System.Text;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Nintendo.Byml
 {
@@ -22,6 +23,15 @@ namespace Nintendo.Byml
             Setter(FromBinary(stream));
         }
         public BymlFile(Stream stream) => Setter(FromBinary(stream));
+        public BymlFile(NodeType type)
+        {
+            RootNode = type switch
+            {
+                NodeType.Array => new List<dynamic>(),
+                NodeType.Dictionary => new Dictionary<string, dynamic>(),
+                _ => throw new BymlException($"Invalid RootNode type {type}"),
+            };
+        }
 
         #endregion
 

@@ -245,6 +245,9 @@ namespace Nintendo.Byml.Parser
         private static string ConvertValue(dynamic node)
         {
             if (node is bool castBoolNode) return castBoolNode ? "true" : "false";
+            else if (node is ushort) return string.Format("0x{0:x4}", node);
+            else if (node is uint) return string.Format("0x{0:x8}", node);
+            else if (node is ulong) return string.Format("0x{0:x16}", node);
             else if (node is BymlPathIndex castPathNode) return castPathNode.Index.ToString();
             else if (node is float) return string.Format("{0:0.000.00}", node);
             else return node.ToString();
