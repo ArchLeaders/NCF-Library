@@ -7,9 +7,21 @@ namespace Nintendo.Aamp.Parser
 {
     internal class AampFileV1 : AampFile
     {
-        public AampFileV1() { }
-        public AampFileV1(string FileName) => Read(new FileReader(new FileStream(FileName, FileMode.Open)));
-        public AampFileV1(Stream Stream) => Read(new FileReader(Stream));
+        public AampFileV1() : base()
+        {
+            Version = 1;
+        }
+        public AampFileV1(string FileName)
+        {
+            using FileStream stream = File.OpenRead(FileName);
+            using FileReader reader = new(stream);
+            Read(reader);
+        }
+        public AampFileV1(Stream Stream)
+        {
+            using FileReader reader = new(Stream);
+            Read(reader);
+        }
 
         internal byte[] EffectName { get; set; }
 
@@ -61,9 +73,6 @@ namespace Nintendo.Aamp.Parser
             writer.Seek(sizeOffset, System.IO.SeekOrigin.Begin);
             uint FileSize = (uint)writer.BaseStream.Length;
             writer.Write(FileSize);
-
-            writer.Close();
-            writer.Dispose();
         }
 
         private static int AlignUp(int n, int align) => (n + align - 1) & -align;

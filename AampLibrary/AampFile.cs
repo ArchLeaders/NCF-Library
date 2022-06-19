@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Syroot.BinaryData;
 using System.Text;
 using System.IO;
+using System;
 
 namespace Nintendo.Aamp
 {
@@ -16,7 +17,13 @@ namespace Nintendo.Aamp
         //
         #region Expand
 
-        internal AampFile() { }
+        internal AampFile()
+        {
+            ParameterIOVersion = 0;
+            ParameterIOType = "xml";
+            Endianness = 3; // encoding is the second bit of the endianness byte
+            RootNode = new() { Hash = 0xA4F6CB6C };
+        }
         public AampFile(string fileName)
         {
             using FileStream stream = File.OpenRead(fileName);
@@ -89,7 +96,7 @@ namespace Nintendo.Aamp
             return new AampFileV2() {
                 Endianness = Endianness,
                 ParameterIOType = ParameterIOType,
-                ParameterIOVersion = 410,
+                ParameterIOVersion = 0, // previously 410 - why was this explicitly set to 410?
                 RootNode = RootNode,
                 Version = 2,
                 UnknownValue = 0,
@@ -110,6 +117,16 @@ namespace Nintendo.Aamp
         // Static functions
         // 
         #region Expand
+
+        public static AampFile New(int version)
+        {
+            return version switch
+            {
+                1 => new AampFileV1(),
+                2 => new AampFileV2(),
+                _ => throw new ArgumentException($"Invalid AampFile version {version}"),
+            };
+        }
 
         private static uint CheckVersion(Stream stream)
         {
