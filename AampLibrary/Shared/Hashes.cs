@@ -77,13 +77,12 @@ namespace Nintendo.Aamp
 
         public static uint SetName(string Name) => Crc32.Compute(Name);
 
-        public static string? GetName(uint hash)
+        public static string GetName(uint hash)
         {
             if (HashName.Count == 0)
                 GenerateHashes();
-            HashName.TryGetValue(hash, out string? name);
 
-            if (name == null)
+            if (!HashName.TryGetValue(hash, out string name))
                 return hash.ToString();
 
             return name;
