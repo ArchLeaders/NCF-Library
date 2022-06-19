@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Nintendo.Aamp
 {
@@ -6,7 +7,8 @@ namespace Nintendo.Aamp
     {
         public StringEntry(byte[] data, int maxValue)
         {
-            Data = data;
+            string data_string = EncodeType.GetString(data);
+            Data = (data_string == "''" || data_string == "\"\"") ? Array.Empty<byte>() : data;
             MaxValue = maxValue;
         }
         public StringEntry(byte[] data) => Data = data;
@@ -16,6 +18,6 @@ namespace Nintendo.Aamp
         private int MaxValue { get; set; } = -1;
         public byte[] Data { get; set; }
 
-        public override string ToString() => EncodeType.GetString(Data);
+        public override string ToString() => Data.Length == 0 ? "''" : EncodeType.GetString(Data);
     }
 }

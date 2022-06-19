@@ -17,12 +17,20 @@ namespace Nintendo.Aamp.Parser
 {
     internal class AampFileV2 : AampFile
     {
-        public AampFileV2(string fileName) => DecompileAamp(new(File.OpenRead(fileName)));
-        public AampFileV2(Stream stream) => DecompileAamp(new(stream));
-        public AampFileV2()
+        public AampFileV2(string fileName)
+        {
+            using FileStream stream = File.OpenRead(fileName);
+            using FileReader reader = new(stream);
+            DecompileAamp(reader);
+        }
+        public AampFileV2(Stream stream)
+        {
+            using FileReader reader = new(stream);
+            DecompileAamp(reader);
+        }
+        public AampFileV2() : base()
         {
             Version = 2;
-            Endianness = 0;
         }
 
         private uint TotalListCount { get; set; } = 0;
@@ -36,8 +44,15 @@ namespace Nintendo.Aamp.Parser
             reader.CheckSignature("AAMP");
             Version = reader.ReadUInt32();
             Endianness = reader.ReadUInt32();
+            _ = reader.ReadUInt32();
             ParameterIOVersion = reader.ReadUInt32();
             uint ParameterIOOffset = reader.ReadUInt32();
+            _ = reader.ReadUInt32();
+            _ = reader.ReadUInt32();
+            _ = reader.ReadUInt32();
+            _ = reader.ReadUInt32();
+            _ = reader.ReadUInt32();
+            _ = reader.ReadUInt32();
             long pos = reader.Position;
             ParameterIOType = reader.ReadString(StringCoding.ZeroTerminated, Encoding.UTF8);
             reader.Seek(pos + ParameterIOOffset, SeekOrigin.Begin);
@@ -47,9 +62,16 @@ namespace Nintendo.Aamp.Parser
 
         internal byte[] CompileV2()
         {
-            MemoryStream ms = new();
-            CompileV2(new(ms));
-            return ms.ToArray();
+            byte[] bytes;
+            using (MemoryStream ms = new())
+            {
+                using (FileWriter fw = new(ms))
+                {
+                    CompileV2(fw);
+                    bytes = ms.ToArray();
+                }
+            }
+            return bytes;
         }
 
         internal void CompileV2(FileWriter writer)
@@ -156,27 +178,24 @@ namespace Nintendo.Aamp.Parser
             writer.Seek(sizeOffset, SeekOrigin.Begin);
             uint FileSize = (uint)writer.BaseStream.Length;
             writer.Write(FileSize);
-
-            writer.Close();
-            writer.Dispose();
         }
 
         private List<ParamList> SavedParamLists { get; set; } = new();
         private List<ObjectContext> SavedParamObjects { get; set; } = new();
         private List<ParamEntry> SavedParamEntries { get; set; } = new();
-        private List<PlaceholderOffet[]> ListOffsets { get; set; } = new();
-        private List<PlaceholderOffet> ObjListOffsets { get; set; } = new();
+        private List<PlaceholderOffset[]> ListOffsets { get; set; } = new();
+        private List<PlaceholderOffset> ObjListOffsets { get; set; } = new();
 
-        private Dictionary<byte[], List<PlaceholderOffet>> DataValues { get; set; } = new(new ByteArrayComparer());
-        private Dictionary<byte[], List<PlaceholderOffet>> StringValues { get; set; } = new(new ByteArrayComparer());
+        private Dictionary<byte[], List<PlaceholderOffset>> DataValues { get; set; } = new(new ByteArrayComparer());
+        private Dictionary<byte[], List<PlaceholderOffset>> StringValues { get; set; } = new(new ByteArrayComparer());
 
         private class ObjectContext
         {
-            public PlaceholderOffet? PlaceholderOffet;
+            public PlaceholderOffset? PlaceholderOffet;
             public ParamObject? ParamObject;
         }
 
-        public class PlaceholderOffet
+        public class PlaceholderOffset
         {
             public object Data { get; set; }
             public long BasePosition { get; set; }
@@ -231,21 +250,21 @@ namespace Nintendo.Aamp.Parser
             return r;
         }
 
-        private static PlaceholderOffet WritePlaceholderOffsetU24(FileWriter writer, long BasePosition)
+        private static PlaceholderOffset WritePlaceholderOffsetU24(FileWriter writer, long BasePosition)
         {
-            PlaceholderOffet offset = new();
+            PlaceholderOffset offset = new();
             offset.OffsetPosition = writer.Position;
             offset.BasePosition = BasePosition;
-            PlaceholderOffet.WritePlaceholderU24(writer);
+            PlaceholderOffset.WritePlaceholderU24(writer);
             return offset;
         }
 
-        private static PlaceholderOffet WritePlaceholderOffsetU16(FileWriter writer, long BasePosition)
+        private static PlaceholderOffset WritePlaceholderOffsetU16(FileWriter writer, long BasePosition)
         {
-            PlaceholderOffet offset = new();
+            PlaceholderOffset offset = new();
             offset.OffsetPosition = writer.Position;
             offset.BasePosition = BasePosition;
-            PlaceholderOffet.WritePlaceholderU16(writer);
+            PlaceholderOffset.WritePlaceholderU16(writer);
             return offset;
         }
 
@@ -254,8 +273,8 @@ namespace Nintendo.Aamp.Parser
             TotalListCount += 1;
             SavedParamLists.Add(paramList);
 
-            ushort ChildListCount = paramList.ChildParams == null ? (ushort)0 : (ushort)paramList.ChildParams.Length;
-            ushort ParamObjectCount = paramList.ParamObjects == null ? (ushort)0 : (ushort)paramList.ParamObjects.Length;
+            ushort ChildListCount = (ushort)paramList.ChildParams?.Length;
+            ushort ParamObjectCount = (ushort)paramList.ParamObjects?.Length;
 
             long pos = writer.Position;
             writer.Write(paramList.Hash);
@@ -264,10 +283,10 @@ namespace Nintendo.Aamp.Parser
             var objectEntry = WritePlaceholderOffsetU16(writer, pos);
             writer.Write(ParamObjectCount);
 
-            ListOffsets.Add(new PlaceholderOffet[] { listEntry, objectEntry });
+            ListOffsets.Add(new PlaceholderOffset[] { listEntry, objectEntry });
         }
 
-        private void WriteListData(FileWriter writer, ParamList paramList, PlaceholderOffet[] offsets)
+        private void WriteListData(FileWriter writer, ParamList paramList, PlaceholderOffset[] offsets)
         {
             offsets[0].WriteOffsetU16(writer, (uint)writer.Position);
             foreach (var child in paramList.ChildParams)
@@ -277,7 +296,7 @@ namespace Nintendo.Aamp.Parser
         private void WriteObject(FileWriter writer, ParamObject paramObj)
         {
             TotalObjCount += 1;
-            int EntryCount = paramObj.ParamEntries == null ? 0 : paramObj.ParamEntries.Length;
+            int EntryCount = paramObj.ParamEntries?.Length ?? 0;
 
             long startPosition = writer.Position;
 
@@ -334,7 +353,7 @@ namespace Nintendo.Aamp.Parser
                     //DataValues store byte arrays for the data as the key then a list of offsets pointing to it
 
                     if (!StringValues.ContainsKey(data))
-                        StringValues.Add(data, new List<PlaceholderOffet>() { paramData, });
+                        StringValues.Add(data, new List<PlaceholderOffset>() { paramData, });
                     else
                         StringValues[data].Add(paramData);
                 }
@@ -345,7 +364,7 @@ namespace Nintendo.Aamp.Parser
                     if (DataValues.ContainsKey(data))
                         DataValues[data].Add(paramData); //Add additional offsets
                     else
-                        DataValues.Add(data, new List<PlaceholderOffet> { paramData });
+                        DataValues.Add(data, new List<PlaceholderOffset> { paramData });
                 }
             }
         }

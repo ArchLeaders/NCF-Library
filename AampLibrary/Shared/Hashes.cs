@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Nintendo.Aamp
 {
@@ -70,20 +72,22 @@ namespace Nintendo.Aamp
             if (!hash.Contains('%'))
                 return Array.Empty<string>();
             string[] strArray = new string[6];
+            Regex r = new(@"%(\d*)d");
+            string match = r.Match(hash).Groups[1].Value;
+            int count = match == "" ? 0 : int.Parse(match);
             for (int index = 0; index < 6; ++index)
-                strArray[index] = hash.Replace("%d", index.ToString()) ?? "";
+                strArray[index] = r.Replace(hash, new MatchEvaluator(m => index.ToString().PadLeft(count, '0')));
             return strArray;
         }
 
         public static uint SetName(string Name) => Crc32.Compute(Name);
 
-        public static string? GetName(uint hash)
+        public static string GetName(uint hash)
         {
             if (HashName.Count == 0)
                 GenerateHashes();
-            HashName.TryGetValue(hash, out string? name);
 
-            if (name == null)
+            if (!HashName.TryGetValue(hash, out string name))
                 return hash.ToString();
 
             return name;

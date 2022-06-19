@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Syroot.BinaryData.Core;
 using System.Text;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Nintendo.Byml
 {
@@ -15,9 +16,22 @@ namespace Nintendo.Byml
         #region Expand
 
         internal BymlFile() { }
-        public BymlFile(string fileName) => Setter(FromBinary(File.OpenRead(fileName)));
-        public BymlFile(byte[] bytes) => Setter(FromBinary(new MemoryStream(bytes)));
+        public BymlFile(string fileName) => Setter(FromBinary(File.ReadAllBytes(fileName)));
+        public BymlFile(byte[] bytes)
+        {
+            using MemoryStream stream = new(bytes);
+            Setter(FromBinary(stream));
+        }
         public BymlFile(Stream stream) => Setter(FromBinary(stream));
+        public BymlFile(NodeType type)
+        {
+            RootNode = type switch
+            {
+                NodeType.Array => new List<dynamic>(),
+                NodeType.Dictionary => new Dictionary<string, dynamic>(),
+                _ => throw new BymlException($"Invalid RootNode type {type}"),
+            };
+        }
 
         #endregion
 
@@ -70,8 +84,16 @@ namespace Nintendo.Byml
         // 
         #region Expand
 
-        public static BymlFile FromBinary(string fileName) => new BymlReader().Read(File.OpenRead(fileName), Encoding.UTF8);
-        public static BymlFile FromBinary(byte[] bytes) => new BymlReader().Read(new MemoryStream(bytes), Encoding.UTF8);
+        public static BymlFile FromBinary(string fileName)
+        {
+            using FileStream stream = File.OpenRead(fileName);
+            return new BymlReader().Read(stream, Encoding.UTF8);
+        }
+        public static BymlFile FromBinary(byte[] bytes)
+        {
+            using MemoryStream stream = new(bytes);
+            return new BymlReader().Read(stream, Encoding.UTF8);
+        }
         public static BymlFile FromBinary(Stream stream) => new BymlReader().Read(stream, Encoding.UTF8);
 
         public static BymlFile FromYaml(string text) => YamlConverter.FromYaml(text);

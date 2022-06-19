@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the type of which a dynamic BYML node can be.
     /// </summary>
-    internal enum NodeType : byte
+    public enum NodeType : byte
 	{
         None,
         StringIndex = 0xA0,

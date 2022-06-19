@@ -9,8 +9,16 @@ namespace Nintendo.Sarc
     {
         internal SarcFile() { }
         public SarcFile(Stream stream) => Setter(SARC.DecompileSarc(stream));
-        public SarcFile(string file) => Setter(SARC.DecompileSarc(File.OpenRead(file)));
-        public SarcFile(byte[] bytes) => Setter(SARC.DecompileSarc(new MemoryStream(bytes)));
+        public SarcFile(string file)
+        {
+            using FileStream stream = File.OpenRead(file);
+            Setter(SARC.DecompileSarc(stream));
+        }
+        public SarcFile(byte[] bytes)
+        {
+            using MemoryStream stream = new(bytes);
+            Setter(SARC.DecompileSarc(stream));
+        }
         public SarcFile(Dictionary<string, byte[]> files, Endian endianness = Endian.Little, bool hashOnly = false)
         {
             Files = files;
@@ -52,8 +60,16 @@ namespace Nintendo.Sarc
         /// <param name="fileName"></param>
         public void ToBinary(string fileName) => File.WriteAllBytes(fileName, SARC.CompileSarc(this).Value);
 
-        public static SarcFile FromBinary(string fileName) => SARC.DecompileSarc(File.OpenRead(fileName));
-        public static SarcFile FromBinary(byte[] bytes) => SARC.DecompileSarc(new MemoryStream(bytes));
+        public static SarcFile FromBinary(string fileName)
+        {
+            using FileStream stream = File.OpenRead(fileName);
+            return SARC.DecompileSarc(stream);
+        }
+        public static SarcFile FromBinary(byte[] bytes)
+        {
+            using MemoryStream stream = new(bytes);
+            return SARC.DecompileSarc(stream);
+        }
         public static SarcFile FromBinary(Stream stream) => SARC.DecompileSarc(stream);
 
         public static byte[] ToBinary(SarcFile sarc) => SARC.CompileSarc(sarc).Value;
