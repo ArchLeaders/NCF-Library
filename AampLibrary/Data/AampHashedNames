@@ -11201,6 +11201,8 @@ Demo_AppearRupeeInMiniGame
 Demo_Applause
 Demo_ApplyDamage
 DemoApplyDamageForPlayer
+Demo_ArmorBind
+Demo_ArmorBindWithAS
 Demo_ArmorProcessing
 DemoASLoader
 DemoASName
