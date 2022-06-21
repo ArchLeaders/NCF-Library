@@ -1,6 +1,8 @@
 ﻿using Syroot.BinaryData;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Nintendo.Byml.IO
 {
@@ -38,6 +40,26 @@ namespace Nintendo.Byml.IO
                 }
             }
             return NodeType.None;
+        }
+
+        internal static void WriteUInt24(this BinaryStream stream, uint i)
+        {
+            byte[] bytes = BitConverter.GetBytes(i)[0..^1];
+            if (stream.ByteConverter.Endian == Syroot.BinaryData.Core.Endian.Big)
+            {
+                List<byte> temp = bytes.ToList();
+                temp.Reverse();
+                bytes = temp.ToArray();
+            }
+            stream.Write(bytes);
+        }
+
+        internal static void WriteAt(this BinaryStream stream, uint location, uint data)
+        {
+            using (stream.TemporarySeek(location, SeekOrigin.Begin))
+            {
+                stream.WriteUInt32(data);
+            }
         }
     }
 }

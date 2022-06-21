@@ -20,6 +20,7 @@
     <None Remove="Data\AcnhByml" />
     <None Remove="Data\AcnhHeaders" />
     <None Remove="Data\AcnhValues" />
+    <None Remove="IO\BymlWriter.cs.bak" />
   </ItemGroup>
 
   <ItemGroup>
