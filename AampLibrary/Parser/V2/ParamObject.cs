@@ -18,9 +18,12 @@ namespace Nintendo.Aamp.Parser
             {
                 using (reader.TemporarySeek(ChildOffset * 4 + CurrentPosition, SeekOrigin.Begin))
                 {
-                    entry.ParamEntries = new ParamEntry[ChildCount];
+                    entry.paramEntries = new ParamEntry[ChildCount];
                     for (int i = 0; i < ChildCount; i++)
-                        entry.ParamEntries[i] = ParamEntryV2.Read(reader);
+                    {
+                        entry.paramEntries[i] = ParamEntryV2.Read(reader);
+                        entry.paramMap.Add(entry.paramEntries[i].Hash, i);
+                    }
                 }
             }
             return entry;

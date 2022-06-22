@@ -25,11 +25,18 @@ namespace Nintendo.Aamp
         /// <summary>
         /// Gets the child param list>
         /// </summary>
-        public ParamList[] ChildParams { get; set; } = Array.Empty<ParamList>();
+        internal ParamList[] childLists { get; set; } = Array.Empty<ParamList>();
+        internal NodeMap listMap = new();
+        public ParamList Lists(uint hash) => childLists[listMap[hash]];
+        public ParamList Lists(string hashString) => childLists[listMap[hashString]];
+
 
         /// <summary>
         /// Gets the param object list>
         /// </summary>
-        public ParamObject[] ParamObjects { get; set; } = Array.Empty<ParamObject>();
+        internal ParamObject[] childObjects { get; set; } = Array.Empty<ParamObject>();
+        internal NodeMap objectMap = new();
+        public ParamObject Objects(uint hash) => childObjects[objectMap[hash]];
+        public ParamObject Objects(string hashString) => childObjects[objectMap[hashString]];
     }
 }

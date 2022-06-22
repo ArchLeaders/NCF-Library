@@ -16,14 +16,20 @@ namespace Nintendo.Aamp.Parser
             uint ChildListCount = reader.ReadUInt32();
             uint ParamObjectCount = reader.ReadUInt32();
 
-            entry.ChildParams = new ParamList[ChildListCount];
-            entry.ParamObjects = new ParamObject[ParamObjectCount];
+            entry.childLists = new ParamList[ChildListCount];
+            entry.childObjects = new ParamObject[ParamObjectCount];
 
             for (int i = 0; i < ChildListCount; i++)
-                entry.ChildParams[i] = ParamListV1.Read(reader);
+            {
+                entry.childLists[i] = ParamListV1.Read(reader);
+                entry.listMap.Add(entry.childLists[i].Hash, i);
+            }
 
             for (int i = 0; i < ParamObjectCount; i++)
-                entry.ParamObjects[i] = ParamObjectV1.Read(reader);
+            {
+                entry.childObjects[i] = ParamObjectV1.Read(reader);
+                entry.objectMap.Add(entry.childObjects[i].Hash, i);
+            }
 
             reader.Seek(CurrentPosition + Size, SeekOrigin.Begin);
             return entry;
@@ -31,8 +37,8 @@ namespace Nintendo.Aamp.Parser
 
         internal static void Write(ParamList entry, FileWriter writer)
         {
-            int ChildListCount = entry.ChildParams == null ? 0 : entry.ChildParams.Length;
-            int ParamObjectCount = entry.ParamObjects == null ? 0 : entry.ParamObjects.Length;
+            int ChildListCount = entry.childLists == null ? 0 : entry.childLists.Length;
+            int ParamObjectCount = entry.childObjects == null ? 0 : entry.childObjects.Length;
 
             long startPosition = writer.Position;
             writer.Write(uint.MaxValue); //Write the size after
@@ -41,12 +47,12 @@ namespace Nintendo.Aamp.Parser
             writer.Write(ParamObjectCount);
 
             for (int i = 0; i < ChildListCount; i++)
-                if (entry.ChildParams != null)
-                    Write(entry.ChildParams[i], writer);
+                if (entry.childLists != null)
+                    Write(entry.childLists[i], writer);
             
             for (int i = 0; i < ParamObjectCount; i++)
-                if (entry.ParamObjects != null)
-                    ParamObjectV1.Write(entry.ParamObjects[i], writer);
+                if (entry.childObjects != null)
+                    ParamObjectV1.Write(entry.childObjects[i], writer);
             
             writer.WriteSize(writer.Position, startPosition);
         }

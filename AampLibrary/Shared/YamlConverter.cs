@@ -72,8 +72,8 @@ namespace Nintendo.Aamp
                 }
             }
 
-            paramList.ChildParams = children.ToArray();
-            paramList.ParamObjects = objects.ToArray();
+            paramList.childLists = children.ToArray();
+            paramList.childObjects = objects.ToArray();
 
             return paramList;
         }
@@ -90,7 +90,7 @@ namespace Nintendo.Aamp
 
             }
 
-            paramObject.ParamEntries = entries.ToArray();
+            paramObject.paramEntries = entries.ToArray();
             return paramObject;
         }
 
@@ -343,22 +343,22 @@ namespace Nintendo.Aamp
             writer.WriteLine($"{YamlHashStr(paramList.HashString)}: !list".Indent(IndentAmount));
            // Console.WriteLine($"HashString {paramList.HashString}");
 
-            if (paramList.ParamObjects.Length <= 0)
+            if (paramList.childObjects.Length <= 0)
                 writer.WriteLine("objects: {}".Indent(IndentAmount + 2));
             else
                 writer.WriteLine("objects: ".Indent(IndentAmount + 2));
 
-            foreach (var paramObj in paramList.ParamObjects)
+            foreach (var paramObj in paramList.childObjects)
             {
                 WriteParamObject(writer, paramObj, IndentAmount + 4);
             }
 
-            if (paramList.ChildParams.Length <= 0)
+            if (paramList.childLists.Length <= 0)
                 writer.WriteLine("lists: {}".Indent(IndentAmount + 2));
             else
                 writer.WriteLine("lists: ".Indent(IndentAmount + 2));
 
-            foreach (var child in paramList.ChildParams)
+            foreach (var child in paramList.childLists)
             {
                 WriteParamList(writer, child, IndentAmount + 4);
             }
@@ -367,7 +367,7 @@ namespace Nintendo.Aamp
         private static void WriteParamObject(TextWriter writer, ParamObject paramObj, int IndentAmount)
         {
             writer.WriteLine($"{YamlHashStr(paramObj.HashString)}: !obj".Indent(IndentAmount));
-            foreach (var entry in paramObj.ParamEntries)
+            foreach (var entry in paramObj.paramEntries)
             {
                 writer.WriteLine($"{WriteParamData(entry)}".Indent(IndentAmount + 2));
             }

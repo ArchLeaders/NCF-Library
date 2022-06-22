@@ -16,9 +16,12 @@ namespace Nintendo.Aamp.Parser
             entry.Hash = reader.ReadUInt32();
             entry.GroupHash = reader.ReadUInt32();
 
-            entry.ParamEntries = new ParamEntry[EntryCount];
+            entry.paramEntries = new ParamEntry[EntryCount];
             for (int i = 0; i < EntryCount; i++)
-                entry.ParamEntries[i] = ParamEntryV1.Read(reader);
+            {
+                entry.paramEntries[i] = ParamEntryV1.Read(reader);
+                entry.paramMap.Add(entry.paramEntries[i].Hash, i);
+            }
 
             reader.Seek(CurrentPosition + Size, SeekOrigin.Begin);
             return entry;
@@ -26,7 +29,7 @@ namespace Nintendo.Aamp.Parser
 
         internal static void Write(ParamObject entry, FileWriter writer)
         {
-            int EntryCount = entry.ParamEntries == null ? 0 : entry.ParamEntries.Length;
+            int EntryCount = entry.paramEntries == null ? 0 : entry.paramEntries.Length;
 
             long startPosition = writer.Position;
 
@@ -36,8 +39,8 @@ namespace Nintendo.Aamp.Parser
             writer.Write(entry.GroupHash);
 
             for (int i = 0; i < EntryCount; i++)
-                if (entry.ParamEntries != null)
-                    ParamEntryV1.Write(entry.ParamEntries[i], writer);
+                if (entry.paramEntries != null)
+                    ParamEntryV1.Write(entry.paramEntries[i], writer);
 
             writer.WriteSize(writer.Position, startPosition);
         }

@@ -119,7 +119,7 @@ namespace Nintendo.Aamp.Parser
             for (int index = 0; index < SavedParamLists.Count; index++)
             {
                 ListOffsets[index][1].WriteOffsetU16(writer, (uint)writer.Position);
-                foreach (var obj in SavedParamLists[index].ParamObjects)
+                foreach (var obj in SavedParamLists[index].childObjects)
                     WriteObject(writer, obj);
             }
 
@@ -273,8 +273,8 @@ namespace Nintendo.Aamp.Parser
             TotalListCount += 1;
             SavedParamLists.Add(paramList);
 
-            ushort ChildListCount = (ushort)paramList.ChildParams?.Length;
-            ushort ParamObjectCount = (ushort)paramList.ParamObjects?.Length;
+            ushort ChildListCount = (ushort)paramList.childLists?.Length;
+            ushort ParamObjectCount = (ushort)paramList.childObjects?.Length;
 
             long pos = writer.Position;
             writer.Write(paramList.Hash);
@@ -289,14 +289,14 @@ namespace Nintendo.Aamp.Parser
         private void WriteListData(FileWriter writer, ParamList paramList, PlaceholderOffset[] offsets)
         {
             offsets[0].WriteOffsetU16(writer, (uint)writer.Position);
-            foreach (var child in paramList.ChildParams)
+            foreach (var child in paramList.childLists)
                 WriteList(writer, child);
         }
 
         private void WriteObject(FileWriter writer, ParamObject paramObj)
         {
             TotalObjCount += 1;
-            int EntryCount = paramObj.ParamEntries?.Length ?? 0;
+            int EntryCount = paramObj.paramEntries?.Length ?? 0;
 
             long startPosition = writer.Position;
 
@@ -333,7 +333,7 @@ namespace Nintendo.Aamp.Parser
         {
             context.PlaceholderOffet.WriteOffsetU16(writer, (uint)writer.Position);
 
-            foreach (ParamEntry entry in context.ParamObject.ParamEntries)
+            foreach (ParamEntry entry in context.ParamObject.paramEntries)
             {
                 SavedParamEntries.Add(entry);
 
@@ -437,7 +437,7 @@ namespace Nintendo.Aamp.Parser
         uint GetListCount(ParamList paramList, uint total = 0)
         {
             total += 1;
-            foreach (var child in paramList.ChildParams)
+            foreach (var child in paramList.childLists)
                 total += GetListCount(child, total);
 
             return total;
@@ -446,7 +446,7 @@ namespace Nintendo.Aamp.Parser
         uint GetObjectCount(ParamList paramList, uint total = 0)
         {
             total += 1;
-            foreach (var child in paramList.ChildParams)
+            foreach (var child in paramList.childLists)
                 total += GetObjectCount(child, total);
 
             return total;
