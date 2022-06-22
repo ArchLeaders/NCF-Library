@@ -12,7 +12,6 @@ namespace Nintendo.Byml.IO
     {
         private BymlNode NameArray { get; set; }
         private BymlNode StringArray { get; set; }
-        private Dictionary<uint, BymlNode> ReadNodes { get; set; } = new();
 
         public BymlFile Read(Stream stream, Encoding encoding)
         {
@@ -60,35 +59,26 @@ namespace Nintendo.Byml.IO
 
         private BymlNode ReadEnumerableNode(BinaryStream reader, uint offset)
         {
-            if (ReadNodes.ContainsKey(offset))
-                return ReadNodes[offset];
-
-            BymlNode node = null;
-            if (offset > 0 && !ReadNodes.TryGetValue(offset, out node))
+            BymlNode node;
+            using (reader.TemporarySeek(offset, SeekOrigin.Begin))
             {
-                using (reader.TemporarySeek(offset, SeekOrigin.Begin))
+                NodeType type = (NodeType)reader.ReadByte();
+                reader.Seek(-1);
+                int length = (int)Get3LsbBytes(reader.ReadUInt32());
+                node = type switch
                 {
-                    NodeType type = (NodeType)reader.ReadByte();
-                    reader.Seek(-1);
-                    int length = (int)Get3LsbBytes(reader.ReadUInt32());
-                    node = type switch
-                    {
-                        NodeType.Array => ReadArrayNode(reader, length, offset),
-                        NodeType.Hash => ReadDictionaryNode(reader, length, offset),
-                        NodeType.StringArray => ReadStringArrayNode(reader, length),
-                        _ => throw new BymlException($"Invalid enumerable node type {type}."),
-                    };
-                }
+                    NodeType.Array => ReadArrayNode(reader, length, offset),
+                    NodeType.Hash => ReadDictionaryNode(reader, length, offset),
+                    NodeType.StringArray => ReadStringArrayNode(reader, length),
+                    _ => throw new BymlException($"Invalid enumerable node type {type}."),
+                };
             }
-
             return node;
         }
 
         public BymlNode ReadArrayNode(BinaryStream reader, int length, uint offset = 0)
         {
             BymlNode node = new BymlNode(new List<BymlNode>());
-            if (offset != 0) ReadNodes.Add(offset, node);
-
             IEnumerable<NodeType> types = reader.ReadBytes(length).Select(x => (NodeType)x);
             reader.Align(4);
 
@@ -108,8 +98,6 @@ namespace Nintendo.Byml.IO
         {
             BymlNode node = new(new Dictionary<string, BymlNode>());
             SortedList<uint, string> enumerables = new(new DuplicateKeyComparer<uint>());
-            if (offset != 0) ReadNodes.Add(offset, node);
-
             // Read the elements of the dictionary.
             for (int i = 0; i < length; i++)
             {
