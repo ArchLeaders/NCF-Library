@@ -72,7 +72,7 @@ namespace Nintendo.Byml
         public string ToYaml() => YamlConverter.ToYaml(this);
 
         public void WriteBinary(string fileName) => File.WriteAllBytes(fileName, ToBinary());
-        public void WriteJson(string fileName) => File.WriteAllText(fileName, ToXml());
+        public void WriteJson(string fileName) => File.WriteAllText(fileName, ToJson());
         public void WriteXml(string fileName) => File.WriteAllText(fileName, ToXml());
         public void WriteYaml(string fileName) => File.WriteAllText(fileName, ToYaml());
 
