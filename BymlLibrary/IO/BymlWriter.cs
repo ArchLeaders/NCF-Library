@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Syroot.BinaryData;
-using Syroot.BinaryData.Core;
 
 namespace Nintendo.Byml.IO
 {
@@ -251,7 +251,7 @@ namespace Nintendo.Byml.IO
             foreach (string s in table.Strings)
             {
                 Writer.WriteAt((uint)(offset_table_offset + sizeof(uint) * i), (uint)Writer.Position - start);
-                Writer.WriteBytes(Writer.Encoding.GetBytes(s));
+                Writer.WriteBytes(Writer.Encoding.GetBytes($"{s}\0"));
                 i++;
             }
 
@@ -264,16 +264,21 @@ namespace Nintendo.Byml.IO
     {
         private bool built;
         private readonly Dictionary<string, uint> hash_table = new();
-        private readonly SortedSet<string> sorted_strings = new();
+        private readonly SortedSet<string> sorted_strings = new(new AsciiComparer());
         public uint Size { get => (uint)sorted_strings.Count; }
         public SortedSet<string> Strings { get => sorted_strings; }
-
         public bool IsEmpty() => sorted_strings.Count == 0;
         public void Add(string str)
         {
             if (built)
                 throw new InvalidOperationException("Can't add strings after the table has been built");
             sorted_strings.Add(str);
+        }
+        public string GetString(uint index)
+        {
+            if (!built)
+                throw new InvalidOperationException("Table hasn't been built yet, strings are in the wrong order");
+            return sorted_strings.ToList()[(int)index];
         }
         public uint GetIndex(string str)
         {
@@ -290,6 +295,26 @@ namespace Nintendo.Byml.IO
                 hash_table[str] = count++;
             }
             built = true;
+        }
+
+        private class AsciiComparer : IComparer<string>
+        {
+            public int Compare(string x, string y)
+            {
+                int shorter_size = x.Length < y.Length ? x.Length : y.Length;
+                for (int i = 0; i < shorter_size; i++)
+                {
+                    if (x[i] != y[i])
+                    {
+                        return (byte)x[i] - (byte)y[i];
+                    }
+                }
+                if (x.Length == y.Length)
+                {
+                    return 0;
+                }
+                return x.Length - y.Length;
+            }
         }
     }
 }
