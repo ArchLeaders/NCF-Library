@@ -27,7 +27,7 @@ namespace Nintendo.Byml.Parser
             RefNodeId = 0;
 
             YamlStream stream = new(new YamlDocument(root));
-            using StringWriter? writer = new(new StringBuilder());
+            using StringWriter writer = new(new StringBuilder());
             stream.Save(writer, true);
             return writer.ToString();
         }
@@ -105,12 +105,13 @@ namespace Nintendo.Byml.Parser
         static BymlNode ConvertValue(string value, string tag)
         {
             if (tag == null)
+            {
                 tag = "";
-            Debug.WriteLine($"{tag} {value}");
+            }
 
             if (value == "null")
             {
-                return null;
+                return new BymlNode();
             }
             else if (value is "true" or "True")
             {
@@ -123,13 +124,6 @@ namespace Nintendo.Byml.Parser
             else if (tag == "!u")
             {
                 return new BymlNode(uint.Parse(value, CultureInfo.InvariantCulture));
-            }
-            else if (tag == "")
-            {
-                if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out int result))
-                {
-                    return new BymlNode(result);
-                }
             }
             else if (tag == "!d")
             {
@@ -147,7 +141,12 @@ namespace Nintendo.Byml.Parser
             {
                 return new BymlNode(Crc32.Compute(value).ToString("x"));
             }
-            else {
+            else
+            {
+                if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out int intValue))
+                {
+                    return new BymlNode(intValue);
+                }
                 if (float.TryParse(value, out float floatValue))
                 {
                     return new BymlNode(floatValue);
@@ -160,50 +159,62 @@ namespace Nintendo.Byml.Parser
         static YamlNode SaveNode(BymlNode node)
         {
             if (node == null)
+            {
                 return new YamlScalarNode("null");
-            else if (node.Type == NodeType.Array) {
+            }
+            else if (node.Type == NodeType.Array)
+            {
                 var yamlNode = new YamlSequenceNode();
 
-                if (!HasEnumerables(node) && node.Array.Count < 6)
+                if (node.Array.Count < 6 && !HasEnumerables(node))
+                {
                     yamlNode.Style = SharpYaml.YamlStyle.Flow;
+                }
 
                 foreach (BymlNode item in node.Array)
+                {
                     yamlNode.Add(SaveNode(item));
+                }
 
                 return yamlNode;
             }
-            else if (node.Type == NodeType.Hash) {
+            else if (node.Type == NodeType.Hash)
+            {
                 var yamlNode = new YamlMappingNode();
 
-                if (!HasEnumerables(node) && node.Hash.Count < 6)
+                if (node.Hash.Count < 6 && !HasEnumerables(node))
+                {
                     yamlNode.Style = SharpYaml.YamlStyle.Flow;
+                }
 
-                foreach ((string key, BymlNode item) in node.Hash) {
-                    YamlNode keyNode = new YamlScalarNode(key);
-                    if (IsHash(key)) {
+                foreach ((string key, BymlNode item) in node.Hash)
+                {
+                    YamlScalarNode keyNode = new YamlScalarNode(key);
+                    if (IsHash(key))
+                    {
                         uint hash = Convert.ToUInt32(key, 16);
                         if (Hashes.ContainsKey(hash))
                         {
-                            keyNode = new YamlScalarNode(Hashes[hash]) { Tag = "!h" };
-                        }
-                        else
-                        {
-                            keyNode = new YamlScalarNode(key) { Tag = "!h" };
+                            keyNode.Value = Hashes[hash];
                         }
                     }
                     yamlNode.Add(keyNode, SaveNode(item));
                 }
                 return yamlNode;
             }
-            else {
-                string? tag = null;
-                if (node.Type == NodeType.UInt) tag = "!u";
-                else if (node.Type == NodeType.Int64) tag = "!l";
-                else if (node.Type == NodeType.UInt64) tag = "!ul";
-                else if (node.Type == NodeType.Double) tag = "!d";
-
-                var yamlNode = new YamlScalarNode(ConvertValue(node));
-                if (tag != null) yamlNode.Tag = tag;
+            else
+            {
+                var yamlNode = new YamlScalarNode(ConvertValue(node))
+                {
+                    Tag = node.Type switch
+                    {
+                        NodeType.UInt => "!u",
+                        NodeType.Int64 => "!l",
+                        NodeType.UInt64 => "!ul",
+                        NodeType.Double => "!d",
+                        _ => null,
+                    }
+                };
                 return yamlNode;
             }
         }
@@ -224,13 +235,13 @@ namespace Nintendo.Byml.Parser
             {
                 NodeType.String => node.String,
                 NodeType.Bool => node.Bool ? "true" : "false",
-                NodeType.Binary => node.Binary.ToString(),
-                NodeType.Int => node.UInt.ToString(),
-                NodeType.Float => string.Format("0x{0:0.000.00}", node.Float),
+                NodeType.Binary => string.Join(" ", node.Binary),
+                NodeType.Int => node.Int.ToString(),
+                NodeType.Float => string.Format("{0:0.000.00}", node.Float),
                 NodeType.UInt => string.Format("0x{0:x8}", node.UInt),
-                NodeType.Int64 => node.UInt64.ToString(),
+                NodeType.Int64 => node.Int64.ToString(),
                 NodeType.UInt64 => string.Format("0x{0:x16}", node.UInt64),
-                NodeType.Double => string.Format("0x{0:x4}", node.Double),
+                NodeType.Double => string.Format("{0:0.000.00}", node.Double),
                 _ => throw new ArgumentException($"Not value node type {node.Type}"),
             };
         }
