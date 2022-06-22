@@ -11,7 +11,7 @@ namespace Nintendo.Byml.IO
     internal class BymlReader : BymlFile
     {
         private BymlNode NameArray { get; set; }
-        BymlNode StringArray { get; set; }
+        private BymlNode StringArray { get; set; }
         private Dictionary<uint, BymlNode> ReadNodes { get; set; } = new();
 
         public BymlFile Read(Stream stream, Encoding encoding)
@@ -158,7 +158,7 @@ namespace Nintendo.Byml.IO
             return nodeType switch
             {
                 NodeType.Array or NodeType.Hash or NodeType.StringArray => new BymlNode(reader.ReadUInt32()),// offset
-                NodeType.String => StringArray.Array[reader.ReadInt32()],
+                NodeType.String => new BymlNode(StringArray.Array[reader.ReadInt32()].String),
                 NodeType.Bool => new BymlNode(reader.ReadInt32() != 0),
                 NodeType.Int => new BymlNode(reader.ReadInt32()),
                 NodeType.Float => new BymlNode(reader.ReadSingle()),
