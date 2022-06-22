@@ -16,8 +16,8 @@ namespace Nintendo.Aamp.Parser
             ushort ParamObjectOffset = reader.ReadUInt16();
             ushort ParamObjectCount = reader.ReadUInt16();
 
-            entry.childLists = new ParamList[ChildListCount];
-            entry.childObjects = new ParamObject[ParamObjectCount];
+            entry.ChildParams = new ParamList[ChildListCount];
+            entry.ParamObjects = new ParamObject[ParamObjectCount];
 
             if (ChildListOffset != 0)
             {
@@ -25,8 +25,8 @@ namespace Nintendo.Aamp.Parser
                 {
                     for (int i = 0; i < ChildListCount; i++)
                     {
-                        entry.childLists[i] = ParamListV2.Read(reader);
-                        entry.listMap.Add(entry.childLists[i].Hash, i);
+                        entry.ChildParams[i] = ParamListV2.Read(reader);
+                        entry.listMap.Add(entry.ChildParams[i].Hash, i);
                     }
                 }
             }
@@ -36,8 +36,8 @@ namespace Nintendo.Aamp.Parser
                 {
                     for (int i = 0; i < ParamObjectCount; i++)
                     {
-                        entry.childObjects[i] = ParamObjectV2.Read(reader);
-                        entry.objectMap.Add(entry.childObjects[i].Hash, i);
+                        entry.ParamObjects[i] = ParamObjectV2.Read(reader);
+                        entry.objectMap.Add(entry.ParamObjects[i].Hash, i);
                     }
                 }
             }

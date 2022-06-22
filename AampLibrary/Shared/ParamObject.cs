@@ -9,7 +9,7 @@ namespace Nintendo.Aamp
         public T GetEntryValue<T>(string hashName) where T : new()
         {
             T instance = new();
-            foreach (var entry in paramEntries) {
+            foreach (var entry in ParamEntries) {
                 if (entry.HashString == hashName) {
                     if (entry.Value.GetType() == instance.GetType())
                         return (T)entry.Value;
@@ -20,7 +20,7 @@ namespace Nintendo.Aamp
 
         public void SetEntryValue(string hashName, object value)
         {
-            ParamEntry? entry = paramEntries.FirstOrDefault(x => x.HashString == hashName);
+            ParamEntry? entry = ParamEntries.FirstOrDefault(x => x.HashString == hashName);
             if (entry != null) {
                 entry.Value = value;
             }
@@ -55,17 +55,17 @@ namespace Nintendo.Aamp
         /// <summary>
         /// Gets the param object list>
         /// </summary>
-        public ParamEntry[] paramEntries { get; set; } = Array.Empty<ParamEntry>();
+        public ParamEntry[] ParamEntries { get; set; } = Array.Empty<ParamEntry>();
         internal NodeMap paramMap = new();
         public ParamEntry? Params(uint hash)
         {
             int? index = paramMap[hash];
-            return index != null ? paramEntries[(int)index] : null;
+            return index != null ? ParamEntries[(int)index] : null;
         }
         public ParamEntry? Params(string hashString)
         {
             int? index = paramMap[hashString];
-            return index != null ? paramEntries[(int)index] : null;
+            return index != null ? ParamEntries[(int)index] : null;
         }
     }
 }
