@@ -42,6 +42,17 @@ namespace Nintendo.Byml.IO
             return NodeType.None;
         }
 
+        internal static uint ReadUInt24(this BinaryStream stream)
+        {
+            List<byte> list = stream.ReadBytes(3).ToList();
+            if (stream.ByteConverter.Endian == Syroot.BinaryData.Core.Endian.Big)
+            {
+                list.Reverse();
+            }
+            list.Add(0);
+            return BitConverter.ToUInt32(list.ToArray());
+        }
+
         internal static void WriteUInt24(this BinaryStream stream, uint i)
         {
             byte[] bytes = BitConverter.GetBytes(i)[0..^1];
