@@ -23,7 +23,7 @@ namespace Nintendo.Aamp
         /// <summary>
         /// Gets the child param list>
         /// </summary>
-        internal ParamList[] ChildParams { get; set; } = Array.Empty<ParamList>();
+        public ParamList[] ChildParams { get; set; } = Array.Empty<ParamList>();
         internal NodeMap listMap = new();
         public ParamList? Lists(uint hash)
         {
