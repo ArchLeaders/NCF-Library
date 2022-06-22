@@ -1,5 +1,6 @@
 ﻿using Nintendo.Aamp.IO;
 using Syroot.BinaryData;
+using System;
 using System.IO;
 using System.Text;
 
@@ -23,7 +24,7 @@ namespace Nintendo.Aamp.Parser
             Read(reader);
         }
 
-        internal byte[] EffectName { get; set; }
+        internal byte[] EffectName { get; set; } = Array.Empty<byte>();
 
         internal void Read(FileReader reader)
         {
@@ -70,7 +71,7 @@ namespace Nintendo.Aamp.Parser
             ParamListV1.Write(RootNode, writer);
 
             //Write end of file
-            writer.Seek(sizeOffset, System.IO.SeekOrigin.Begin);
+            writer.Seek(sizeOffset, SeekOrigin.Begin);
             uint FileSize = (uint)writer.BaseStream.Length;
             writer.Write(FileSize);
         }

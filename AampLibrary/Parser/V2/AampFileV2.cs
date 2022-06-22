@@ -1,10 +1,4 @@
-﻿#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8605 // Unboxing a possibly null value.
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-#pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
-
-using Nintendo.Aamp.IO;
+﻿using Nintendo.Aamp.IO;
 using System.Text;
 using Syroot.BinaryData;
 using Syroot.Maths;
@@ -134,11 +128,11 @@ namespace Nintendo.Aamp.Parser
                     if (IsBuffer(((ParamEntry)offset.Data).ParamType))
                     {
                         writer.Write(0); //Save offset after the size of buffer
-                        offset.WriteOffsetU24(writer, (uint)writer.Position, (ParamEntry)offset.Data);
+                        offset.WriteOffsetU24(writer, (uint)writer.Position, (ParamEntry)offset.Data!);
                         writer.Seek(-4, SeekOrigin.Current);
                     }
                     else
-                        offset.WriteOffsetU24(writer, (uint)writer.Position, (ParamEntry)offset.Data);
+                        offset.WriteOffsetU24(writer, (uint)writer.Position, (ParamEntry)offset.Data!);
                 }
 
                 writer.Write(entry.Key);
@@ -153,7 +147,7 @@ namespace Nintendo.Aamp.Parser
             {
                 foreach (var offset in entry.Value)
                 {
-                    offset.WriteOffsetU24(writer, (uint)writer.Position, (ParamEntry)offset.Data);
+                    offset.WriteOffsetU24(writer, (uint)writer.Position, (ParamEntry)offset.Data!);
                     stringCount++;
                 }
 
@@ -191,13 +185,13 @@ namespace Nintendo.Aamp.Parser
 
         private class ObjectContext
         {
-            public PlaceholderOffset? PlaceholderOffet;
+            public PlaceholderOffset? PlaceholderOffset;
             public ParamObject? ParamObject;
         }
 
         public class PlaceholderOffset
         {
-            public object Data { get; set; }
+            public object Data { get; set; } = new();
             public long BasePosition { get; set; }
             public long OffsetPosition { get; set; }
 
@@ -273,8 +267,8 @@ namespace Nintendo.Aamp.Parser
             TotalListCount += 1;
             SavedParamLists.Add(paramList);
 
-            ushort ChildListCount = (ushort)paramList.childLists?.Length;
-            ushort ParamObjectCount = (ushort)paramList.childObjects?.Length;
+            ushort ChildListCount = (ushort)paramList.childLists.Length;
+            ushort ParamObjectCount = (ushort)paramList.childObjects.Length;
 
             long pos = writer.Position;
             writer.Write(paramList.Hash);
@@ -307,13 +301,13 @@ namespace Nintendo.Aamp.Parser
             SavedParamObjects.Add(new ObjectContext()
             {
                 ParamObject = paramObj,
-                PlaceholderOffet = paramEntry,
+                PlaceholderOffset = paramEntry,
             });
         }
 
         public class ByteArrayComparer : IEqualityComparer<byte[]>
         {
-            public bool Equals(byte[] left, byte[] right)
+            public bool Equals(byte[]? left, byte[]? right)
             {
                 if (left == null || right == null)
                     return left == right;
@@ -331,7 +325,10 @@ namespace Nintendo.Aamp.Parser
 
         private void WriteObjectData(FileWriter writer, ObjectContext context)
         {
-            context.PlaceholderOffet.WriteOffsetU16(writer, (uint)writer.Position);
+            if (context.ParamObject == null || context.PlaceholderOffset == null)
+                return;
+
+            context.PlaceholderOffset.WriteOffsetU16(writer, (uint)writer.Position);
 
             foreach (ParamEntry entry in context.ParamObject.paramEntries)
             {

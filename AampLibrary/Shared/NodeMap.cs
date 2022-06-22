@@ -10,7 +10,24 @@ namespace Nintendo.Aamp
         {
             hash_map[hash] = index;
         }
-        public int this[uint hash] => hash_map[hash];
-        public int this[string hashString] => hash_map[Crc32.Compute(hashString)];
+        public int? this[uint hash]
+        {
+            get
+            {
+                if (hash_map.TryGetValue(hash, out int index))
+                    return index;
+                return null;
+            }
+        }
+        public int? this[string hashString]
+        {
+            get
+            {
+                uint hash = Crc32.Compute(hashString);
+                if (hash_map.TryGetValue(hash, out int index))
+                    return index;
+                return null;
+            }
+}
     }
 }

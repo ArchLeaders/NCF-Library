@@ -1,8 +1,4 @@
-﻿#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-#pragma warning disable CS8602 // Dereference of possible null reference.
-#pragma warning disable CS8605 // Unboxing a possibly null value.
-
-using Nintendo.Aamp.IO;
+﻿using Nintendo.Aamp.IO;
 using Syroot.Maths;
 using Syroot.BinaryData;
 using System.IO;

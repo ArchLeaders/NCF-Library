@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS8603 // Possible null reference return.
-
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Nintendo.Aamp
 {
@@ -30,6 +28,6 @@ namespace Nintendo.Aamp
         /// <summary>
         /// Gets or sets the value of the data>
         /// </summary>
-        public object? Value { get; set; }
+        public object Value { get; set; } = new();
     }
 }

@@ -84,7 +84,7 @@ namespace Nintendo.Aamp
             if (hashName.Count == 0)
                 GenerateHashes();
 
-            if (!hashName.TryGetValue(hash, out string name))
+            if (!hashName.TryGetValue(hash, out string? name))
                 return hash.ToString();
 
             return name;

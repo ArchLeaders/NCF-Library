@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS8603 // Possible null reference return.
-
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
 
 namespace Nintendo.Aamp
@@ -27,16 +25,32 @@ namespace Nintendo.Aamp
         /// </summary>
         internal ParamList[] childLists { get; set; } = Array.Empty<ParamList>();
         internal NodeMap listMap = new();
-        public ParamList Lists(uint hash) => childLists[listMap[hash]];
-        public ParamList Lists(string hashString) => childLists[listMap[hashString]];
+        public ParamList? Lists(uint hash)
+        {
+            int? index = listMap[hash];
+            return index != null ? childLists[(int)index] : null;
+        }
+        public ParamList? Lists(string hashString)
+        {
+            int? index = listMap[hashString];
+            return index != null ? childLists[(int)index] : null;
+        }
 
 
         /// <summary>
         /// Gets the param object list>
         /// </summary>
-        internal ParamObject[] childObjects { get; set; } = Array.Empty<ParamObject>();
+        public ParamObject[] childObjects { get; set; } = Array.Empty<ParamObject>();
         internal NodeMap objectMap = new();
-        public ParamObject Objects(uint hash) => childObjects[objectMap[hash]];
-        public ParamObject Objects(string hashString) => childObjects[objectMap[hashString]];
+        public ParamObject? Objects(uint hash)
+        {
+            int? index = objectMap[hash];
+            return index != null ? childObjects[(int)index] : null;
+        }
+        public ParamObject? Objects(string hashString)
+        {
+            int? index = objectMap[hashString];
+            return index != null ? childObjects[(int)index] : null;
+        }
     }
 }

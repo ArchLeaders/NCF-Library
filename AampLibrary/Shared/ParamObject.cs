@@ -1,8 +1,4 @@
-﻿#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8603 // Possible null reference return.
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Text.Json.Serialization;
 
@@ -24,7 +20,7 @@ namespace Nintendo.Aamp
 
         public void SetEntryValue(string hashName, object value)
         {
-            ParamEntry entry = paramEntries.FirstOrDefault(x => x.HashString == hashName);
+            ParamEntry? entry = paramEntries.FirstOrDefault(x => x.HashString == hashName);
             if (entry != null) {
                 entry.Value = value;
             }
@@ -59,9 +55,17 @@ namespace Nintendo.Aamp
         /// <summary>
         /// Gets the param object list>
         /// </summary>
-        internal ParamEntry[] paramEntries { get; set; } = Array.Empty<ParamEntry>();
+        public ParamEntry[] paramEntries { get; set; } = Array.Empty<ParamEntry>();
         internal NodeMap paramMap = new();
-        public ParamEntry Params(uint hash) => paramEntries[paramMap[hash]];
-        public ParamEntry Params(string hashString) => paramEntries[paramMap[hashString]];
+        public ParamEntry? Params(uint hash)
+        {
+            int? index = paramMap[hash];
+            return index != null ? paramEntries[(int)index] : null;
+        }
+        public ParamEntry? Params(string hashString)
+        {
+            int? index = paramMap[hashString];
+            return index != null ? paramEntries[(int)index] : null;
+        }
     }
 }
