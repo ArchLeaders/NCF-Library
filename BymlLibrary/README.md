@@ -5,3 +5,4 @@ Updated version of KillzXGaming's [fork](https://github.com/KillzXGaming/EditorC
 
 - exelix | Original implementation.
 - KillzXGaming | Modifications and Yaml/Xml serialization/deserialization.
+- GingerAvalanche | IO optimizations and library fixes

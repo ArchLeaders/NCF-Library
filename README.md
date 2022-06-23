@@ -27,4 +27,5 @@ _Credit to KillzXGaming, exelix, Syroot and others for the discovery and impleme
 - **exelix** | Byml, Sarc, and yaz0 implementation.
 - **AboodXD** | Original SARCLib
 - **Syroot** | Binary IO, original foundation libraries.
+- **GingerAvalanche** | API changes and IO optimizations.
 - **ArchLeaders** | Code cleanup and modification to support newer Syroot libraries.

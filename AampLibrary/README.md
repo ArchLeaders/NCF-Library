@@ -6,3 +6,4 @@ Updated version of KillzXGaming's [AampLibrary](https://github.com/KillzXGaming/
 
 - KillzXGaming | Aamp implementation.
 - leoetlino | [Hashed names list](https://github.com/zeldamods/aamp/blob/master/aamp/botw_hashed_names.txt)
+- GingerAvalanche | Various aamp fixes
