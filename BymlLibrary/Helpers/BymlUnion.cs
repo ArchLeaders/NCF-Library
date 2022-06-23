@@ -2,7 +2,7 @@
 
 namespace Nintendo.Byml
 {
-    [StructLayout(LayoutKind.Explicit, Size = 64, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Explicit, Size = 64)]
     internal unsafe struct BymlUnion
     {
         [FieldOffset(0)]
