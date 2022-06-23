@@ -61,6 +61,7 @@ namespace Nintendo.Aamp.IO
         }
 
         internal bool ReadIntBoolean() => ReadInt32() != 0;
+        internal Color4F ReadColor4F() => new(ReadSingle(), ReadSingle(), ReadSingle(), ReadSingle());
         internal Vector4F ReadVector4F() => new(ReadSingle(), ReadSingle(), ReadSingle(), ReadSingle());
         internal Vector3F ReadVector3F() => new(ReadSingle(), ReadSingle(), ReadSingle());
         internal Vector2F ReadVector2F() => new(ReadSingle(), ReadSingle());

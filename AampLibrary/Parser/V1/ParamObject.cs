@@ -18,7 +18,10 @@ namespace Nintendo.Aamp.Parser
 
             entry.ParamEntries = new ParamEntry[EntryCount];
             for (int i = 0; i < EntryCount; i++)
+            {
                 entry.ParamEntries[i] = ParamEntryV1.Read(reader);
+                entry.paramMap.Add(entry.ParamEntries[i].Hash, i);
+            }
 
             reader.Seek(CurrentPosition + Size, SeekOrigin.Begin);
             return entry;

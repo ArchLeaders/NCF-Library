@@ -20,7 +20,10 @@ namespace Nintendo.Aamp.Parser
                 {
                     entry.ParamEntries = new ParamEntry[ChildCount];
                     for (int i = 0; i < ChildCount; i++)
+                    {
                         entry.ParamEntries[i] = ParamEntryV2.Read(reader);
+                        entry.paramMap.Add(entry.ParamEntries[i].Hash, i);
+                    }
                 }
             }
             return entry;

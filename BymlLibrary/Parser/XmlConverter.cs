@@ -132,7 +132,7 @@ namespace Nintendo.Byml.Parser
             return nodeType switch
             {
                 NodeType.Array => ParseArrNode(xmlNode),
-                NodeType.Dictionary => ParseDictNode(xmlNode),
+                NodeType.Hash => ParseDictNode(xmlNode),
                 _ => XmlTypeConverter.ConvertValue(nodeType.GetInstanceType(), xmlNode.Attributes["V"].Value),
             };
         }

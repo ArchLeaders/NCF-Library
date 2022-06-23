@@ -1,286 +1,320 @@
-﻿#pragma warning disable CS8602 // Dereference of a possibly null reference.
-
-using Nintendo.Byml.Collections;
-using Syroot.BinaryData;
-using Syroot.BinaryData.Core;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Syroot.BinaryData;
 
 namespace Nintendo.Byml.IO
 {
-    internal class BymlWriter : BymlFile
+    internal class BymlWriter
     {
-        public BymlWriter(BymlFile byml) => Setter(byml);
-
-        List<string> NameArray { get; set; } = new();
-        List<string> StringArray { get; set; } = new();
-        List<List<BymlPathPoint>> PathArray { get; set; } = new();
-        Dictionary<dynamic, uint> WrittenNodes { get; set; } = new();
-        List<dynamic> ReadNodes { get; set; } = new();
-
-        public void Write(Stream stream, Encoding encoding)
+        public static byte[] Write(BymlFile byml, Encoding encoding)
         {
-            // Check if the root is of the correct type.
-            if (RootNode == null)
-                throw new BymlException("Root node must not be null.");
-            else if (!(RootNode is IDictionary<string, dynamic> || RootNode is IEnumerable))
-                throw new BymlException($"Type '{RootNode.GetType()}' is not supported as a BYAML root node.");
-
-            // Generate the name, string and path array nodes.
-            CollectNodeArrayContents(RootNode);
-            NameArray.Sort(StringComparer.Ordinal);
-            StringArray.Sort(StringComparer.Ordinal);
-
-            // Open a writer on the given stream.
-            using (BinaryStream writer = new(stream, encoding: encoding, leaveOpen: true))
+            byte[] bytes;
+            using (BinaryStream stream = new(new MemoryStream(), ByteConverter.GetConverter(byml.Endianness), encoding))
             {
-                writer.ByteConverter = ByteConverter.GetConverter(Endianness);
+                if (byml.Version < 2 || byml.Version > 4)
+                    throw new InvalidDataException($"Invalid BYML version {byml.Version}");
 
-                // Write the header, specifying magic bytes, version and main node offsets.
-                // writer.Write(Endianness == Endian.Big ? 0x4259 : 0x5942);
-                // Header writing is inversed?               B Y      Y B
-                writer.Write(Endianness == Endian.Little ? (ushort)0x4259 : (ushort)0x5942);
-                writer.Write(Version);
-                uint nameArrayOffset = writer.ReserveOffset();
-                uint stringArrayOffset = writer.ReserveOffset();
-                uint? pathArrayOffset = SupportPaths ? writer.ReserveOffset() : null;
-                uint rootOffset = writer.ReserveOffset();
+                WriteContext context = new(byml.RootNode) { Writer = stream };
 
-                // Write the main nodes.
-                WriteEnumerableNode(writer, nameArrayOffset, NodeType.StringArray, NameArray);
-                if (StringArray.Count == 0)
-                    writer.Write(0);
-                else
-                    WriteEnumerableNode(writer, stringArrayOffset, NodeType.StringArray, StringArray);
+                context.Writer.WriteUInt16(0x4259);
+                context.Writer.WriteUInt16(byml.Version);
+                context.Writer.WriteUInt32(0); // Hash key table offset
+                context.Writer.WriteUInt32(0); // String table offset
+                context.Writer.WriteUInt32(0); // Root node offset
 
-                // Include a path array offset if requested.
-                if (SupportPaths)
+                if (byml.RootNode.Type == NodeType.Null)
                 {
-                    if (PathArray.Count == 0)
-                        writer.Write(0);
-                    else
-                        WriteEnumerableNode(writer, pathArrayOffset ?? 0, NodeType.PathArray, PathArray);
+                    return ((MemoryStream)context.Writer.BaseStream).ToArray();
                 }
 
-                // Write the root node.
-                WriteEnumerableNode(writer, rootOffset, NodeTypeExtension.GetNodeType(RootNode), (IEnumerable)RootNode);
+                if (!context.HashKeys.IsEmpty())
+                {
+                    context.Writer.WriteAt(4u, (uint)context.Writer.Position);
+                    context.WriteStringTable(context.HashKeys);
+                }
+
+                if (!context.Strings.IsEmpty())
+                {
+                    context.Writer.WriteAt(8u, (uint)context.Writer.Position);
+                    context.WriteStringTable(context.Strings);
+                }
+
+                context.Writer.WriteAt(12u, (uint)context.Writer.Position);
+                context.Writer.Align(4);
+                context.WriteContainerNode(byml.RootNode);
+                context.Writer.Align(4);
+
+                bytes = ((MemoryStream)context.Writer.BaseStream).ToArray();
             }
+            return bytes;
         }
+    }
 
-        private void CollectNodeArrayContents(dynamic node)
+    internal class WriteContext
+    {
+        private int num_non_inline_nodes = 0;
+        private StringTable hash_key_table;
+        private StringTable string_table;
+        private Dictionary<BymlNode, uint> non_inline_node_data = new();
+        public BinaryStream Writer { get; set; }
+        public StringTable HashKeys { get => hash_key_table; }
+        public StringTable Strings { get => string_table; }
+
+        public WriteContext(BymlNode root)
         {
-            if (node == null) return;
+            hash_key_table = new();
+            string_table = new();
 
-            if (ReadNodes.Contains(node))
-                return;
+            traverse(root);
 
-            ReadNodes.Add(node);
-            switch (node)
+            hash_key_table.Build();
+            string_table.Build();
+
+            void traverse(BymlNode node)
             {
-                case string stringNode:
-                    if (!StringArray.Contains(stringNode))
-                        StringArray.Add(stringNode);
-                    break;
-                case List<BymlPathPoint> pathNode:
-                    PathArray.Add(pathNode);
-                    break;
-                case IDictionary<string, object> dictionaryNode:
-                    foreach (KeyValuePair<string, object> entry in dictionaryNode)
-                    {
-                        if (!NameArray.Contains(entry.Key))
-                            NameArray.Add(entry.Key);
-                        CollectNodeArrayContents(entry.Value);
-                    }
-                    break;
-                case IEnumerable arrayNode:
-                    foreach (object childNode in arrayNode)
-                        CollectNodeArrayContents(childNode);
-                    break;
-            }
-        }
-
-        private uint WriteValue(BinaryStream writer, dynamic value)
-        {
-            // Only reserve and return an offset for the complex value contents, write simple values directly.
-            NodeType type = NodeTypeExtension.GetNodeType(value);
-
-            switch (type)
-            {
-                case NodeType.StringIndex:
-                    WriteStringIndexNode(writer, value);
-                    return 0;
-                case NodeType.PathIndex:
-                    if (value is BymlPathIndex index)
-                        writer.Write(index.Index);
-                    else
-                        WritePathIndexNode(writer, value);
-                    return 0;
-                case NodeType.Dictionary or NodeType.Array:
-                    return writer.ReserveOffset();
-                case NodeType.Boolean:
-                    writer.Write(value ? 1 : 0);
-                    return 0;
-                case NodeType.Integer or NodeType.Float or NodeType.Uinteger or NodeType.Double or NodeType.ULong or NodeType.Long:
-                    writer.Write(value);
-                    return 0;
-                case NodeType.Null:
-                    writer.Write(0x0);
-                    return 0;
-                default:
-                    throw new BymlException($"{type} not supported as value node.");
-            }
-        }
-
-        private void WriteEnumerableNode(BinaryStream writer, uint offset, NodeType type, IEnumerable node)
-        {
-            if (WrittenNodes.TryGetValue(node, out uint position))
-            {
-                writer.SatisfyOffset(offset, position);
-                return;
-            }
-            else
-            {
-                // Satisfy the offset to the complex node value which must be 4-byte aligned.
-                position = (uint)writer.Position;
-                writer.SatisfyOffset(offset, position);
-                WriteTypeAndLength(writer, type, node);
-
-                WrittenNodes.Add(node, position);
-
-                // Write the value contents.
+                NodeType type = node.Type;
+                if (IsNonInlineType(type))
+                    num_non_inline_nodes++;
                 switch (type)
                 {
+                    case NodeType.String:
+                        string_table.Add(node.String);
+                        break;
                     case NodeType.Array:
-                        WriteArrayNode(writer, node);
+                        foreach (BymlNode child in node.Array)
+                            traverse(child);
                         break;
-                    case NodeType.Dictionary:
-                        WriteDictionaryNode(writer, (IDictionary<string, object>)node);
+                    case NodeType.Hash:
+                        foreach ((string key, BymlNode child) in node.Hash)
+                        {
+                            hash_key_table.Add(key);
+                            traverse(child);
+                        }
                         break;
-                    case NodeType.StringArray:
-                        WriteStringArrayNode(writer, (List<string>)node);
-                        break;
-                    case NodeType.PathArray:
-                        WritePathArrayNode(writer, (List<List<BymlPathPoint>>)node);
-                        break;
-                    default:
-                        throw new BymlException($"{type} not supported as complex node.");
                 }
             }
         }
 
-        private void WriteTypeAndLength(BinaryStream writer, NodeType type, dynamic node) =>
-            writer.Write(Endianness == Endian.Big ? (uint)type << 24 | (uint)Enumerable.Count(node) : (uint)type | (uint)Enumerable.Count(node) << 8);
-        private void WriteStringIndexNode(BinaryStream writer, string node) =>writer.Write((uint)StringArray.IndexOf(node));
-        private void WritePathIndexNode(BinaryStream writer, List<BymlPathPoint> node) => writer.Write(PathArray.IndexOf(node));
-
-        private void WriteArrayNode(BinaryStream writer, IEnumerable node)
+        public static bool IsNonInlineType(NodeType type)
         {
-            // Write the element types.
-            foreach (dynamic element in node)
-                writer.Write((byte)NodeTypeExtension.GetNodeType(element));
+            return IsContainerType(type) || IsLongType(type) || type == NodeType.Binary;
+        }
 
-            // Write the elements, which begin after a padding to the next 4 bytes.
-            writer.Align(4);
+        public static bool IsContainerType(NodeType type)
+        {
+            return type == NodeType.Array || type == NodeType.Hash;
+        }
 
-            List<IEnumerable> enumerables = new();
-            List<uint> offsets = new();
-            foreach (dynamic element in node)
+        public static bool IsLongType(NodeType type)
+        {
+            return type == NodeType.Int64 || type == NodeType.UInt64 || type == NodeType.Double;
+        }
+
+        public void WriteValueNode(BymlNode node)
+        {
+            switch (node.Type)
             {
-                var off = WriteValue(writer, element);
-                if (off > 0)
+                case NodeType.Null:
+                    Writer.WriteUInt32(0);
+                    break;
+                case NodeType.String:
+                    Writer.Write(string_table.GetIndex(node.String));
+                    break;
+                case NodeType.Binary:
+                    Writer.WriteUInt32((uint)node.Binary.Length);
+                    Writer.WriteBytes(node.Binary);
+                    break;
+                case NodeType.Bool:
+                    Writer.WriteUInt32(node.Bool ? 1u : 0u);
+                    break;
+                case NodeType.Int:
+                    Writer.WriteInt32(node.Int);
+                    break;
+                case NodeType.Float:
+                    Writer.WriteSingle(node.Float);
+                    break;
+                case NodeType.UInt:
+                    Writer.WriteUInt32(node.UInt);
+                    break;
+                case NodeType.Int64:
+                    Writer.WriteInt64(node.Int64);
+                    break;
+                case NodeType.UInt64:
+                    Writer.WriteUInt64(node.UInt64);
+                    break;
+                case NodeType.Double:
+                    Writer.WriteDouble(node.Double);
+                    break;
+                default:
+                    throw new InvalidDataException($"{node.Type} is not a value node!");
+            }
+        }
+
+        private class NonInlineNode
+        {
+            public uint ContainerOffset { get; set; }
+            public BymlNode Node { get; set; }
+
+            public NonInlineNode(uint containerOffset, BymlNode node)
+            {
+                ContainerOffset = containerOffset;
+                Node = node;
+            }
+        }
+
+        public void WriteContainerNode(BymlNode node)
+        {
+            List<NonInlineNode> non_inline_nodes = new();
+
+            switch (node.Type)
+            {
+                case NodeType.Array:
+                    Writer.Write((byte)NodeType.Array);
+                    Writer.WriteUInt24((uint)node.Array.Count);
+                    foreach (BymlNode item in node.Array)
+                        Writer.WriteByte((byte)item.Type);
+                    Writer.Align(4);
+                    foreach (BymlNode item in node.Array)
+                        write_container_item(item);
+                    break;
+                case NodeType.Hash:
+                    Dictionary<string, BymlNode> hash = node.Hash;
+                    Writer.WriteByte((byte)node.Type);
+                    Writer.WriteUInt24((uint)hash.Count);
+                    foreach ((string key, BymlNode child) in hash)
+                    {
+                        Writer.WriteUInt24(hash_key_table.GetIndex(key));
+                        Writer.WriteByte((byte)child.Type);
+                        write_container_item(child);
+                    }
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid container node type {node.Type}");
+            }
+
+            foreach (NonInlineNode non in non_inline_nodes)
+            {
+                if (non_inline_node_data.TryGetValue(non.Node, out uint offset))
                 {
-                    offsets.Add(off);
-                    enumerables.Add((IEnumerable)element);
+                    using (Writer.TemporarySeek(non.ContainerOffset, SeekOrigin.Begin))
+                    {
+                        Writer.WriteUInt32(offset);
+                    }
+                }
+                else
+                {
+                    offset = (uint)Writer.Position;
+                    using (Writer.TemporarySeek(non.ContainerOffset, SeekOrigin.Begin))
+                    {
+                        Writer.WriteUInt32(offset);
+                    }
+                    non_inline_node_data.Add(non.Node, offset);
+                    if (IsContainerType(non.Node.Type))
+                    {
+                        WriteContainerNode(non.Node);
+                    }
+                    else
+                    {
+                        WriteValueNode(non.Node);
+                    }
                 }
             }
 
-            // Write the contents of complex nodes and satisfy the offsets.
-            for (int i = 0; i < enumerables.Count; i++)
+            void write_container_item(BymlNode node)
             {
-                IEnumerable enumerable = enumerables[i];
-                WriteEnumerableNode(writer, offsets[i], NodeTypeExtension.GetNodeType(enumerable), enumerable);
-            }
-        }
-
-        private void WriteDictionaryNode(BinaryStream writer, IDictionary<string, dynamic> node)
-        {
-            List<EnumerableNode> enumerables = node
-               .Where(x => (NodeTypeExtension.GetNodeType(x.Value) >= NodeType.Array && NodeTypeExtension.GetNodeType(x.Value) <= NodeType.PathArray))
-               .Select(x => new EnumerableNode((IEnumerable)x.Value))
-               .ToList();
-
-            // Write the key-value pairs.
-            foreach (KeyValuePair<string, object> element in node.OrderBy(x => x.Key, StringComparer.Ordinal))
-            {
-                // Get the index of the key string in the file's name array and write it together with the type.
-                uint keyIndex = (uint)NameArray.IndexOf(element.Key);
-                if (Endianness == Endian.Big)
-                    writer.Write(keyIndex << 8 | (uint)NodeTypeExtension.GetNodeType(element.Value));
+                if (IsNonInlineType(node.Type))
+                {
+                    non_inline_nodes.Add(new NonInlineNode((uint)Writer.Position, node));
+                    Writer.WriteUInt32(0);
+                }
                 else
-                    writer.Write(keyIndex | (uint)NodeTypeExtension.GetNodeType(element.Value) << 24);
-
-                // Write the elements.
-                var offset = WriteValue(writer, element.Value);
-                if (offset > 0)
-                    enumerables.Where(x => x.Node == element.Value && x.Offset == 0).First().Offset = offset;
+                {
+                    WriteValueNode(node);
+                }
             }
-
-            // Write the value contents.
-            foreach (EnumerableNode enumerable in enumerables)
-                WriteEnumerableNode(writer, enumerable.Offset, NodeTypeExtension.GetNodeType(enumerable.Node), enumerable.Node);
         }
 
-        private static void WriteStringArrayNode(BinaryStream writer, List<string> node)
+        public void WriteStringTable(StringTable table)
         {
-            // Write the offsets to the strings, where the last one points to the end of the last string.
-            long offset = sizeof(uint) + sizeof(uint) * (node.Count + 1); // Relative to node start + all uint32 offsets.
-            foreach (string str in node)
+            uint start = (uint)Writer.Position;
+            Writer.WriteByte((byte)NodeType.StringArray);
+            Writer.WriteUInt24(table.Size);
+
+            // String offsets
+            uint offset_table_offset = (uint)Writer.Position;
+            Writer.Seek(sizeof(uint) * (table.Size + 1));
+            
+            int i = 0;
+            foreach (string s in table.Strings)
             {
-                writer.Write((uint)offset);
-                offset += writer.Encoding.GetByteCount(str) + 1;
+                Writer.WriteAt((uint)(offset_table_offset + sizeof(uint) * i), (uint)Writer.Position - start);
+                Writer.WriteBytes(Writer.Encoding.GetBytes($"{s}\0"));
+                i++;
             }
-            writer.Write((uint)offset);
 
-            foreach (string str in node)
-                writer.Write(str, StringCoding.ZeroTerminated);
-            writer.Align(4);
+            Writer.WriteAt((uint)(offset_table_offset + sizeof(uint) * i), (uint)Writer.Position - start);
+            Writer.Align(4);
+        }
+    }
+
+    internal class StringTable
+    {
+        private bool built;
+        private readonly Dictionary<string, uint> hash_table = new();
+        private readonly SortedSet<string> sorted_strings = new(new AsciiComparer());
+        public uint Size { get => (uint)sorted_strings.Count; }
+        public SortedSet<string> Strings { get => sorted_strings; }
+        public bool IsEmpty() => sorted_strings.Count == 0;
+        public void Add(string str)
+        {
+            if (built)
+                throw new InvalidOperationException("Can't add strings after the table has been built");
+            sorted_strings.Add(str);
+        }
+        public string GetString(uint index)
+        {
+            if (!built)
+                throw new InvalidOperationException("Table hasn't been built yet, strings are in the wrong order");
+            return sorted_strings.ToList()[(int)index];
+        }
+        public uint GetIndex(string str)
+        {
+            if (!built)
+                throw new InvalidOperationException("Table hasn't been built yet, strings are in the wrong order");
+            return hash_table[str];
         }
 
-        private static void WritePathArrayNode(BinaryStream writer, IEnumerable<List<BymlPathPoint>> node)
+        public void Build()
         {
-            // Write the offsets to the paths, where the last one points to the end of the last path.
-            long offset = 4 + 4 * (node.Count() + 1); // Relative to node start + all uint32 offsets.
-            foreach (List<BymlPathPoint> path in node)
+            uint count = 0;
+            foreach (string str in sorted_strings)
             {
-                writer.Write((uint)offset);
-                offset += path.Count * 28; // 28 bytes are required for a single point.
+                hash_table[str] = count++;
             }
-            writer.Write((uint)offset);
-
-            // Write the paths.
-            foreach (List<BymlPathPoint> path in node)
-                WritePathNode(writer, path);
+            built = true;
         }
 
-        private static void WritePathNode(BinaryStream writer, List<BymlPathPoint> node)
+        private class AsciiComparer : IComparer<string>
         {
-            foreach (BymlPathPoint point in node)
-                WritePathPoint(writer, point);
-        }
-
-        private static void WritePathPoint(BinaryStream writer, BymlPathPoint point)
-        {
-            writer.Write(point.Position.X);
-            writer.Write(point.Position.Y);
-            writer.Write(point.Position.Z);
-            writer.Write(point.Normal.X);
-            writer.Write(point.Normal.Y);
-            writer.Write(point.Normal.Z);
-            writer.Write(point.Unknown);
+            public int Compare(string x, string y)
+            {
+                int shorter_size = x.Length < y.Length ? x.Length : y.Length;
+                for (int i = 0; i < shorter_size; i++)
+                {
+                    if (x[i] != y[i])
+                    {
+                        return (byte)x[i] - (byte)y[i];
+                    }
+                }
+                if (x.Length == y.Length)
+                {
+                    return 0;
+                }
+                return x.Length - y.Length;
+            }
         }
     }
 }

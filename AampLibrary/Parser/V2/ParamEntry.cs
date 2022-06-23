@@ -32,7 +32,7 @@ namespace Nintendo.Aamp.Parser
                         case ParamType.Vector2F: entry.Value = reader.ReadVector2F(); break;
                         case ParamType.Vector3F: entry.Value = reader.ReadVector3F(); break;
                         case ParamType.Vector4F: entry.Value = reader.ReadVector4F(); break;
-                        case ParamType.Color4F: entry.Value = reader.ReadVector4F(); break;
+                        case ParamType.Color4F: entry.Value = reader.ReadColor4F(); break;
                         case ParamType.Uint: entry.Value = reader.ReadUInt32(); break;
                         case ParamType.BufferUint:
                             reader.Seek(-4, SeekOrigin.Current);

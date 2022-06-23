@@ -1,8 +1,6 @@
 ﻿using Aamp.Security.Cryptography;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Nintendo.Aamp
@@ -17,12 +15,11 @@ namespace Nintendo.Aamp
         private static Dictionary<uint, string> hashName = new();
         public static Dictionary<uint, string> HashName { get => hashName; set => hashName = value; }
 
-        public static bool HasString(string name) => HashName.Values.Any(x => x == name);
+        public static bool HasString(string name) => hashName.ContainsKey(Crc32.Compute(name));
         private static void CheckHash(string hashStr)
         {
             uint hash = Crc32.Compute(hashStr);
-            if (!HashName.ContainsKey(hash))
-                HashName.Add(hash, hashStr);
+            hashName.TryAdd(hash, hashStr);
         }
 
         private static void GenerateHashes()
@@ -84,10 +81,10 @@ namespace Nintendo.Aamp
 
         public static string GetName(uint hash)
         {
-            if (HashName.Count == 0)
+            if (hashName.Count == 0)
                 GenerateHashes();
 
-            if (!HashName.TryGetValue(hash, out string name))
+            if (!hashName.TryGetValue(hash, out string? name))
                 return hash.ToString();
 
             return name;

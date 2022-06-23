@@ -2,8 +2,10 @@
 using Nintendo.Aamp;
 using Nintendo.Bfres;
 using Nintendo.Byml;
+using Nintendo.Byml.IO;
 using Nintendo.Sarc;
 using Nintendo.Yaz0;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
@@ -33,8 +35,26 @@ namespace IOTests
         [TestMethod]
         public void NewByml()
         {
-            BymlFile byml = new(NodeType.Dictionary);
+            BymlFile byml = new(new Dictionary<string, BymlNode>());
             File.WriteAllBytes(@"..\..\..\Data\new.byml", byml.ToBinary());
+        }
+        [TestMethod]
+        public void WriteByml()
+        {
+            BymlFile byml = new(@"..\..\..\Data\IO.byml");
+            File.WriteAllBytes(@"..\..\..\Data\new.byml", byml.ToBinary());
+        }
+        [TestMethod]
+        public void ActorInfoReadWriteTest()
+        {
+            BymlFile byml = new(@"E:\Users\chodn\Documents\ISOs - WiiU\The Legend of Zelda Breath of the Wild (UPDATE DATA) (v208) (USA)\content\Actor\ActorInfo.product.byml");
+            File.WriteAllBytes(@"E:\Users\chodn\Documents\ISOs - WiiU\The Legend of Zelda Breath of the Wild (UPDATE DATA) (v208) (USA)\content\Actor\ActorInfo.test.product.byml", byml.ToBinary());
+        }
+        [TestMethod]
+        public void ActorInfoYamlTest()
+        {
+            BymlFile byml = new(@"E:\Users\chodn\Documents\ISOs - WiiU\The Legend of Zelda Breath of the Wild (UPDATE DATA) (v208) (USA)\content\Actor\ActorInfo.product.byml");
+            Trace.WriteLine(byml.ToYaml());
         }
     }
 }

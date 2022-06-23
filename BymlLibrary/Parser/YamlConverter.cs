@@ -12,8 +12,8 @@ namespace Nintendo.Byml.Parser
 {
     public class YamlConverter
     {
-        private static Dictionary<dynamic, YamlNode> NodePaths { get; set; } = new Dictionary<dynamic, YamlNode>();
-        private static Dictionary<string, dynamic> ReferenceNodes { get; set; } = new Dictionary<string, dynamic>();
+        private static Dictionary<BymlNode, YamlNode> NodePaths { get; set; } = new Dictionary<BymlNode, YamlNode>();
+        private static Dictionary<string, BymlNode> ReferenceNodes { get; set; } = new Dictionary<string, BymlNode>();
         static int RefNodeId { get; set; } = 0;
 
         public static string ToYaml(BymlFile byml)
@@ -27,7 +27,7 @@ namespace Nintendo.Byml.Parser
             RefNodeId = 0;
 
             YamlStream stream = new(new YamlDocument(root));
-            using StringWriter? writer = new(new StringBuilder());
+            using StringWriter writer = new(new StringBuilder());
             stream.Save(writer, true);
             return writer.ToString();
         }
@@ -42,7 +42,7 @@ namespace Nintendo.Byml.Parser
 
             yaml.Load(new StringReader(text));
 
-            dynamic root = yaml.Documents[0].RootNode;
+            YamlNode root = yaml.Documents[0].RootNode;
 
             if (root is YamlMappingNode)
                 byml.RootNode = ParseNode(root);
@@ -55,12 +55,12 @@ namespace Nintendo.Byml.Parser
             return byml;
         }
 
-        static dynamic ParseNode(YamlNode node)
+        static BymlNode ParseNode(YamlNode node)
         {
             if (node is YamlMappingNode castMappingNode) {
-                var values = new Dictionary<string, dynamic>();
+                var values = new Dictionary<string, BymlNode>();
                 if (IsValidReference(node))
-                    ReferenceNodes.Add(node.Tag, values);
+                    ReferenceNodes.Add(node.Tag, new BymlNode(values));
 
                 foreach (var child in castMappingNode.Children) {
                     var key = ((YamlScalarNode)child.Key).Value;
@@ -70,18 +70,18 @@ namespace Nintendo.Byml.Parser
 
                     values.Add(key, ParseNode(child.Value));
                 }
-                return values;
+                return new BymlNode(values);
             }
             else if (node is YamlSequenceNode castSequenceNode) {
 
-                var values = new List<dynamic>();
+                var values = new List<BymlNode>();
                 if (IsValidReference(node))
-                    ReferenceNodes.Add(node.Tag, values);
+                    ReferenceNodes.Add(node.Tag, new BymlNode(values));
 
                 foreach (var child in castSequenceNode.Children)
                     values.Add(ParseNode(child));
 
-                return values;
+                return new BymlNode(values);
             }
             else if (node is YamlScalarNode castScalarNode && castScalarNode.Value.Contains("!refTag=")) {
 
@@ -102,155 +102,148 @@ namespace Nintendo.Byml.Parser
 
         static bool IsValidReference(YamlNode node) => node.Tag != null && node.Tag.Contains("!ref") && !ReferenceNodes.ContainsKey(node.Tag);
 
-        static dynamic ConvertValue(string value, string tag)
+        static BymlNode ConvertValue(string value, string tag)
         {
             if (tag == null)
+            {
                 tag = "";
+            }
 
             if (value == "null")
-                return null;
-            else if (value == "true" || value == "True")
-                return true;
-            else if (value == "false" || value == "False")
-                return false;
-            else if (tag == "!u")
-                return uint.Parse(value, CultureInfo.InvariantCulture);
-            else if (tag == "!l")
-                return int.Parse(value, CultureInfo.InvariantCulture);
-            else if (tag == "!d")
-                return double.Parse(value, CultureInfo.InvariantCulture);
-            else if (tag == "!ul")
-                return ulong.Parse(value, CultureInfo.InvariantCulture);
-            else if (tag == "!ll")
-                return long.Parse(value, CultureInfo.InvariantCulture);
-            else if (tag == "!h")
-                return Crc32.Compute(value).ToString("x");
-            else if (tag == "!p")
-                return new BymlPathIndex() { Index = Int32.Parse(value, CultureInfo.InvariantCulture) };
-            else {
-                bool isFloat = float.TryParse(value, out float floatValue);
-
-                if (isFloat)
-                    return floatValue;
-
-                return value;
+            {
+                return new BymlNode();
             }
+            else if (value is "true" or "True")
+            {
+                return new BymlNode(true);
+            }
+            else if (value is "false" or "False")
+            {
+                return new BymlNode(false);
+            }
+            else if (tag == "!u")
+            {
+                return new BymlNode(uint.Parse(value, CultureInfo.InvariantCulture));
+            }
+            else if (tag == "!d")
+            {
+                return new BymlNode(double.Parse(value, CultureInfo.InvariantCulture));
+            }
+            else if (tag == "!ul")
+            {
+                return new BymlNode(ulong.Parse(value, CultureInfo.InvariantCulture));
+            }
+            else if (tag == "!l")
+            {
+                return new BymlNode(long.Parse(value, CultureInfo.InvariantCulture));
+            }
+            else if (tag == "!h")
+            {
+                return new BymlNode(Crc32.Compute(value).ToString("x"));
+            }
+            else
+            {
+                if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out int intValue))
+                {
+                    return new BymlNode(intValue);
+                }
+                if (float.TryParse(value, out float floatValue))
+                {
+                    return new BymlNode(floatValue);
+                }
+            }
+
+            return new BymlNode(value);
         }
 
-        static YamlNode SaveNode(dynamic node)
+        static YamlNode SaveNode(BymlNode node)
         {
             if (node == null)
+            {
                 return new YamlScalarNode("null");
-            else if (node is IList<dynamic> castNode) {
+            }
+            else if (node.Type == NodeType.Array)
+            {
                 var yamlNode = new YamlSequenceNode();
-                // NodePaths.Add(node, yamlNode);
 
-                if (!HasEnumerables(castNode) &&
-                    castNode.Count < 6)
+                if (node.Array.Count < 6 && !HasEnumerables(node))
+                {
                     yamlNode.Style = SharpYaml.YamlStyle.Flow;
+                }
 
-                foreach (var item in castNode)
+                foreach (BymlNode item in node.Array)
+                {
                     yamlNode.Add(SaveNode(item));
+                }
 
                 return yamlNode;
             }
-            else if (node is IDictionary<string, dynamic> nodeDict) {
+            else if (node.Type == NodeType.Hash)
+            {
                 var yamlNode = new YamlMappingNode();
-                //  NodePaths.Add(node, yamlNode);
 
-                if (!HasEnumerables(nodeDict) && nodeDict.Count < 6)
+                if (node.Hash.Count < 6 && !HasEnumerables(node))
+                {
                     yamlNode.Style = SharpYaml.YamlStyle.Flow;
+                }
 
-                foreach (var item in nodeDict) {
-                    string key = item.Key;
-                    YamlNode keyNode = new YamlScalarNode(key);
-                    if (IsHash(key)) {
+                foreach ((string key, BymlNode item) in node.Hash)
+                {
+                    YamlScalarNode keyNode = new YamlScalarNode(key);
+                    if (IsHash(key))
+                    {
                         uint hash = Convert.ToUInt32(key, 16);
                         if (Hashes.ContainsKey(hash))
-                            key = $"{Hashes[hash]}";
-
-                        keyNode = new YamlScalarNode(key) {
-                            Tag = "!h"
-                        };
+                        {
+                            keyNode.Value = Hashes[hash];
+                        }
                     }
-                    yamlNode.Add(keyNode, SaveNode(item.Value));
+                    yamlNode.Add(keyNode, SaveNode(item));
                 }
                 return yamlNode;
             }
-            else if (node is BymlPathPoint castBymlPoint)
-                return ConvertPathPoint(castBymlPoint);
-            else if (node is List<BymlPathPoint> castList) {
-                var yamlNode = new YamlSequenceNode();
-                foreach (var pt in castList)
-                    yamlNode.Add(ConvertPathPoint(pt));
-                return yamlNode;
-            }
-            else {
-                string? tag = null;
-                if (node is int) tag = "!l";
-                else if (node is uint) tag = "!u";
-                else if (node is long) tag = "!ul";
-                else if (node is double) tag = "!d";
-                else if (node is BymlPathIndex) tag = "!p";
-
-                var yamlNode = new YamlScalarNode(ConvertValue(node));
-                if (tag != null) yamlNode.Tag = tag;
+            else
+            {
+                var yamlNode = new YamlScalarNode(ConvertValue(node))
+                {
+                    Tag = node.Type switch
+                    {
+                        NodeType.UInt => "!u",
+                        NodeType.Int64 => "!l",
+                        NodeType.UInt64 => "!ul",
+                        NodeType.Double => "!d",
+                        _ => null,
+                    }
+                };
                 return yamlNode;
             }
         }
 
-        private static YamlMappingNode ConvertPathPoint(BymlPathPoint point)
+        private static bool HasEnumerables(BymlNode node)
         {
-            YamlMappingNode node = new() {
-                Style = SharpYaml.YamlStyle.Flow
+            return node.Type switch
+            {
+                NodeType.Array => node.Array.Any(n => n.Type == NodeType.Array || n.Type == NodeType.Hash),
+                NodeType.Hash => node.Hash.Any(p => p.Value.Type == NodeType.Array || p.Value.Type == NodeType.Hash),
+                _ => false,
             };
-            node.Add("X", point.Position.X.ToString());
-            node.Add("Y", point.Position.Y.ToString());
-            node.Add("Z", point.Position.Z.ToString());
-            node.Add("NX", point.Normal.X.ToString());
-            node.Add("NY", point.Normal.Y.ToString());
-            node.Add("NZ", point.Normal.Z.ToString());
-            node.Add("Value", point.Unknown.ToString());
-            return node;
         }
 
-        private static bool HasEnumerables(IDictionary<string, dynamic> node)
+        private static string ConvertValue(BymlNode node)
         {
-            foreach (var item in node.Values) {
-                if (item == null)
-                    continue;
-                if (item is IList<dynamic>)
-                    return true;
-                else if (item is IDictionary<string, dynamic>)
-                    return true;
-            }
-            return false;
-        }
-
-        private static bool HasEnumerables(IList<dynamic> node)
-        {
-            foreach (var _ in node) {
-                if (node == null)
-                    continue;
-
-                if (node is IList<dynamic>)
-                    return true;
-                else if (node is IDictionary<string, dynamic>)
-                    return true;
-            }
-
-            return false;
-        }
-
-        private static string ConvertValue(dynamic node)
-        {
-            if (node is bool castBoolNode) return castBoolNode ? "true" : "false";
-            else if (node is ushort) return string.Format("0x{0:x4}", node);
-            else if (node is uint) return string.Format("0x{0:x8}", node);
-            else if (node is ulong) return string.Format("0x{0:x16}", node);
-            else if (node is BymlPathIndex castPathNode) return castPathNode.Index.ToString();
-            else if (node is float) return string.Format("{0:0.000.00}", node);
-            else return node.ToString();
+            return node.Type switch
+            {
+                NodeType.String => node.String,
+                NodeType.Bool => node.Bool ? "true" : "false",
+                NodeType.Binary => string.Join(" ", node.Binary),
+                NodeType.Int => node.Int.ToString(),
+                NodeType.Float => string.Format("{0:0.000.00}", node.Float),
+                NodeType.UInt => string.Format("0x{0:x8}", node.UInt),
+                NodeType.Int64 => node.Int64.ToString(),
+                NodeType.UInt64 => string.Format("0x{0:x16}", node.UInt64),
+                NodeType.Double => string.Format("{0:0.000.00}", node.Double),
+                _ => throw new ArgumentException($"Not value node type {node.Type}"),
+            };
         }
 
         private static Dictionary<uint, string> Hashes => CreateHashList();

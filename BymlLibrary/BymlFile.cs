@@ -23,14 +23,13 @@ namespace Nintendo.Byml
             Setter(FromBinary(stream));
         }
         public BymlFile(Stream stream) => Setter(FromBinary(stream));
-        public BymlFile(NodeType type)
+        public BymlFile(Dictionary<string, BymlNode> dictionary)
         {
-            RootNode = type switch
-            {
-                NodeType.Array => new List<dynamic>(),
-                NodeType.Dictionary => new Dictionary<string, dynamic>(),
-                _ => throw new BymlException($"Invalid RootNode type {type}"),
-            };
+            RootNode = new BymlNode(dictionary);
+        }
+        public BymlFile(List<BymlNode> list)
+        {
+            RootNode = new BymlNode(list);
         }
 
         #endregion
@@ -56,7 +55,7 @@ namespace Nintendo.Byml
         #region Expand
 
         public Endian Endianness { get; set; } = Endian.Little;
-        public dynamic? RootNode { get; set; }
+        public BymlNode RootNode { get; set; }
         public bool SupportPaths { get; set; } = false;
         public ushort Version { get; set; } = 2;
 
@@ -73,7 +72,7 @@ namespace Nintendo.Byml
         public string ToYaml() => YamlConverter.ToYaml(this);
 
         public void WriteBinary(string fileName) => File.WriteAllBytes(fileName, ToBinary());
-        public void WriteJson(string fileName) => File.WriteAllText(fileName, ToXml());
+        public void WriteJson(string fileName) => File.WriteAllText(fileName, ToJson());
         public void WriteXml(string fileName) => File.WriteAllText(fileName, ToXml());
         public void WriteYaml(string fileName) => File.WriteAllText(fileName, ToYaml());
 
@@ -101,14 +100,7 @@ namespace Nintendo.Byml
 
         public static BymlFile FromXml(string text) => XmlConverter.FromXml(text);
         public static BymlFile FromXmlFile(string fileName) => XmlConverter.FromXml(File.ReadAllText(fileName));
-
-        public static void ToBinary(BymlFile byml, Stream stream) => new BymlWriter(byml).Write(stream, Encoding.UTF8);
-        public static byte[] ToBinary(BymlFile byml)
-        {
-            using MemoryStream ms = new();
-            ToBinary(byml, ms);
-            return ms.ToArray();
-        }
+        public static byte[] ToBinary(BymlFile byml) => BymlWriter.Write(byml, Encoding.UTF8);
 
         #endregion
     }

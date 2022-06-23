@@ -38,6 +38,14 @@ namespace Nintendo.Aamp.IO
             Write(vector4F.W);
         }
 
+        internal void WriteColor4F(Color4F color4F)
+        {
+            Write(color4F.R);
+            Write(color4F.G);
+            Write(color4F.B);
+            Write(color4F.A);
+        }
+
         /// <summary>
         /// Checks the byte order mark to determine the endianness of the writer.
         /// </summary>

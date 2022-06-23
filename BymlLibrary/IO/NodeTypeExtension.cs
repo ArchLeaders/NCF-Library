@@ -9,7 +9,7 @@ namespace Nintendo.Byml.IO
     /// </summary>
     internal static class NodeTypeExtension
 	{
-		internal static bool IsEnumerable(this NodeType nodeType) => nodeType >= NodeType.Array && nodeType <= NodeType.PathArray;
+		internal static bool IsEnumerable(this NodeType nodeType) => nodeType >= NodeType.Array && nodeType <= NodeType.StringArray;
 
 		/// <summary>
 		/// Gets the corresponding, instantiatable <see cref="Type"/> for the given <paramref name="nodeType"/>.
@@ -20,18 +20,17 @@ namespace Nintendo.Byml.IO
 		{
             return nodeType switch
             {
-                NodeType.StringIndex => typeof(string),
-                NodeType.PathIndex => typeof(List<BymlPathPoint>),
+                NodeType.String => typeof(string),
 				// TODO: Check if this could be loaded as an object array.
 				NodeType.Array => throw new BymlException("Cannot instantiate an array of unknown element type."),
 				// TODO: Check if this could be loaded as a string-object dictionary.
-                NodeType.Dictionary => throw new BymlException("Cannot instantiate an object of unknown type."),
-                NodeType.Boolean => typeof(bool),
-                NodeType.Integer => typeof(int),
+                NodeType.Hash => throw new BymlException("Cannot instantiate an object of unknown type."),
+                NodeType.Bool => typeof(bool),
+                NodeType.Int => typeof(int),
                 NodeType.Float => typeof(float),
-                NodeType.Uinteger => typeof(uint),
-                NodeType.Long => typeof(long),
-                NodeType.ULong => typeof(ulong),
+                NodeType.UInt => typeof(uint),
+                NodeType.Int64 => typeof(long),
+                NodeType.UInt64 => typeof(ulong),
                 NodeType.Double => typeof(double),
                 NodeType.Null => typeof(object),
                 _ => throw new BymlException($"Unknown node type {nodeType}."),
@@ -45,14 +44,13 @@ namespace Nintendo.Byml.IO
         /// <param name="isInternalNode"></param>
         /// <returns></returns>
         /// <exception cref="BymlException"></exception>
-        static internal NodeType GetNodeType(dynamic node, bool isInternalNode = false)
+        internal static NodeType GetNodeType(dynamic node, bool isInternalNode = false)
         {
             if (isInternalNode)
             {
                 return node switch
                 {
                     IEnumerable<string> => NodeType.StringArray,
-                    IEnumerable<List<NodeType>> => NodeType.PathArray,
                     _ => throw new BymlException($"Type '{node.GetType()}' is not supported as a main BYAML node."),
                 };
             }
@@ -60,16 +58,15 @@ namespace Nintendo.Byml.IO
             {
                 return node switch
                 {
-                    string => NodeType.StringIndex,
-                    List<BymlPathPoint> => NodeType.PathIndex,
-                    IDictionary<string, dynamic> => NodeType.Dictionary,
+                    string => NodeType.String,
+                    IDictionary<string, dynamic> => NodeType.Hash,
                     IEnumerable => NodeType.Array,
-                    bool => NodeType.Boolean,
-                    int => NodeType.Integer,
+                    bool => NodeType.Bool,
+                    int => NodeType.Int,
                     float => NodeType.Float, // TODO decimal is float or double?
-                    uint => NodeType.Uinteger,
-                    long => NodeType.Long,
-                    ulong => NodeType.ULong,
+                    uint => NodeType.UInt,
+                    long => NodeType.Int64,
+                    ulong => NodeType.UInt64,
                     double => NodeType.Double,
                     null => NodeType.Null,
                     _ => throw new BymlException($"Type '{node.GetType()}' is not supported as a BYAML node."),

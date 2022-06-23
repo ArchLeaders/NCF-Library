@@ -14,12 +14,14 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
 	<VersionPrefix>1.0.5</VersionPrefix>
+	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Data\AcnhByml" />
     <None Remove="Data\AcnhHeaders" />
     <None Remove="Data\AcnhValues" />
+    <None Remove="IO\BymlWriter.cs.bak" />
   </ItemGroup>
 
   <ItemGroup>
