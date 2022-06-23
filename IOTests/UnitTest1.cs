@@ -2,6 +2,7 @@
 using Nintendo.Aamp;
 using Nintendo.Bfres;
 using Nintendo.Byml;
+using Nintendo.Byml.IO;
 using Nintendo.Sarc;
 using Nintendo.Yaz0;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace IOTests
         public void Byml()
         {
             BymlFile byml = new(@"..\..\..\Data\IO.byml");
-            //Trace.WriteLine(byml.ToYaml());
+            Trace.WriteLine(byml.ToYaml());
         }
         [TestMethod]
         public void NewAamp()
@@ -44,21 +45,16 @@ namespace IOTests
             File.WriteAllBytes(@"..\..\..\Data\new.byml", byml.ToBinary());
         }
         [TestMethod]
-        public void ActorInfoTest()
+        public void ActorInfoReadWriteTest()
         {
             BymlFile byml = new(@"E:\Users\chodn\Documents\ISOs - WiiU\The Legend of Zelda Breath of the Wild (UPDATE DATA) (v208) (USA)\content\Actor\ActorInfo.product.byml");
-            //File.WriteAllBytes(@"..\..\..\Data\ActorInfo.product.byml", byml.ToBinary());
+            File.WriteAllBytes(@"E:\Users\chodn\Documents\ISOs - WiiU\The Legend of Zelda Breath of the Wild (UPDATE DATA) (v208) (USA)\content\Actor\ActorInfo.test.product.byml", byml.ToBinary());
         }
         [TestMethod]
         public void ActorInfoYamlTest()
         {
-            BymlFile byml = new(@"..\..\..\Data\ActorInfo.product.byml");
+            BymlFile byml = new(@"E:\Users\chodn\Documents\ISOs - WiiU\The Legend of Zelda Breath of the Wild (UPDATE DATA) (v208) (USA)\content\Actor\ActorInfo.product.byml");
             Trace.WriteLine(byml.ToYaml());
-        }
-        [TestMethod]
-        public void SimpleTest()
-        {
-            Trace.WriteLine(new byte[] { 0x00, 0x01, 0x02, 0x03 }.ToString());
         }
     }
 }
