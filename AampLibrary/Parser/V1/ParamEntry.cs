@@ -28,7 +28,7 @@ namespace Nintendo.Aamp.Parser
                 case ParamType.Vector3F: entry.Value = reader.ReadVector3F(); break;
                 case ParamType.Vector4F: entry.Value = reader.ReadVector4F(); break;
                 case ParamType.Quat: entry.Value = reader.ReadSingles(4); break;
-                case ParamType.Color4F: entry.Value = reader.ReadVector4F(); break;
+                case ParamType.Color4F: entry.Value = reader.ReadColor4F(); break;
                 case ParamType.Uint: entry.Value = reader.ReadUInt32(); break;
                 case ParamType.BufferUint: entry.Value = reader.ReadUInt32s(DataSize / sizeof(uint)); break;
                 case ParamType.BufferInt: entry.Value = reader.ReadInt32s(DataSize / sizeof(int)); break;
@@ -107,7 +107,7 @@ namespace Nintendo.Aamp.Parser
                 case ParamType.Vector2F: writer.WriteVector2F((Vector2F)entry.Value); break;
                 case ParamType.Vector3F: writer.WriteVector3F((Vector3F)entry.Value); break;
                 case ParamType.Vector4F: writer.WriteVector4F((Vector4F)entry.Value); break;
-                case ParamType.Color4F: writer.WriteVector4F((Vector4F)entry.Value); break;
+                case ParamType.Color4F: writer.WriteColor4F((Color4F)entry.Value); break;
                 case ParamType.Quat: writer.Write((float[])entry.Value); break;
                 case ParamType.Uint: writer.Write((uint)entry.Value); break;
                 case ParamType.BufferUint: writer.Write((uint[])entry.Value); break;

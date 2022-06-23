@@ -390,7 +390,7 @@ namespace Nintendo.Aamp.Parser
                 case ParamType.Vector2F: writer.WriteVector2F((Vector2F)entry.Value); break;
                 case ParamType.Vector3F: writer.WriteVector3F((Vector3F)entry.Value); break;
                 case ParamType.Vector4F: writer.WriteVector4F((Vector4F)entry.Value); break;
-                case ParamType.Color4F: writer.WriteVector4F((Vector4F)entry.Value); break;
+                case ParamType.Color4F: writer.WriteColor4F((Color4F)entry.Value); break;
                 case ParamType.Quat: writer.Write((float[])entry.Value); break;
                 case ParamType.Uint: writer.Write((uint)entry.Value); break;
                 case ParamType.BufferUint:
