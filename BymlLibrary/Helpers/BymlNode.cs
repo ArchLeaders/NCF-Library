@@ -140,15 +140,18 @@ namespace Nintendo.Byml
 
         public override int GetHashCode()
         {
-            return type switch
+            unsafe
             {
-                NodeType.Array => Array.Aggregate(0, (acc, y) => (acc + y.GetHashCode()) % 0xFFFF),
-                NodeType.Hash => Hash.Aggregate(0, (acc, p) => (acc + p.Key.GetHashCode() + p.Value.GetHashCode()) % 0xFFFF),
-                NodeType.StringArray => StringArray.GetHashCode(),
-                NodeType.String => String.GetHashCode(),
-                NodeType.Binary => Binary.GetHashCode(),
-                _ => UInt64.GetHashCode(),
-            };
+                return type switch
+                {
+                    NodeType.Array => Array.Aggregate(0, (acc, y) => acc + y.GetHashCode()),
+                    NodeType.Hash => Hash.Aggregate(0, (acc, p) => acc + p.Key.GetHashCode() + p.Value.GetHashCode()),
+                    NodeType.StringArray => StringArray.GetHashCode(),
+                    NodeType.String => String.GetHashCode(),
+                    NodeType.Binary => Binary.GetHashCode(),
+                    _ => UInt64.GetHashCode(),
+                };
+            }
         }
     }
 }
