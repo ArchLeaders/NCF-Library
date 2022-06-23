@@ -8,19 +8,20 @@ namespace Nintendo.Byml
         private readonly List<BymlNode> array;
         private readonly Dictionary<string, BymlNode> dict;
         private readonly List<string> str_array;
+        private BymlUnion union;
         public NodeType Type { get => type; }
-        public string String { get; set; }
-        public byte[] Binary { get; set; }
         public List<BymlNode> Array { get => array; }
         public Dictionary<string, BymlNode> Hash { get => dict; }
         public List<string> StringArray { get => str_array; }
-        public bool Bool { get; set; }
-        public int Int { get; set; }
-        public float Float { get; set; }
-        public uint UInt { get; set; }
-        public long Int64 { get; set; }
-        public ulong UInt64 { get; set; }
-        public double Double { get; set; }
+        public string String { get => union.String; set => union.String = value; }
+        public byte[] Binary { get => union.Binary; set => union.Binary = value; }
+        public bool Bool { get => union.Bool; set => union.Bool = value; }
+        public int Int { get => union.Int; set => union.Int = value; }
+        public float Float { get => union.Float; set => union.Float = value; }
+        public uint UInt { get => union.UInt; set => union.UInt = value; }
+        public long Int64 { get => union.Int64; set => union.Int64 = value; }
+        public ulong UInt64 { get => union.UInt64; set => union.UInt64 = value; }
+        public double Double { get => union.Double; set => union.Double = value; }
 
         public BymlNode()
         {
@@ -28,12 +29,12 @@ namespace Nintendo.Byml
         }
         public BymlNode(string str)
         {
-            String = str;
+            union.String = str;
             type = NodeType.String;
         }
         public BymlNode(byte[] bytes)
         {
-            Binary = bytes;
+            union.Binary = bytes;
             type = NodeType.Binary;
         }
         public BymlNode(List<BymlNode> array)
@@ -53,37 +54,37 @@ namespace Nintendo.Byml
         }
         public BymlNode(bool b)
         {
-            Bool = b;
+            union.Bool = b;
             type = NodeType.Bool;
         }
         public BymlNode(int i)
         {
-            Int = i;
+            union.Int = i;
             type = NodeType.Int;
         }
         public BymlNode(float f)
         {
-            Float = f;
+            union.Float = f;
             type = NodeType.Float;
         }
         public BymlNode(uint u)
         {
-            UInt = u;
+            union.UInt = u;
             type = NodeType.UInt;
         }
         public BymlNode(long l)
         {
-            Int64 = l;
+            union.Int64 = l;
             type = NodeType.Int64;
         }
         public BymlNode(ulong ul)
         {
-            UInt64 = ul;
+            union.UInt64 = ul;
             type = NodeType.UInt64;
         }
         public BymlNode(double d)
         {
-            Double = d;
+            union.Double = d;
             type = NodeType.Double;
         }
     }
