@@ -11,7 +11,7 @@ namespace Nintendo.Aamp
         internal Resource(string resourceName)
         {
             Assembly assembly = Assembly.GetCallingAssembly();
-            using (Stream resStream = assembly.GetManifestResourceStream("AampLibrary." + resourceName)) {
+            using (Stream? resStream = assembly.GetManifestResourceStream("AampLibrary." + resourceName)) {
 
                 if (resStream == null)
                     return;
