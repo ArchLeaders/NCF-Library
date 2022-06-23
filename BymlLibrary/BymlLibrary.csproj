@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Authors>exelix, KillzXGaming, and Syroot. (Updated by ArchLeaders)</Authors>
+    <Authors>exelix, KillzXGaming, GingerAvalanche, and Syroot. (Updated by ArchLeaders)</Authors>
     <Description>Updated version of KillzXGaming's fork of exelix's ByamlLibrary</Description>
     <PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/BymlLibrary</PackageProjectUrl>
     <PackageIcon>BymlIcon-128.png</PackageIcon>
@@ -13,7 +13,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-	<VersionPrefix>1.0.7</VersionPrefix>
+	<VersionPrefix>1.1.0</VersionPrefix>
 	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
