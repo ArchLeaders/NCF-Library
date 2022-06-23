@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nintendo.Byml
 {
-    public class BymlNode
+    public class BymlNode : IEquatable<BymlNode>
     {
         private NodeType type;
         private readonly List<BymlNode> array;
@@ -86,6 +88,70 @@ namespace Nintendo.Byml
         {
             union.Double = d;
             type = NodeType.Double;
+        }
+
+        public static bool operator ==(BymlNode a, BymlNode b) => a.Equals(b);
+        public static bool operator !=(BymlNode a, BymlNode b) => !a.Equals(b);
+
+        private bool IsContainerType()
+        {
+            return type switch
+            {
+                NodeType.Array or NodeType.Hash or NodeType.StringArray or NodeType.Binary => true,
+                _ => false,
+            };
+        }
+
+        public override bool Equals(object other) => Equals(other as BymlNode);
+        public virtual bool Equals(BymlNode other)
+        {
+            if (this is null || other is null || type != other.type) return false;
+            if (IsContainerType())
+            {
+                switch (type)
+                {
+                    case NodeType.Array:
+                        if (Array.Count != other.Array.Count) return false;
+                        for (int i = 0; i < Array.Count; i++)
+                        {
+                            if (Array[i] != other.Array[i]) return false;
+                        }
+                        return true;
+                    case NodeType.Hash:
+                        if (Hash.Count != other.Hash.Count) return false;
+                        foreach ((string key, BymlNode child) in Hash)
+                        {
+                            if (!other.Hash.TryGetValue(key, out BymlNode child2) ||
+                                child != child2) return false;
+                        }
+                        return true;
+                    case NodeType.StringArray:
+                        return StringArray.SequenceEqual(other.StringArray);
+                    case NodeType.Binary:
+                        return Binary.SequenceEqual(other.Binary);
+                }
+            }
+            return type switch
+            {
+                NodeType.String => String.Equals(other.String, StringComparison.Ordinal),
+                _ => UInt64 == other.UInt64, // this works because these 8 bytes are shared by all remaining values
+            };
+        }
+
+        public override int GetHashCode()
+        {
+            unsafe
+            {
+                return type switch
+                {
+                    NodeType.Array => Array.Aggregate(0, (acc, y) => acc + y.GetHashCode()),
+                    NodeType.Hash => Hash.Aggregate(0, (acc, p) => acc + p.Key.GetHashCode() + p.Value.GetHashCode()),
+                    NodeType.StringArray => StringArray.GetHashCode(),
+                    NodeType.String => String.GetHashCode(),
+                    NodeType.Binary => Binary.GetHashCode(),
+                    _ => UInt64.GetHashCode(),
+                };
+            }
         }
     }
 }
