@@ -6,14 +6,14 @@ namespace Nintendo.Byml
 {
     public class BymlNode : IEquatable<BymlNode>
     {
-        private NodeType type;
+        private readonly NodeType type;
         private readonly List<BymlNode> array;
-        private readonly Dictionary<string, BymlNode> dict;
+        private readonly SortedDictionary<string, BymlNode> dict;
         private readonly List<string> str_array;
         private BymlUnion union;
         public NodeType Type { get => type; }
         public List<BymlNode> Array { get => array; }
-        public Dictionary<string, BymlNode> Hash { get => dict; }
+        public SortedDictionary<string, BymlNode> Hash { get => dict; }
         public List<string> StringArray { get => str_array; }
         public string String { get => union.String; set => union.String = value; }
         public byte[] Binary { get => union.Binary; set => union.Binary = value; }
@@ -44,9 +44,14 @@ namespace Nintendo.Byml
             this.array = array;
             type = NodeType.Array;
         }
-        public BymlNode(Dictionary<string, BymlNode> dict)
+        public BymlNode(SortedDictionary<string, BymlNode> dict)
         {
             this.dict = dict;
+            type = NodeType.Hash;
+        }
+        public BymlNode(Dictionary<string, BymlNode> dict)
+        {
+            this.dict = new SortedDictionary<string, BymlNode>(dict, new AsciiComparer());
             type = NodeType.Hash;
         }
         public BymlNode(List<string> str_array)

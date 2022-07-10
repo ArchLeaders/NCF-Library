@@ -153,7 +153,7 @@ namespace Nintendo.Byml.Parser
                 }
             }
 
-            return new BymlNode(value);
+            return new BymlNode(value != "''" ? value : string.Empty);
         }
 
         static YamlNode SaveNode(BymlNode node)
@@ -233,15 +233,15 @@ namespace Nintendo.Byml.Parser
         {
             return node.Type switch
             {
-                NodeType.String => node.String,
+                NodeType.String => !string.IsNullOrEmpty(node.String) ? node.String : "''",
                 NodeType.Bool => node.Bool ? "true" : "false",
                 NodeType.Binary => string.Join(" ", node.Binary),
-                NodeType.Int => node.Int.ToString(),
-                NodeType.Float => string.Format("{0:0.000.00}", node.Float),
-                NodeType.UInt => string.Format("0x{0:x8}", node.UInt),
-                NodeType.Int64 => node.Int64.ToString(),
-                NodeType.UInt64 => string.Format("0x{0:x16}", node.UInt64),
-                NodeType.Double => string.Format("{0:0.000.00}", node.Double),
+                NodeType.Int => node.Int.ToString(CultureInfo.InvariantCulture),
+                NodeType.Float => FormatFloat(node.Float),
+                NodeType.UInt => $"0x{node.UInt:x8}",
+                NodeType.Int64 => node.Int64.ToString(CultureInfo.InvariantCulture),
+                NodeType.UInt64 => $"0x{node.UInt64:x16}",
+                NodeType.Double => FormatDouble(node.Double),
                 _ => throw new ArgumentException($"Not value node type {node.Type}"),
             };
         }
@@ -289,6 +289,25 @@ namespace Nintendo.Byml.Parser
             }
 
             return true;
+        }
+
+        private static string FormatFloat(float f)
+        {
+            string s = f.ToString(CultureInfo.InvariantCulture);
+            if (!s.Contains('.'))
+            {
+                s = $"{s}.0";
+            }
+            return s;
+        }
+        private static string FormatDouble(double d)
+        {
+            string s = d.ToString(CultureInfo.InvariantCulture);
+            if (!s.Contains('.'))
+            {
+                s = $"{s}.0";
+            }
+            return s;
         }
     }
 }
