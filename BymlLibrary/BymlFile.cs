@@ -23,6 +23,10 @@ namespace Nintendo.Byml
             Setter(FromBinary(stream));
         }
         public BymlFile(Stream stream) => Setter(FromBinary(stream));
+        public BymlFile(SortedDictionary<string, BymlNode> dictionary)
+        {
+            RootNode = new BymlNode(dictionary);
+        }
         public BymlFile(Dictionary<string, BymlNode> dictionary)
         {
             RootNode = new BymlNode(dictionary);

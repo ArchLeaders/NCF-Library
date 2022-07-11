@@ -181,7 +181,7 @@ namespace Nintendo.Byml.IO
                         write_container_item(item);
                     break;
                 case NodeType.Hash:
-                    Dictionary<string, BymlNode> hash = node.Hash;
+                    SortedDictionary<string, BymlNode> hash = node.Hash;
                     Writer.WriteByte((byte)node.Type);
                     Writer.WriteUInt24((uint)hash.Count);
                     foreach ((string key, BymlNode child) in hash)
@@ -295,26 +295,6 @@ namespace Nintendo.Byml.IO
                 hash_table[str] = count++;
             }
             built = true;
-        }
-
-        private class AsciiComparer : IComparer<string>
-        {
-            public int Compare(string x, string y)
-            {
-                int shorter_size = x.Length < y.Length ? x.Length : y.Length;
-                for (int i = 0; i < shorter_size; i++)
-                {
-                    if (x[i] != y[i])
-                    {
-                        return (byte)x[i] - (byte)y[i];
-                    }
-                }
-                if (x.Length == y.Length)
-                {
-                    return 0;
-                }
-                return x.Length - y.Length;
-            }
         }
     }
 }
