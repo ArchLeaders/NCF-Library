@@ -13,7 +13,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-	<VersionPrefix>1.1.0</VersionPrefix>
+	<VersionPrefix>1.1.1</VersionPrefix>
 	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
