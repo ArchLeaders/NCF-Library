@@ -18,6 +18,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Lib\Syroot.NintenTools.NSW.Bntx.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Lib\Syroot.NintenTools.NSW.Bntx.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\docs\resources\icons\BfresIcon-128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
