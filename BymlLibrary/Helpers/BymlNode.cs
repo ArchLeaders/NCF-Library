@@ -98,6 +98,8 @@ namespace Nintendo.Byml
         public static bool operator ==(BymlNode a, BymlNode b) => a.Equals(b);
         public static bool operator !=(BymlNode a, BymlNode b) => !a.Equals(b);
 
+        public BymlNode ShallowCopy() => (BymlNode)MemberwiseClone();
+
         private bool IsContainerType()
         {
             return type switch
