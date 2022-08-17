@@ -383,7 +383,7 @@ namespace Nintendo.Aamp
                 ParamType.BufferInt => $"!BufferInt [ {WriteInts((int[])entry.Value)} ]",
                 ParamType.BufferUint => $"!BufferUint [ {WriteUints((uint[])entry.Value)} ]",
                 ParamType.Quat => $"!BufferUint [ {WriteFloats((float[])entry.Value)} ]",
-                ParamType.Color4F => $"{WriteColor4F((Vector4F)entry.Value)}",
+                ParamType.Color4F => $"{WriteColor4F((Color4F)entry.Value)}",
                 ParamType.Vector2F => $"{WriteVec2F((Vector2F)entry.Value)}",
                 ParamType.Vector3F => $"{WriteVec3F((Vector3F)entry.Value)}",
                 ParamType.Vector4F => $"{WriteVec4F((Vector4F)entry.Value)}",
@@ -443,7 +443,7 @@ namespace Nintendo.Aamp
         private static string WriteVec2F(Vector2F vec2) { return $"!vec2 [{vec2.X}, {vec2.Y}]"; }
         private static string WriteVec3F(Vector3F vec3) { return $"!vec3 [{vec3.X}, {vec3.Y}, {vec3.Z}]"; }
         private static string WriteVec4F(Vector4F vec4) { return $"!vec4 [{vec4.X}, {vec4.Y}, {vec4.Z}, {vec4.W}]"; }
-        private static string WriteColor4F(Vector4F vec4) { return $"!color [{vec4.X}, {vec4.Y}, {vec4.Z}, {vec4.W}]"; }
+        private static string WriteColor4F(Color4F col4) { return $"!color [{col4.R}, {col4.G}, {col4.B}, {col4.A}]"; }
 
         #endregion
     }
