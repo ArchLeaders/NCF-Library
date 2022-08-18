@@ -12,29 +12,23 @@ namespace Nintendo.Byml.Parser
 {
     public class YamlConverter
     {
-        private static Dictionary<BymlNode, YamlNode> NodePaths { get; set; } = new Dictionary<BymlNode, YamlNode>();
         private static Dictionary<string, BymlNode> ReferenceNodes { get; set; } = new Dictionary<string, BymlNode>();
-        static int RefNodeId { get; set; } = 0;
 
         public static string ToYaml(BymlFile byml)
         {
-            NodePaths.Clear();
-            RefNodeId = 0;
-
             YamlNode root = SaveNode(byml.RootNode);
-
-            NodePaths.Clear();
-            RefNodeId = 0;
-
             YamlStream stream = new(new YamlDocument(root));
-            using StringWriter writer = new(new StringBuilder());
-            stream.Save(writer, true);
-            return writer.ToString();
+            string ret;
+            using (StringWriter writer = new(new StringBuilder()))
+            {
+                stream.Save(writer, true);
+                ret = writer.ToString();
+            }
+            return ret;
         }
 
         public static BymlFile FromYaml(string text)
         {
-            NodePaths.Clear();
             ReferenceNodes.Clear();
 
             var byml = new BymlFile();
@@ -48,7 +42,6 @@ namespace Nintendo.Byml.Parser
                 byml.RootNode = ParseNode(root);
 
             ReferenceNodes.Clear();
-            NodePaths.Clear();
 
             return byml;
         }
