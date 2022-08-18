@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	<Copyright>(c) KillzXGaming, and Syroot, licensed under MIT</Copyright>
     <TargetFramework>net5.0</TargetFramework>
 	<!-- <TargetFrameworks>net5.0;net6.0</TargetFrameworks> -->
 	<PackageIcon>BfresIcon-128.png</PackageIcon>
@@ -8,13 +9,12 @@
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Authors>KillzXGaming and Syroot. (Updated by ArchLeaders)</Authors>
 	<Description>Updated version of KillzXGaming's BfresLibrary</Description>
-	<Copyright>(c) Syroot, licensed under MIT</Copyright>
 	<PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/BfresLibrary</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/BfresLibrary</RepositoryUrl>
 	<PackageTags>bfres;cafe-resource;nintendo;botw;zelda</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>1.0.1</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Copyright>(c) exelix, Syroot, GingerAvalanche, and KillzXGaming, licensed under GPL-3.0-or-later</Copyright>
     <TargetFramework>net5.0</TargetFramework>
     <Authors>exelix, KillzXGaming, GingerAvalanche, and Syroot. (Updated by ArchLeaders)</Authors>
     <Description>Updated version of KillzXGaming's fork of exelix's ByamlLibrary</Description>
@@ -13,7 +14,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-	<VersionPrefix>1.1.2</VersionPrefix>
+	<VersionPrefix>1.1.3</VersionPrefix>
 	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 

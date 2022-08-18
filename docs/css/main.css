@@ -1,0 +1,17 @@
+.home {
+    text-align: center;
+    margin: 50px 0;
+    margin: 50px 400px;
+}
+
+.home h1 {
+    font-weight: 300;
+}
+
+.home hr {
+    margin: 35px 0;
+}
+
+.note {
+    color: var(--primary-light);
+}

@@ -1,10 +1,10 @@
 :root {
-    --paper: #1f1f1f;
+    --paper: #09090c;
     --body: #e1e1e1;
 
-    --primary-light: #6b6b6b;
-    --primary-mid: #383838;
-    --primary-dark: #1d1d1d;
+    --primary-light: #61616b;
+    --primary-mid: #51515a;
+    --primary-dark: #151518;
 
     --secondary-light: #f14c62;
     --secondary-mid: #ca1841;
@@ -21,6 +21,11 @@ body {
 
 h1 {
     font-weight: bold;
-    font-size: 22px;
+    font-size: 42px;
     margin: 0.6rem 0.4rem;
+}
+
+p {
+    font-size: 17px;
+    margin: 8px 0;
 }

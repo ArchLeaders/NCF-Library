@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+        <Copyright>(c) exelix, Syroot, GingerAvalanche, and KillzXGaming, licensed under GPL-3.0-or-later</Copyright>
 		<TargetFramework>net5.0</TargetFramework>
 		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -13,7 +14,7 @@
 		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<VersionPrefix>1.0.5</VersionPrefix>
+		<VersionPrefix>1.0.6</VersionPrefix>
 	</PropertyGroup>
 
 	<ItemGroup>
