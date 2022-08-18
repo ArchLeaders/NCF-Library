@@ -14,7 +14,7 @@
     <PackageTags>aamp;parameterio;botw;nintendo;zelda</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-	<VersionPrefix>1.0.9</VersionPrefix>
+	<VersionPrefix>1.0.10</VersionPrefix>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
