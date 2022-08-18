@@ -44,9 +44,7 @@ namespace Nintendo.Byml.Parser
 
             YamlNode root = yaml.Documents[0].RootNode;
 
-            if (root is YamlMappingNode)
-                byml.RootNode = ParseNode(root);
-            else if (root is YamlSequenceNode)
+            if (root is YamlMappingNode || root is YamlSequenceNode)
                 byml.RootNode = ParseNode(root);
 
             ReferenceNodes.Clear();
@@ -291,23 +289,7 @@ namespace Nintendo.Byml.Parser
             return true;
         }
 
-        private static string FormatFloat(float f)
-        {
-            string s = f.ToString(CultureInfo.InvariantCulture);
-            if (!s.Contains('.'))
-            {
-                s = $"{s}.0";
-            }
-            return s;
-        }
-        private static string FormatDouble(double d)
-        {
-            string s = d.ToString(CultureInfo.InvariantCulture);
-            if (!s.Contains('.'))
-            {
-                s = $"{s}.0";
-            }
-            return s;
-        }
+        private static string FormatFloat(float f) => $"{f:0.0########}";
+        private static string FormatDouble(double d) => $"{d:0.0########}";
     }
 }
