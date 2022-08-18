@@ -17768,6 +17768,9 @@ FarFriendFriendlyDist
 Far_Lightning
 farModelCulling
 FarModelCullingArea
+FarModelCullingCenter
+FarModelCullingHeight
+FarModelCullingRadius
 FarModelCullMgr
 FarModelOcclusionQueryMgr
 FarMoveSpeed

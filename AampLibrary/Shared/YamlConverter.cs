@@ -96,8 +96,7 @@ namespace Nintendo.Aamp
 
         private static ParamEntry ParseParamEntry(string key, YamlNode valueNode)
         {
-            ParamEntry entry = new();
-            entry.Hash = ParseHash(key);
+            ParamEntry entry = new() { Hash = ParseHash(key) };
 
             if (valueNode is YamlSequenceNode castValues)
             {
@@ -111,13 +110,17 @@ namespace Nintendo.Aamp
                         entry.Value = ToFloatArray(castValues);
                         entry.ParamType = ParamType.BufferFloat;
                         break;
+                    case "!BufferInt":
+                        entry.Value = ToIntArray(castValues);
+                        entry.ParamType = ParamType.BufferInt;
+                        break;
                     case "!BufferUint":
                         entry.Value = ToUIntArray(castValues);
                         entry.ParamType = ParamType.BufferUint;
                         break;
-                    case "!BufferInt":
-                        entry.Value = ToIntArray(castValues);
-                        entry.ParamType = ParamType.BufferInt;
+                    case "!quat":
+                        entry.Value = ToFloatArray(castValues);
+                        entry.ParamType = ParamType.Quat;
                         break;
                     case "!vec2": {
                             float[] singles = ToFloatArray(castValues, 2);
@@ -378,18 +381,18 @@ namespace Nintendo.Aamp
             string value = entry.ParamType switch
             {
                 ParamType.Boolean => $"{(bool)entry.Value}",
-                ParamType.BufferBinary => $"!BufferBinary [ {WriteBytes((byte[])entry.Value)} ]",
-                ParamType.BufferFloat => $"!BufferFloat [ {WriteFloats((float[])entry.Value)} ]",
-                ParamType.BufferInt => $"!BufferInt [ {WriteInts((int[])entry.Value)} ]",
-                ParamType.BufferUint => $"!BufferUint [ {WriteUints((uint[])entry.Value)} ]",
-                ParamType.Quat => $"!BufferUint [ {WriteFloats((float[])entry.Value)} ]",
+                ParamType.BufferBinary => $"!BufferBinary [{WriteBytes((byte[])entry.Value)}]",
+                ParamType.BufferFloat => $"!BufferFloat [{WriteFloats((float[])entry.Value)}]",
+                ParamType.BufferInt => $"!BufferInt [{WriteInts((int[])entry.Value)}]",
+                ParamType.BufferUint => $"!BufferUint [{WriteUints((uint[])entry.Value)}]",
+                ParamType.Quat => $"!quat [{WriteFloats((float[])entry.Value)}]",
                 ParamType.Color4F => $"{WriteColor4F((Color4F)entry.Value)}",
                 ParamType.Vector2F => $"{WriteVec2F((Vector2F)entry.Value)}",
                 ParamType.Vector3F => $"{WriteVec3F((Vector3F)entry.Value)}",
                 ParamType.Vector4F => $"{WriteVec4F((Vector4F)entry.Value)}",
                 ParamType.Uint => $"{(uint)entry.Value}",
                 ParamType.Int => $"{(int)entry.Value}",
-                ParamType.Float => string.Format("{0:0.0######}", (float)entry.Value),
+                ParamType.Float => WriteFloat((float)entry.Value),
                 ParamType.String256 => $"!str256 {(StringEntry)entry.Value}",
                 ParamType.String32 => $"!str32 {(StringEntry)entry.Value}",
                 ParamType.String64 => $"!str64 {(StringEntry)entry.Value}",
@@ -422,28 +425,30 @@ namespace Nintendo.Aamp
 
         private static string WriteUints(uint[] arr)
         {
-            return String.Join(",", arr.Select(p => p.ToString()).ToArray());
+            return String.Join(", ", arr.Select(p => p.ToString()).ToArray());
         }
 
         private static string WriteFloats(float[] arr)
         {
-            return String.Join(",", arr.Select(p => p.ToString()).ToArray());
+            return String.Join(", ", arr.Select(p => WriteFloat(p)).ToArray());
         }
 
         private static string WriteInts(int[] arr)
         {
-            return String.Join(",", arr.Select(p => p.ToString()).ToArray());
+            return String.Join(", ", arr.Select(p => p.ToString()).ToArray());
         }
 
         private static string WriteBytes(byte[] arr)
         {
-            return String.Join(",", arr.Select(p => p.ToString()).ToArray());
+            return String.Join(", ", arr.Select(p => p.ToString()).ToArray());
         }
 
-        private static string WriteVec2F(Vector2F vec2) { return $"!vec2 [{vec2.X}, {vec2.Y}]"; }
-        private static string WriteVec3F(Vector3F vec3) { return $"!vec3 [{vec3.X}, {vec3.Y}, {vec3.Z}]"; }
-        private static string WriteVec4F(Vector4F vec4) { return $"!vec4 [{vec4.X}, {vec4.Y}, {vec4.Z}, {vec4.W}]"; }
-        private static string WriteColor4F(Color4F col4) { return $"!color [{col4.R}, {col4.G}, {col4.B}, {col4.A}]"; }
+        private static string WriteVec2F(Vector2F vec2) { return $"!vec2 [{WriteFloat(vec2.X)}, {WriteFloat(vec2.Y)}]"; }
+        private static string WriteVec3F(Vector3F vec3) { return $"!vec3 [{WriteFloat(vec3.X)}, {WriteFloat(vec3.Y)}, {WriteFloat(vec3.Z)}]"; }
+        private static string WriteVec4F(Vector4F vec4) { return $"!vec4 [{WriteFloat(vec4.X)}, {WriteFloat(vec4.Y)}, {WriteFloat(vec4.Z)}, {WriteFloat(vec4.W)}]"; }
+        private static string WriteColor4F(Color4F col4) { return $"!color [{WriteFloat(col4.R)}, {WriteFloat(col4.G)}, {WriteFloat(col4.B)}, {WriteFloat(col4.A)}]"; }
+
+        private static string WriteFloat(float f) => $"{f:0.0########}";
 
         #endregion
     }

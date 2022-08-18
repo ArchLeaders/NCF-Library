@@ -12,29 +12,23 @@ namespace Nintendo.Byml.Parser
 {
     public class YamlConverter
     {
-        private static Dictionary<BymlNode, YamlNode> NodePaths { get; set; } = new Dictionary<BymlNode, YamlNode>();
         private static Dictionary<string, BymlNode> ReferenceNodes { get; set; } = new Dictionary<string, BymlNode>();
-        static int RefNodeId { get; set; } = 0;
 
         public static string ToYaml(BymlFile byml)
         {
-            NodePaths.Clear();
-            RefNodeId = 0;
-
             YamlNode root = SaveNode(byml.RootNode);
-
-            NodePaths.Clear();
-            RefNodeId = 0;
-
             YamlStream stream = new(new YamlDocument(root));
-            using StringWriter writer = new(new StringBuilder());
-            stream.Save(writer, true);
-            return writer.ToString();
+            string ret;
+            using (StringWriter writer = new(new StringBuilder()))
+            {
+                stream.Save(writer, true);
+                ret = writer.ToString();
+            }
+            return ret;
         }
 
         public static BymlFile FromYaml(string text)
         {
-            NodePaths.Clear();
             ReferenceNodes.Clear();
 
             var byml = new BymlFile();
@@ -44,13 +38,10 @@ namespace Nintendo.Byml.Parser
 
             YamlNode root = yaml.Documents[0].RootNode;
 
-            if (root is YamlMappingNode)
-                byml.RootNode = ParseNode(root);
-            else if (root is YamlSequenceNode)
+            if (root is YamlMappingNode || root is YamlSequenceNode)
                 byml.RootNode = ParseNode(root);
 
             ReferenceNodes.Clear();
-            NodePaths.Clear();
 
             return byml;
         }
@@ -291,23 +282,7 @@ namespace Nintendo.Byml.Parser
             return true;
         }
 
-        private static string FormatFloat(float f)
-        {
-            string s = f.ToString(CultureInfo.InvariantCulture);
-            if (!s.Contains('.'))
-            {
-                s = $"{s}.0";
-            }
-            return s;
-        }
-        private static string FormatDouble(double d)
-        {
-            string s = d.ToString(CultureInfo.InvariantCulture);
-            if (!s.Contains('.'))
-            {
-                s = $"{s}.0";
-            }
-            return s;
-        }
+        private static string FormatFloat(float f) => $"{f:0.0########}";
+        private static string FormatDouble(double d) => $"{d:0.0########}";
     }
 }
