@@ -8,11 +8,11 @@ namespace BntxLibrary.Shared.AddressLibrary
 {
     internal class TileInfo
     {
-        internal int Banks { get; set; } = 0;
-        internal int BankWidth { get; set; } = 0;
-        internal int BankHeight { get; set; } = 0;
-        internal int MacroAspectRatio { get; set; } = 0;
-        internal int TileSplitBytes { get; set; } = 0;
-        internal int PipeConfig { get; set; } = 0;
+        internal uint Banks { get; set; } = 0;
+        internal uint BankWidth { get; set; } = 0;
+        internal uint BankHeight { get; set; } = 0;
+        internal uint MacroAspectRatio { get; set; } = 0;
+        internal uint TileSplitBytes { get; set; } = 0;
+        internal uint PipeConfig { get; set; } = 0;
     }
 }

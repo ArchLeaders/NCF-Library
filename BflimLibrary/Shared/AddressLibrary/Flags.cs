@@ -2,6 +2,6 @@
 {
     internal class Flags
     {
-        internal int Value { get; set; } = 0;
+        internal uint Value { get; set; } = 0;
     }
 }
