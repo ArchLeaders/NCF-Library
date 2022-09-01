@@ -20,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOTests", "IOTests\IOTests.csproj", "{9E2AD101-A577-4882-9AE1-35002A8504A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BntxLibrary", "BflimLibrary\BntxLibrary.csproj", "{23710803-7053-4412-B2F1-A261EF4E4637}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,14 +76,6 @@ Global
 		{9E2AD101-A577-4882-9AE1-35002A8504A3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E2AD101-A577-4882-9AE1-35002A8504A3}.Release|x64.ActiveCfg = Release|Any CPU
 		{9E2AD101-A577-4882-9AE1-35002A8504A3}.Release|x64.Build.0 = Release|Any CPU
-		{23710803-7053-4412-B2F1-A261EF4E4637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23710803-7053-4412-B2F1-A261EF4E4637}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23710803-7053-4412-B2F1-A261EF4E4637}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{23710803-7053-4412-B2F1-A261EF4E4637}.Debug|x64.Build.0 = Debug|Any CPU
-		{23710803-7053-4412-B2F1-A261EF4E4637}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23710803-7053-4412-B2F1-A261EF4E4637}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23710803-7053-4412-B2F1-A261EF4E4637}.Release|x64.ActiveCfg = Release|Any CPU
-		{23710803-7053-4412-B2F1-A261EF4E4637}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
