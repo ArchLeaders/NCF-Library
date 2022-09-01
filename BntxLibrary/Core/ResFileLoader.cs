@@ -6,7 +6,7 @@ using System.Text;
 using Syroot.BinaryData;
 using Syroot.Maths;
 
-namespace BntxLibrary.Core.Core
+namespace BntxLibrary.Core
 {
     /// <summary>
     /// Loads the hierachy and data of a <see cref="Bntx.BntxFile"/>.

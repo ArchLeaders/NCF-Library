@@ -1,4 +1,4 @@
-﻿namespace BntxLibrary.Core.Core
+﻿namespace BntxLibrary.Core
 {
     /// <summary>
     /// Represents the common interface for <see cref="BntxFile"/> data instances.

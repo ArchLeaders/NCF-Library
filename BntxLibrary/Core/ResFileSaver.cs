@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using Syroot.BinaryData;
 using Syroot.Maths;
 using System.Security.Cryptography;
 
-namespace BntxLibrary.Core.Core
+namespace BntxLibrary.Core
 {
     /// <summary>
     /// Saves the hierachy and data of a <see cref="Bntx.BntxFile"/>.

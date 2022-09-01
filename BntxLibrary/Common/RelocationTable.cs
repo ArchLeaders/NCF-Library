@@ -12,8 +12,8 @@ namespace BntxLibrary.Common
     /// </summary>  
     public class RelocationTable : IResData
     {
-        // ---- Notes --------------------------------------------------------------------------------------------------
-
+        // Notes
+        // 
         // Has 5 sections which branch off to multiple entries
         // If a section is unused it'll use the same offset and data from previous section
         // First section stores all the data from start of file to the end string table.
@@ -25,21 +25,13 @@ namespace BntxLibrary.Common
         // Entries sometimes will reference dicts aswell
         // The way I am handling it is by booleans for ReadOffset, ReadDict, and Load methods. Those set to true will be relocated
         
-
-
-        // ---- CONSTANTS ----------------------------------------------------------------------------------------------
-
         private const string _signature = "_RLT";
-
-        // ---- PROPERTIES ---------------------------------------------------------------------------------------------
 
         /// <summary>
         /// Gets or sets the <see cref="VertexBuffer"/> instance storing the data which forms the shape's surface. Saved
         /// depending on <see cref="VertexBufferIndex"/>.
         /// </summary>
         internal uint position { get; set; }
-
-        // ---- METHODS ------------------------------------------------------------------------------------------------
 
         void IResData.Load(BntxFileLoader loader)
         {
@@ -49,7 +41,6 @@ namespace BntxLibrary.Common
             int pos = loader.ReadInt32();
             int SectionCount = loader.ReadInt32();
             loader.Seek(4); //Padding
-
         }
 
         void IResData.Save(BntxFileSaver saver)
