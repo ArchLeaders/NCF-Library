@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Nintendo.Byml.Parser;
 
 namespace Nintendo.Byml
 {
@@ -159,6 +161,38 @@ namespace Nintendo.Byml
                     _ => UInt64.GetHashCode(),
                 };
             }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// Returns the node value converted to a human-friendly string
+        /// </returns>
+        public override string ToString()
+        {
+            return type switch
+            {
+                NodeType.Binary => string.Join("", Binary.Select(x => x.ToString("x2"))),
+                NodeType.Bool => Bool.ToString(),
+                NodeType.Double => Double.ToString(),
+                NodeType.Float => Float.ToString(),
+                NodeType.Int => Int.ToString(),
+                NodeType.Int64 => Int64.ToString(),
+                NodeType.String => String,
+                NodeType.StringArray => $"{string.Join(", ", StringArray)}",
+                NodeType.UInt => UInt.ToString("x8"),
+                NodeType.UInt64 => UInt64.ToString("x8"),
+                _ => SerializeNode(),
+            };
+        }
+
+        /// <summary>
+        /// Serialize the current node to YAML
+        /// </summary>
+        /// <returns></returns>
+        public string SerializeNode()
+        {
+            return YamlConverter.ToYaml(this);
         }
     }
 }
