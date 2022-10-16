@@ -27,6 +27,19 @@ namespace Nintendo.Byml.Parser
             return ret;
         }
 
+        public static string ToYaml(BymlNode byml)
+        {
+            YamlNode root = SaveNode(byml);
+            YamlStream stream = new(new YamlDocument(root));
+            string ret;
+            using (StringWriter writer = new(new StringBuilder()))
+            {
+                stream.Save(writer, true);
+                ret = writer.ToString();
+            }
+            return ret;
+        }
+
         public static BymlFile FromYaml(string text)
         {
             ReferenceNodes.Clear();
