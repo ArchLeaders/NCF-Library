@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AampLibrary\AampLibrary.csproj" />
     <ProjectReference Include="..\BfresLibrary\BfresLibrary.csproj" />
+    <ProjectReference Include="..\BntxLibrary\BntxLibrary.csproj" />
     <ProjectReference Include="..\BymlLibrary\BymlLibrary.csproj" />
     <ProjectReference Include="..\SarcLibrary\SarcLibrary.csproj" />
     <ProjectReference Include="..\Yaz0Library\Yaz0Library.csproj" />

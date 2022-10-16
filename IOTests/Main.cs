@@ -12,38 +12,59 @@ using System.IO;
 namespace IOTests
 {
     [TestClass]
-    public class UnitTest1
+    public class Main
     {
+        [TestMethod]
+        public void ReadBntx()
+        {
+            // BntxFile bntxFile = new("D:\\Bin\\BNTX\\__Combined.bntx");
+            // bntxFile.Name = "Wow";
+            // bntxFile.Save("D:\\Bin\\BNTX\\Output.bntx");
+        }
+
         [TestMethod]
         public void Aamp()
         {
             AampFile aamp = new(@"..\..\..\Data\IO.aamp");
             Trace.WriteLine(aamp.ToYml());
         }
+
         [TestMethod]
         public void Byml()
         {
             BymlFile byml = new(@"..\..\..\Data\IO.byml");
             Trace.WriteLine(byml.ToYaml());
         }
+
+        [TestMethod]
+        public void BymlToString()
+        {
+            BymlFile byml = new(@"..\..\..\Data\IO.byml");
+            Trace.WriteLine(byml.RootNode.Hash["Objs"].Array[0].ToString());
+            Trace.WriteLine("HashId: " + byml.RootNode.Hash["Objs"].Array[0].Hash["HashId"].ToString());
+        }
+
         [TestMethod]
         public void NewAamp()
         {
             AampFile aamp = AampFile.New(2);
             File.WriteAllBytes(@"..\..\..\Data\new.aamp", aamp.ToBinary());
         }
+
         [TestMethod]
         public void NewByml()
         {
             BymlFile byml = new(new Dictionary<string, BymlNode>());
             File.WriteAllBytes(@"..\..\..\Data\new.byml", byml.ToBinary());
         }
+
         [TestMethod]
         public void WriteByml()
         {
             BymlFile byml = new(@"..\..\..\Data\IO.byml");
             File.WriteAllBytes(@"..\..\..\Data\new.byml", byml.ToBinary());
         }
+
         [TestMethod]
         public void ActorInfoReadWriteTest()
         {
@@ -54,12 +75,14 @@ namespace IOTests
                 byml = new($@"E:\Users\chodn\Documents\ISOs - WiiU\The Legend of Zelda Breath of the Wild (UPDATE DATA) (v208) (USA)\content\Actor\ActorInfo.test.{i}.product.byml");
             }
         }
+
         [TestMethod]
         public void ActorInfoYamlTest()
         {
             BymlFile byml = new(@"E:\Users\chodn\Documents\ISOs - WiiU\The Legend of Zelda Breath of the Wild (UPDATE DATA) (v208) (USA)\content\Actor\ActorInfo.test.0.product.byml");
             Trace.WriteLine(byml.ToYaml());
         }
+
         [TestMethod]
         public void BymlEqualityCompare()
         {
