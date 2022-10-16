@@ -14,9 +14,9 @@
         void Load(BntxFileLoader loader);
         
         /// <summary>
-        /// Saves header data of the instance and queues referenced data in the given <paramref name="saver"/>.
+        /// Saves header data of the instance and queues referenced data in the given <paramref name="writer"/>.
         /// </summary>
-        /// <param name="saver">The <see cref="BntxFileSaver"/> to save headers and queue data with.</param>
-        void Save(BntxFileSaver saver);
+        /// <param name="writer">The <see cref="BntxFileWriter"/> to save headers and queue data with.</param>
+        void Save(BntxFileWriter writer);
     }
 }

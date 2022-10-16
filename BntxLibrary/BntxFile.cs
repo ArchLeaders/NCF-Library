@@ -4,9 +4,10 @@ using System.IO;
 using System.ComponentModel;
 using Syroot.BinaryData;
 using Syroot.BinaryData.Core;
-using BntxLibrary.Core.Core;
+using BntxLibrary.Core;
+using BntxLibrary.Common;
 
-namespace BntxLibrary.Core
+namespace BntxLibrary
 {
     /// <summary>
     /// Represents a NintendoWare for Cafe (NW4F) graphics data archive file.
@@ -187,7 +188,7 @@ namespace BntxLibrary.Core
         public char[] Target { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of the stored <see cref="Texture"/> instances.
+        /// Gets or sets a list of the stored <see cref="TextureInfo"/> instances.
         /// </summary>
         [Browsable(false)]
         public IList<Texture> Textures { get; set; }
@@ -261,9 +262,9 @@ namespace BntxLibrary.Core
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after writing, otherwise <c>false</c>.</param>
         public void Save(Stream stream, bool leaveOpen = false)
         {
-            using (BntxFileSaver saver = new BntxFileSaver(this, stream, leaveOpen))
+            using (BntxFileWriter writer = new(this, stream, leaveOpen))
             {
-                saver.Execute();
+                writer.Execute();
             }
         }
 
@@ -273,9 +274,9 @@ namespace BntxLibrary.Core
         /// <param name="fileName">The name of the file to save the contents into.</param>
         public void Save(string fileName)
         {
-            using (BntxFileSaver saver = new BntxFileSaver(this, fileName))
+            using (BntxFileWriter writer = new(this, fileName))
             {
-                saver.Execute();
+                writer.Execute();
             }
         }
 
@@ -331,6 +332,9 @@ namespace BntxLibrary.Core
             Target = System.Text.Encoding.ASCII.GetString(loader.ReadBytes(4)).ToCharArray();
             int textureCount = loader.ReadInt32();
             long TextureArrayOffset = loader.ReadInt64();
+            long TextureData = loader.ReadInt64();
+            TextureDict = loader.LoadDict();
+            Name = loader.LoadString(null, OffsetToFileName - 2);
 
             FileSizeToRLT = RelocationTableOffset;
             OriginalRLTChunk = loader.LoadCustom(() =>
@@ -347,9 +351,6 @@ namespace BntxLibrary.Core
                 }
                 return texList;
             }, TextureArrayOffset);
-            long TextureData = loader.ReadInt64();
-            TextureDict = loader.LoadDict();
-            Name = loader.LoadString(null, OffsetToFileName - 2);
 
             originalFileName = Name;
 
@@ -374,39 +375,39 @@ namespace BntxLibrary.Core
         internal long TextureDictOffset;
         internal long TextureArrayOffset;
 
-        void IResData.Save(BntxFileSaver saver)
+        void IResData.Save(BntxFileWriter writer)
         {
             PreSave(); 
 
-            saver.WriteSignature(_signature);
-            saver.Write(0);
-            saver.Write(SaveVersion());
+            writer.WriteSignature(_signature);
+            writer.Write(0);
+            writer.Write(SaveVersion());
             if (ByteConverter.Endian == Endian.None)
                 ByteConverter = Syroot.BinaryData.ByteConverter.Big;
 
-            saver.WriteEnum(ByteConverter.Endian, true);
-            saver.Write((byte)Alignment);
-            saver.Write((byte)TargetAddressSize);
-            saver.SaveFileNameString(Name);
-            saver.Write((ushort)Flag);
-            saver.SaveHeaderBlock(true);
-            saver.SaveRelocationTable();
-            saver.SaveFieldFileSize();
+            writer.WriteEnum(ByteConverter.Endian, true);
+            writer.Write((byte)Alignment);
+            writer.Write((byte)TargetAddressSize);
+            writer.SaveFileNameString(Name);
+            writer.Write((ushort)Flag);
+            writer.SaveHeaderBlock(true);
+            writer.SaveRelocationTable();
+            writer.SaveFieldFileSize();
 
             //Start of container info
-            saver.Write(System.Text.Encoding.ASCII.GetBytes(Target));
-            saver.Write(TextureDict.Count);
-            saver.SaveRelocateEntryToSection(saver.Position, 1, 2, 1, BntxFileSaver.Section1, "Texture Array Offset"); //      <------------ Entry Set
-            TextureArrayOffset = saver.SaveOffset();
-            saver.SaveRelocateEntryToSection(saver.Position, 1, 1, 0, BntxFileSaver.Section2, "Texture Block Array"); //      <------------ Entry Set
-            saver.SaveTextureDataBlocks();
-            TextureDictOffset = saver.SaveOffset();
-            saver.SaveRelocateEntryToSection(saver.Position, 1, 1, 0, BntxFileSaver.Section1, "Memory Pool"); //      <------------ Entry Set
-            saver.Write((ulong)0x58);
-            saver.Write(0L);
-            saver.Write(0L);
-            saver.Write(new byte[0x140]); //Space for memory ppool
-            saver.SaveRelocateEntryToSection(saver.Position, (uint)TextureDict.Count, 1, 0, BntxFileSaver.Section1, "Texture Array"); //      <------------ Entry Set
+            writer.Write(System.Text.Encoding.ASCII.GetBytes(Target));
+            writer.Write(TextureDict.Count);
+            writer.SaveRelocateEntryToSection(writer.Position, 1, 2, 1, BntxFileWriter.Section1, "Texture Array Offset"); //      <------------ Entry Set
+            TextureArrayOffset = writer.SaveOffset();
+            writer.SaveRelocateEntryToSection(writer.Position, 1, 1, 0, BntxFileWriter.Section2, "Texture Block Array"); //      <------------ Entry Set
+            writer.SaveTextureDataBlocks();
+            TextureDictOffset = writer.SaveOffset();
+            writer.SaveRelocateEntryToSection(writer.Position, 1, 1, 0, BntxFileWriter.Section1, "Memory Pool"); //      <------------ Entry Set
+            writer.Write((ulong)0x58);
+            writer.Write(0L);
+            writer.Write(0L);
+            writer.Write(new byte[0x140]); //Space for memory ppool
+            writer.SaveRelocateEntryToSection(writer.Position, (uint)TextureDict.Count, 1, 0, BntxFileWriter.Section1, "Texture Array"); //      <------------ Entry Set
         }
 
         // ---- METHODS (PRIVATE) --------------------------------------------------------------------------------------

@@ -8,13 +8,14 @@ using System.Text;
 using Syroot.BinaryData;
 using Syroot.Maths;
 using System.Security.Cryptography;
+using BntxLibrary.Common;
 
 namespace BntxLibrary.Core
 {
     /// <summary>
     /// Saves the hierachy and data of a <see cref="Bntx.BntxFile"/>.
     /// </summary>
-    public class BntxFileSaver : BinaryStream
+    public class BntxFileWriter : BinaryStream
     {
         // ---- CONSTANTS ----------------------------------------------------------------------------------------------
 
@@ -51,20 +52,20 @@ namespace BntxLibrary.Core
         // ---- CONSTRUCTORS & DESTRUCTOR ------------------------------------------------------------------------------
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BntxFileSaver"/> class saving data from the given
+        /// Initializes a new instance of the <see cref="BntxFileWriter"/> class saving data from the given
         /// <paramref name="bntxFile"/> into the specified <paramref name="stream"/> which is optionally left open.
         /// </summary>
         /// <param name="bntxFile">The <see cref="Bntx.bntxFile"/> instance to save data from.</param>
         /// <param name="stream">The <see cref="Stream"/> to save data into.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after writing, otherwise <c>false</c>.</param>
-        internal BntxFileSaver(BntxFile bntxFile, Stream stream, bool leaveOpen)
+        internal BntxFileWriter(BntxFile bntxFile, Stream stream, bool leaveOpen)
             : base(stream, null, null, BooleanCoding.Byte, DateTimeCoding.NetTicks, StringCoding.ZeroTerminated, leaveOpen)
         {
             ByteConverter = ByteConverter.Little;
             BntxFile = bntxFile;
         }
 
-        internal BntxFileSaver(Texture texture, BntxFile bntxFile, Stream stream, bool leaveOpen)
+        internal BntxFileWriter(Texture texture, BntxFile bntxFile, Stream stream, bool leaveOpen)
             : base(stream, null, null, BooleanCoding.Byte, DateTimeCoding.NetTicks, StringCoding.ZeroTerminated, leaveOpen)
         {
             ByteConverter = ByteConverter.Little;
@@ -73,23 +74,23 @@ namespace BntxLibrary.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BntxFileSaver"/> class for the file with the given
+        /// Initializes a new instance of the <see cref="BntxFileWriter"/> class for the file with the given
         /// <paramref name="fileName"/>.
         /// </summary>
         /// <param name="BntxFile">The <see cref="Bntx.BntxFile"/> instance to save.</param>
         /// <param name="fileName">The name of the file to save the data into.</param>
-        internal BntxFileSaver(BntxFile BntxFile, string fileName)
+        internal BntxFileWriter(BntxFile BntxFile, string fileName)
             : this(BntxFile, new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read), false)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BntxFileSaver"/> class for the file with the given
+        /// Initializes a new instance of the <see cref="BntxFileWriter"/> class for the file with the given
         /// <paramref name="fileName"/>.
         /// </summary>
         /// <param name="BntxFile">The <see cref="Bntx.BntxFile"/> instance to save.</param>
         /// <param name="fileName">The name of the file to save the data into.</param>
-        internal BntxFileSaver(Texture texture, BntxFile BntxFile, string fileName)
+        internal BntxFileWriter(Texture texture, BntxFile BntxFile, string fileName)
             : this(texture, BntxFile, new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read), false)
         {
         }

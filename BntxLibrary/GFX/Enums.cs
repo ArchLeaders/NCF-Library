@@ -1,4 +1,6 @@
-﻿namespace BntxLibrary.GFX
+﻿using System;
+
+namespace BntxLibrary.GFX
 {
 
     /// <summary>

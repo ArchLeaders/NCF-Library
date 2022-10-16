@@ -1,21 +1,20 @@
 ﻿using System.IO;
 using System.Diagnostics;
+using BntxLibrary.Core;
+using BntxLibrary.GFX;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Runtime.InteropServices;
-using BntxLibrary.Core;
-using BntxLibrary.GFX;
-using BntxLibrary.Common;
 
-namespace BntxLibrary
+namespace BntxLibrary.Common.Restore
 {
     /// <summary>
     /// Represents an FMDL subfile in a <see cref="BntxFile"/>, storing multi-dimensional texture data.
     /// </summary>
-    [DebuggerDisplay(nameof(Texture) + " {" + nameof(Name) + "}")]
-    public class Texture : IResData
+    [DebuggerDisplay(nameof(TextureInfo) + " {" + nameof(Name) + "}")]
+    public class TextureInfo : IResData
     {
         // ---- CONSTANTS ----------------------------------------------------------------------------------------------
 
@@ -32,7 +31,7 @@ namespace BntxLibrary
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after reading, otherwise <c>false</c>.</param>
         public void Import(Stream stream, bool leaveOpen = false)
         {
-            using (BntxFileLoader loader = new BntxFileLoader(this, stream, leaveOpen))
+            using (var loader = new BntxFileLoader(this, stream, leaveOpen))
             {
                 loader.ImportTexture();
             }
@@ -45,7 +44,7 @@ namespace BntxLibrary
         /// <param name="fileName">The name of the file to load the data from.</param>
         public void Import(string fileName)
         {
-            using (BntxFileLoader loader = new BntxFileLoader(this, fileName))
+            using (var loader = new BntxFileLoader(this, fileName))
             {
                 loader.ImportTexture();
             }
@@ -58,7 +57,7 @@ namespace BntxLibrary
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after writing, otherwise <c>false</c>.</param>
         public void Export(Stream stream, BntxFile BntxFile, bool leaveOpen = false)
         {
-            using (BntxFileWriter saver = new BntxFileWriter(this, BntxFile, stream, leaveOpen))
+            using (var saver = new BntxFileWriter(this, BntxFile, stream, leaveOpen))
             {
                 saver.ExportTexture();
             }
@@ -70,7 +69,7 @@ namespace BntxLibrary
         /// <param name="fileName">The name of the file to save the contents into.</param>
         public void Export(string fileName, BntxFile BntxFile)
         {
-            using (BntxFileWriter saver = new BntxFileWriter(this, BntxFile, fileName))
+            using (var saver = new BntxFileWriter(this, BntxFile, fileName))
             {
                 saver.ExportTexture();
             }
@@ -164,7 +163,7 @@ namespace BntxLibrary
         {
             get
             {
-                byte DataType = (byte)((int)Format >> 0 & 0xff);
+                var DataType = (byte)((int)Format >> 0 & 0xff);
                 if (DataType == 0x06)
                     return true;
                 else
@@ -172,15 +171,15 @@ namespace BntxLibrary
             }
             set
             {
-                var format = (SurfaceFormat)(((int)Format >> 8) & 0xff);
+                var format = (SurfaceFormat)((int)Format >> 8 & 0xff);
 
                 if (value == true)
                 {
-                    Format = (SurfaceFormat)((int)format << 8 | (int)0x06 << 0);
+                    Format = (SurfaceFormat)((int)format << 8 | 0x06 << 0);
                 }
                 else
                 {
-                    Format = (SurfaceFormat)((int)format << 8 | (int)0x01 << 0);
+                    Format = (SurfaceFormat)((int)format << 8 | 0x01 << 0);
                 }
             }
         }
@@ -366,141 +365,142 @@ namespace BntxLibrary
             ArrayLength = loader.ReadUInt32();
             textureLayout = loader.ReadUInt32();
             textureLayout2 = loader.ReadUInt32();
-            byte[] reserved = loader.ReadBytes(20);
+            var reserved = loader.ReadBytes(20);
             ImageSize = loader.ReadUInt32();
 
             if (ImageSize == 0)
-                throw new System.Exception("Empty image size!");
+                throw new Exception("Empty image size!");
 
             Alignment = loader.ReadInt32();
-            uint ChannelType = loader.ReadUInt32();
+            var ChannelType = loader.ReadUInt32();
             SurfaceDim = loader.ReadEnum<SurfaceDim>(true);
             Name = loader.LoadString();
-            long ParentOffset = loader.ReadInt64();
-            long PtrOffset = loader.ReadInt64();
-            long UserDataOffset = loader.ReadInt64();
-            long TexPtr = loader.ReadInt64();
-            long TexView = loader.ReadInt64();
-            long descSlotDataOffset = loader.ReadInt64();
+            var ParentOffset = loader.ReadInt64();
+            var PtrOffset = loader.ReadInt64();
+            var UserDataOffset = loader.ReadInt64();
+            var TexPtr = loader.ReadInt64();
+            var TexView = loader.ReadInt64();
+            var descSlotDataOffset = loader.ReadInt64();
             UserDataDict = loader.LoadDict();
 
             UserData = loader.LoadList<UserData>(UserDataDict.Count, UserDataOffset);
             MipOffsets = loader.LoadCustom(() => loader.ReadInt64s((int)MipCount), PtrOffset);
 
-            ChannelRed = (ChannelType)((ChannelType >> 0) & 0xff);
-            ChannelGreen = (ChannelType)((ChannelType >> 8) & 0xff);
-            ChannelBlue = (ChannelType)((ChannelType >> 16) & 0xff);
-            ChannelAlpha = (ChannelType)((ChannelType >> 24) & 0xff);
+            ChannelRed = (ChannelType)(ChannelType >> 0 & 0xff);
+            ChannelGreen = (ChannelType)(ChannelType >> 8 & 0xff);
+            ChannelBlue = (ChannelType)(ChannelType >> 16 & 0xff);
+            ChannelAlpha = (ChannelType)(ChannelType >> 24 & 0xff);
             TextureData = new List<List<byte[]>>();
 
-            ReadTextureLayout = (int)Flags & 1;
-            sparseBinding = (int)Flags >> 1;
-            sparseResidency = (int)Flags >> 2;
+            ReadTextureLayout = Flags & 1;
+            sparseBinding = Flags >> 1;
+            sparseResidency = Flags >> 2;
             BlockHeightLog2 = textureLayout & 7;
 
-            int ArrayOffset = 0;
-            for (int a = 0; a < ArrayLength; a++)
+            var ArrayOffset = 0;
+            for (var a = 0; a < ArrayLength; a++)
             {
-                List<byte[]> mips = new List<byte[]>();
-                for (int i = 0; i < MipCount; i++)
+                var mips = new List<byte[]>();
+                for (var i = 0; i < MipCount; i++)
                 {
-                    int size = (int)((MipOffsets[0] + ImageSize - MipOffsets[i]) / ArrayLength);
-                    using (loader.TemporarySeek(ArrayOffset + MipOffsets[i], System.IO.SeekOrigin.Begin))
+                    var size = (int)((MipOffsets[0] + ImageSize - MipOffsets[i]) / ArrayLength);
+                    using (loader.TemporarySeek(ArrayOffset + MipOffsets[i], SeekOrigin.Begin))
                     {
                         mips.Add(loader.ReadBytes(size));
                     }
                     if (mips[i].Length == 0)
-                        throw new System.Exception($"Empty mip size! Texture {Name} ImageSize {ImageSize} mips level {i} sizee {size} ArrayLength {ArrayLength}");
+                        throw new Exception($"Empty mip size! Texture {Name} ImageSize {ImageSize} mips level {i} sizee {size} ArrayLength {ArrayLength}");
                 }
                 TextureData.Add(mips);
 
                 ArrayOffset += mips[0].Length;
             }
 
-            int mip = 0;
-            long StartMip = MipOffsets[0];
-            foreach (long offset in MipOffsets)
+            var mip = 0;
+            var StartMip = MipOffsets[0];
+            foreach (var offset in MipOffsets)
                 MipOffsets[mip++] = offset - StartMip;
         }
         internal long PosUserDataOffset;
         internal long PosUserDataDictOffset;
 
-        void IResData.Save(BntxFileWriter saver)
+        void IResData.Save(BntxFileWriter writer)
         {
-            int Channels = (int)ChannelAlpha << 24 | (int)ChannelBlue << 16 | (int)ChannelGreen << 8 | (int)ChannelRed;
+            var Channels = (int)ChannelAlpha << 24 | (int)ChannelBlue << 16 | (int)ChannelGreen << 8 | (int)ChannelRed;
 
             if (ReadTextureLayout != 1)
                 textureLayout = 0;
-            else if (saver.BntxFile.VersionMajor2 == 4 && saver.BntxFile.VersionMinor >= 1)
-                textureLayout = (uint)BlockHeightLog2;
+            else if (writer.BntxFile.VersionMajor2 == 4 && writer.BntxFile.VersionMinor >= 1)
+                textureLayout = BlockHeightLog2;
             else
                 textureLayout = (uint)(sparseResidency << 5 | sparseBinding << 4 | (int)BlockHeightLog2);
 
             Console.WriteLine($"sparseResidency {sparseResidency} sparseBinding {sparseBinding} BlockHeightLog2 {BlockHeightLog2}");
 
-            Flags = (byte)(sparseResidency << 2 | sparseBinding << 1 | (int)ReadTextureLayout);
+            Flags = (byte)(sparseResidency << 2 | sparseBinding << 1 | ReadTextureLayout);
 
-            saver.WriteSignature(_signature);
-            saver.SaveHeaderBlock();
-            long TexturePos = saver.Position;
-            saver.Write((byte)Flags);
-            saver.WriteEnum(Dim, true);
-            saver.WriteEnum(TileMode, true);
-            saver.Write((ushort)Swizzle);
-            saver.Write((ushort)TextureData[0].Count);
-            saver.Write(SampleCount);
-            saver.WriteEnum(Format, true);
-            saver.WriteEnum(AccessFlags, false);
-            saver.Write(Width);
-            saver.Write(Height);
-            saver.Write(Depth);
-            saver.Write(TextureData.Count);
-            saver.Write(textureLayout);
-            saver.Write(textureLayout2);
-            saver.Seek(20); //reserved
-            saver.Write(GetTotalSize());
-            saver.Write(Alignment);
-            saver.Write((uint)Channels);
-            saver.WriteEnum(SurfaceDim, true);
-            saver.SaveRelocateEntryToSection(saver.Position, 3, 1, 0, BntxFileWriter.Section1, "Texture Info"); //      <------------ Entry Set
-            saver.SaveString(Name);
-            saver.Write((long)0x20); //ParentOffset
-            long PosDataOffsets = saver.SaveOffset();
-            saver.SaveRelocateEntryToSection(saver.Position, 1, 1, 0, BntxFileWriter.Section1, "User Data"); //      <------------ Entry Set
-            PosUserDataOffset = saver.SaveOffset();
-            saver.SaveRelocateEntryToSection(saver.Position, 2, 1, 0, BntxFileWriter.Section1, "Texture Info"); //      <------------ Entry Set
-            saver.Write(TexturePos + 0x90); //TexPtr
-            saver.Write(TexturePos + 0x190); //TexView
-            saver.Write(0L); //descSlotDataOffset
-            saver.SaveRelocateEntryToSection(saver.Position, 1, 1, 0, BntxFileWriter.Section1, "User Data"); //      <------------ Entry Set
-            PosUserDataDictOffset = saver.SaveOffset();// userDictOffset
+            writer.WriteSignature(_signature);
+            writer.SaveHeaderBlock();
+            var TexturePos = writer.Position;
+            writer.Write(Flags);
+            writer.WriteEnum(Dim, true);
+            writer.WriteEnum(TileMode, true);
+            writer.Write((ushort)Swizzle);
+            writer.Write((ushort)TextureData[0].Count);
+            writer.Write(SampleCount);
+            writer.WriteEnum(Format, true);
+            writer.WriteEnum(AccessFlags, false);
+            writer.Write(Width);
+            writer.Write(Height);
+            writer.Write(Depth);
+            writer.Write(TextureData.Count);
+            writer.Write(textureLayout);
+            writer.Write(textureLayout2);
+            writer.Seek(20); //reserved
+            writer.Write(GetTotalSize());
+            writer.Write(Alignment);
+            writer.Write((uint)Channels);
+            writer.WriteEnum(SurfaceDim, true);
+            writer.SaveRelocateEntryToSection(writer.Position, 3, 1, 0, BntxFileWriter.Section1, "Texture Info"); //      <------------ Entry Set
+            writer.SaveString(Name);
+            writer.Write((long)0x20); //ParentOffset
+            var PosDataOffsets = writer.SaveOffset();
+            writer.SaveRelocateEntryToSection(writer.Position, 1, 1, 0, BntxFileWriter.Section1, "User Data"); //      <------------ Entry Set
+            PosUserDataOffset = writer.SaveOffset();
+            writer.SaveRelocateEntryToSection(writer.Position, 2, 1, 0, BntxFileWriter.Section1, "Texture Info"); //      <------------ Entry Set
+            writer.Write(TexturePos + 0x90); //TexPtr
+            writer.Write(TexturePos + 0x190); //TexView
+            writer.Write(0L); //descSlotDataOffset
+            writer.SaveRelocateEntryToSection(writer.Position, 1, 1, 0, BntxFileWriter.Section1, "User Data"); //      <------------ Entry Set
+            PosUserDataDictOffset = writer.SaveOffset();// userDictOffset
 
-            saver.Write(new byte[512]);
+            writer.Write(new byte[512]);
 
-            saver.Align(8);
-            long _ofsDataOffsets = saver.Position;
-            saver.SaveRelocateEntryToSection(_ofsDataOffsets, (uint)TextureData[0].Count, 1, 0, BntxFileWriter.Section2, "TextureBlocks");
+            writer.Align(8);
+            var _ofsDataOffsets = writer.Position;
+            writer.SaveRelocateEntryToSection(_ofsDataOffsets, (uint)TextureData[0].Count, 1, 0, BntxFileWriter.Section2, "TextureBlocks");
 
-            foreach (long mipmap in MipOffsets)
+            foreach (var mipmap in MipOffsets)
             {
-                saver.SaveMipMapOffsets();
+                writer.SaveMipMapOffsets();
             }
 
-            if (UserData.Count > 0) {
-                saver.SaveUserData(UserData, PosUserDataOffset);
+            if (UserData.Count > 0)
+            {
+                writer.SaveUserData(UserData, PosUserDataOffset);
             }
             if (UserData.Count > 0)
             {
-                saver.SaveUserDataData(UserData);
-                saver.Align(8);
-                saver.WriteOffset(PosUserDataDictOffset);
-                ((IResData)UserDataDict).Save(saver);
-                saver.Align(8);
+                writer.SaveUserDataData(UserData);
+                writer.Align(8);
+                writer.WriteOffset(PosUserDataDictOffset);
+                ((IResData)UserDataDict).Save(writer);
+                writer.Align(8);
             }
 
-            using (saver.TemporarySeek(PosDataOffsets, System.IO.SeekOrigin.Begin))
+            using (writer.TemporarySeek(PosDataOffsets, SeekOrigin.Begin))
             {
-                saver.Write(_ofsDataOffsets);
+                writer.Write(_ofsDataOffsets);
             }
         }
     }

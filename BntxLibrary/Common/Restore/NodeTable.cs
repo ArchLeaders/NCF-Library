@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using BntxLibrary.Core;
 
-namespace BntxLibrary.Common
+namespace BntxLibrary.Common.Restore
 {
     /// <summary>
     /// Represents the non-generic base of a dictionary which can quickly look up <see cref="IResData"/> instances via
@@ -15,36 +15,29 @@ namespace BntxLibrary.Common
     /// </summary>
     [DebuggerDisplay("Count = {Count}")]
     [DebuggerTypeProxy(typeof(TypeProxy))]
-    public class ResDict : IEnumerable, IResData
+    public class NodeTable : IEnumerable, IResData
     {
-        // ---- FIELDS -------------------------------------------------------------------------------------------------
-
-        private IList<Node> _nodes; // Includes root node.
-
-        // ---- CONSTRUCTORS & DESTRUCTOR ------------------------------------------------------------------------------
+        private IList<Node> nodes; // Includes root node.
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResDict"/> class.
+        /// Initializes a new instance of the <see cref="NodeTable"/> class.
         /// </summary>
-        public ResDict()
+        public NodeTable()
         {
             // Create root node.
-            _nodes = new List<Node> { new Node() };
+            nodes = new List<Node> { new Node() };
         }
 
-        // ---- PROPERTIES ---------------------------------------------------------------------------------------------
+        // 
+        // Properties
 
         /// <summary>
         /// Gets the number of instances stored.
         /// </summary>
-        public int Count
-        {
-            get { return _nodes.Count - 1; }
-        }
+        public int Count => nodes.Count - 1;
 
-        // ---- OPERATORS ----------------------------------------------------------------------------------------------
-
-        // ---- METHODS (PUBLIC) ---------------------------------------------------------------------------------------
+        // 
+        // Methods (Public)
 
         /// <summary>
         /// Adds the given <paramref name="key"/> to insert in the dictionary.
@@ -53,10 +46,11 @@ namespace BntxLibrary.Common
         /// already exists.</exception>
         public void Add(string key)
         {
-            if (!ContainsKey((key)))
-                _nodes.Add(new Node(key));
-            else
-                throw new Exception($"key {key} already exists in the dictionary!");
+            if (!ContainsKey(key))
+            {
+                nodes.Add(new Node(key));
+            }
+            else throw new ArgumentException($"An item with the same key has already been added. Key: '{key}'");
         }
 
         /// <summary>
@@ -66,7 +60,21 @@ namespace BntxLibrary.Common
         /// already exists.</exception>
         public void Remove(string key)
         {
-            _nodes.Remove(_nodes.Where(n => n.Key == key).FirstOrDefault());
+            if (ContainsKey(key))
+            {
+                nodes.Remove(nodes.First(n => n.Key == key));
+            }
+            else throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
+        }
+
+        /// <summary>
+        /// Removes all elements from the dictionary.
+        /// </summary>
+        public void Clear()
+        {
+            // Create new collection with root node.
+            nodes.Clear();
+            nodes.Add(new Node());
         }
 
         /// <summary>
@@ -76,7 +84,7 @@ namespace BntxLibrary.Common
         /// </returns>
         public bool ContainsKey(string key)
         {
-            return _nodes.Any(p => p.Key == key);
+            return nodes.Any(p => p.Key == key);
         }
 
         /// <summary>
@@ -84,10 +92,11 @@ namespace BntxLibrary.Common
         /// </summary>
         public string GetKey(int index)
         {
-            if (index < _nodes.Count || index > 0)
-                return _nodes[index + 1].Key;
-            else
-                throw new Exception($"Index {index} is out of range!");
+            if (index < nodes.Count && index > 0)
+            {
+                return nodes[index + 1].Key;
+            }
+            else throw new IndexOutOfRangeException();
         }
 
         /// <summary>
@@ -95,10 +104,11 @@ namespace BntxLibrary.Common
         /// </summary>
         public void SetKey(int index, string key)
         {
-            if (index < _nodes.Count || index > 0)
-                _nodes[index + 1].Key = key;
-            else
-                throw new Exception($"Index {index} is out of range!");
+            if (index < nodes.Count && index > 0)
+            {
+                nodes[index + 1].Key = key;
+            }
+            else throw new IndexOutOfRangeException();
         }
 
         /// <summary>
@@ -106,20 +116,33 @@ namespace BntxLibrary.Common
         /// </summary>
         /// <param name="index">The 0-based index of the <see cref="IResData"/> instance to get or set.</param>
         /// <returns>The <see cref="IResData"/> at the specified <paramref name="index"/>.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">The index is smaller than 0 or bigger or equal to
-        /// <see cref="Count"/>.</exception>
+        /// <exception cref="IndexOutOfRangeException">
+        /// The index is smaller than 0 or bigger or equal to <see cref="Count"/>.
+        /// </exception>
         public string this[int index]
         {
-            get
-            {
-                // Throw if index out of bounds.
-                Lookup(index, out Node node);
-                return node.Key;
-            }
+            get => Lookup(index).Key;
             set
             {
-                // Throw if index out of bounds.
-                Lookup(index, out Node node);
+                var node = Lookup(index);
+                node.Key = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="IResData"/> instance stored with the specified <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The 0-based index of the <see cref="IResData"/> instance to get or set.</param>
+        /// <returns>The <see cref="IResData"/> with the specified <paramref name="key"/>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The index is smaller than 0 or bigger or equal to <see cref="Count"/>.
+        /// </exception>
+        public string this[string key]
+        {
+            get => Lookup(IndexOf(key)).Key;
+            set
+            {
+                var node = Lookup(IndexOf(key));
                 node.Key = value;
             }
         }
@@ -132,53 +155,20 @@ namespace BntxLibrary.Common
         /// <c>null</c>.</param>
         /// <returns>The zero-based index of the first occurence of <paramref name="value"/> within the entire
         /// dictionary if found; otherwise <c>-1</c>.</returns>
-        public int IndexOf(string value)
+        public int IndexOf(string key)
         {
-            return Lookup(value, out Node node, out int index, false) ? index : -1;
-        }
-
-        private bool Lookup(int index, out Node node, bool throwOnFail = true)
-        {
-            if (index < 0 || index > Count)
+            for (int i = 0; i < nodes.Count; i++)
             {
-                if (throwOnFail) throw new IndexOutOfRangeException($"{index} out of bounds in {this}.");
-                node = null;
-                return false;
-            }
-            node = _nodes[index + 1];
-            return true;
-        }
-
-        private bool Lookup(string key, out Node node, out int index, bool throwOnFail = true)
-        {
-            int i = 0;
-            foreach (Node foundNode in Nodes)
-            {
-                if (foundNode.Key == key)
+                if (nodes[i].Key == key)
                 {
-                    node = foundNode;
-                    index = i;
-                    return true;
+                    return i;
                 }
-                i++;
             }
-            if (throwOnFail) throw new ArgumentException($"{key} not found in {this}.", nameof(key));
-            node = null;
-            index = -1;
-            return false;
+            return -1;
         }
 
-        /// <summary>
-        /// Removes all elements from the dictionary.
-        /// </summary>
-        public void Clear()
-        {
-            // Create new collection with root node.
-            _nodes.Clear();
-            _nodes.Add(new Node());
-        }
-
-        // ---- METHODS (INTERNAL) -------------------------------------------------------------------------------------
+        //
+        // Methods (Internal)
 
         void IResData.Load(BntxFileLoader loader)
         {
@@ -194,121 +184,75 @@ namespace BntxLibrary.Common
                 nodes.Add(ReadNode(loader));
                 i++;
             }
-            _nodes = nodes;
+            this.nodes = nodes;
         }
 
-        void IResData.Save(BntxFileWriter saver)
+        void IResData.Save(BntxFileWriter writer)
         {
             // Update the Patricia trie values in the nodes.
             UpdateNodes();
 
             // Write header.
-            saver.WriteSignature("_DIC");
-            saver.Write(Count);
+            writer.WriteSignature("_DIC");
+            writer.Write(Count);
 
             // Write nodes.
             int index = -1; // Start at -1 due to root node.
             int curNode = 0;
-            foreach (Node node in _nodes)
+            foreach (Node node in nodes)
             {
-                saver.Write(node.Reference);
-                saver.Write(node.IdxLeft);
-                saver.Write(node.IdxRight);
+                writer.Write(node.Reference);
+                writer.Write(node.IdxLeft);
+                writer.Write(node.IdxRight);
 
                 if (curNode == 0)
                 {
-                    saver.SaveRelocateEntryToSection(saver.Position, 1, (uint)_nodes.Count, 1, BntxFileWriter.Section1, ""); //      <------------ Entry Set
-                    saver.SaveString("");
+                    writer.SaveRelocateEntryToSection(writer.Position, 1, (uint)nodes.Count, 1, BntxFileWriter.Section1, ""); //      <------------ Entry Set
+                    writer.SaveString("");
                 }   
                 else
                 {
-                    saver.SaveString(node.Key);
+                    writer.SaveString(node.Key);
                 }
                 curNode++;
             }
         }
 
-        // ---- METHODS (INTERNAL) -------------------------------------------------------------------------------------
-
-        IEnumerator<string> GetEnumerator()
-        {
-            foreach (Node node in Nodes)
-            {
-                yield return node.Key;
-            }
-        }
-
+        /// <summary>
+        /// Returns the publically visible nodes, excluding the root node.
+        /// </summary>
+        /// <remarks>
+        /// Should return <see cref="Node"/>, instead of <see cref="Node"/>.Key as <see cref="string"/>
+        /// </remarks>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            foreach (Node node in nodes) yield return node.Key;
         }
 
         /// <summary>
-        /// Returns only the publically visible nodes, excluding the root node.
+        /// Returns the publically visible nodes, excluding the root node.
         /// </summary>
-        protected IEnumerable<Node> Nodes
+        /// <remarks>
+        /// Not really sure what this is for...
+        /// </remarks>
+        private IEnumerator<Node> Nodes
         {
             get
             {
-                for (int i = 1; i < _nodes.Count; i++)
-                {
-                    yield return _nodes[i];
-                }
+                foreach (Node node in nodes) yield return node;
             }
         }
 
-        // ---- METHODS (PRIVATE) --------------------------------------------------------------------------------------
+        //
+        // Methods (Private)
 
-        static string ToBinaryString(string text, Encoding encoding)
+        private Node Lookup(int index)
         {
-            return string.Join("", encoding.GetBytes(text).Select(n => Convert.ToString(n, 2).PadLeft(8, '0')));
-        }
-
-        //Bit index data is too big.
-        static int _bit(BigInteger n, int b)
-        {
-            BigInteger test = (n >> (int)(b & 0xffffffff)) & 1;
-            return (int)test;
-        }
-
-        static int first_1bit(BigInteger n)
-        {
-            int bitlength1 = BitLength(n);
-            for (int i = 0; i < bitlength1; i++)
+            if (index < nodes.Count && index > 0)
             {
-                if (((n >> i) & 1) == 1)
-                {
-                    return i;
-                }
+                return nodes[index + 1];
             }
-
-            throw new Exception("Operation Failed");
-        }
-
-        static int bit_mismatch(BigInteger int1, BigInteger int2)
-        {
-            int bitlength1 = BitLength(int1);
-            int bitlength2 = BitLength(int2);
-
-            for (int i = 0; i < Math.Max(bitlength1, bitlength2); i++)
-            {
-                if (((int1 >> i) & 1) != ((int2 >> i) & 1))
-                    return i;
-            }
-            return -1;
-        }
-
-
-        static int BitLength(BigInteger bits)
-        {
-            int bitLength = 0;
-            while (bits / 2 != 0)
-            {
-                bits /= 2;
-                bitLength++;
-            }
-            bitLength += 1;
-            return bitLength;
+            else throw new IndexOutOfRangeException();
         }
 
         class Tree
@@ -347,7 +291,7 @@ namespace BntxLibrary.Common
                 while (true)
                 {
                     prevNode = node;
-                    node = node.Child[_bit(data, node.bitInx)];
+                    node = node.Child[data.GetBit(node.bitInx)];
                     if (node.bitInx <= prevNode.bitInx)
                         break;
                 }
@@ -357,12 +301,12 @@ namespace BntxLibrary.Common
                     return node;
             }
 
-            public void Insert(string Name)
+            public void Insert(string name)
             {
-                string bits = ToBinaryString(Name, Encoding.UTF8);
+                string bits = name.ToBinaryString(Encoding.UTF8);
                 BigInteger data = bits.Aggregate(new BigInteger(), (b, c) => b * 2 + c - '0');
                 Node current = Search(data, true);
-                int bitIdx = bit_mismatch(current.Data, data);
+                int bitIdx = Bit.Mismatch(current.Data, data);
 
                 while (bitIdx < current.Parent.bitInx)
                     current = current.Parent;
@@ -370,8 +314,8 @@ namespace BntxLibrary.Common
                 if (bitIdx < current.bitInx)
                 {
                     Node newNode = new Node(data, bitIdx, current.Parent);
-                    newNode.Child[_bit(data, bitIdx) ^ 1] = current;
-                    current.Parent.Child[_bit(data, current.Parent.bitInx)] = newNode;
+                    newNode.Child[data.GetBit(bitIdx) ^ 1] = current;
+                    current.Parent.Child[data.GetBit(current.Parent.bitInx)] = newNode;
                     current.Parent = newNode;
 
                     insertEntry(data, newNode);
@@ -379,26 +323,26 @@ namespace BntxLibrary.Common
                 else if (bitIdx > current.bitInx)
                 {
                     Node newNode = new Node(data, bitIdx, current);
-                    if (_bit(current.Data, bitIdx) == (_bit(data, bitIdx) ^ 1))
-                        newNode.Child[_bit(data, bitIdx) ^ 1] = current;
+                    if (current.Data.GetBit(bitIdx) == (data.GetBit(bitIdx) ^ 1))
+                        newNode.Child[data.GetBit(bitIdx) ^ 1] = current;
                     else
-                        newNode.Child[_bit(data, bitIdx) ^ 1] = root;
+                        newNode.Child[data.GetBit(bitIdx) ^ 1] = root;
 
 
-                    current.Child[_bit(data, current.bitInx)] = newNode;
+                    current.Child[data.GetBit(current.bitInx)] = newNode;
                     insertEntry(data, newNode);
                 }
                 else
                 {
 
-                    int NewBitIdx = first_1bit(data);
+                    int NewBitIdx = data.GetFirst1Bit();
 
-                    if (current.Child[_bit(data, bitIdx)] != root)
-                        NewBitIdx = bit_mismatch(current.Child[_bit(data, bitIdx)].Data, data);
+                    if (current.Child[data.GetBit(bitIdx)] != root)
+                        NewBitIdx = Bit.Mismatch(current.Child[data.GetBit(bitIdx)].Data, data);
                     Node newNode = new Node(data, NewBitIdx, current);
 
-                    newNode.Child[_bit(data, NewBitIdx) ^ 1] = current.Child[_bit(data, bitIdx)];
-                    current.Child[_bit(data, bitIdx)] = newNode;
+                    newNode.Child[data.GetBit(NewBitIdx) ^ 1] = current.Child[data.GetBit(bitIdx)];
+                    current.Child[data.GetBit(bitIdx)] = newNode;
                     insertEntry(data, newNode);
                 }
             }
@@ -410,11 +354,11 @@ namespace BntxLibrary.Common
             Tree tree = new Tree();
 
             // Create a new root node with empty key so the length can be retrieved throughout the process.
-            _nodes[0] = new Node() { Key = String.Empty, bitInx = -1, Parent = _nodes[0] };
+            nodes[0] = new Node() { Key = String.Empty, bitInx = -1, Parent = nodes[0] };
 
             // Update the data-referencing nodes.
-            for (ushort i = 1; i < _nodes.Count; i++)
-                tree.Insert(_nodes[i].Key);
+            for (ushort i = 1; i < nodes.Count; i++)
+                tree.Insert(nodes[i].Key);
 
             int CurEntry = 0;
             foreach (var entry in tree.entries.Values)
@@ -425,13 +369,13 @@ namespace BntxLibrary.Common
                 node.IdxLeft = (ushort)tree.entries[node.Child[0].Data].Item1;
                 node.IdxRight = (ushort)tree.entries[node.Child[1].Data].Item1;
                 node.Key = node.GetName();
-                _nodes[CurEntry] = node;
+                nodes[CurEntry] = node;
 
                 CurEntry++;
             }
 
             // Remove the dummy empty key in the root again.
-            _nodes[0].Key = null;
+            nodes[0].Key = null;
         }
 
         private Node ReadNode(BntxFileLoader loader)
@@ -472,7 +416,7 @@ namespace BntxLibrary.Common
             }
             internal string GetName()
             {
-                BigInteger data = BitLength(Data) + 7 / 8;
+                BigInteger data = Data.GetBitLength() + 7 / 8;
                 byte[] stringBytes = Data.ToByteArray();
                 Array.Reverse(stringBytes, 0, stringBytes.Length); //Convert to big endian
                 return Encoding.UTF8.GetString(stringBytes); //Decode byte[] to string
@@ -496,9 +440,9 @@ namespace BntxLibrary.Common
 
         private class TypeProxy
         {
-            private ResDict _dict;
+            private NodeTable _dict;
 
-            internal TypeProxy(ResDict dict)
+            internal TypeProxy(NodeTable dict)
             {
                 _dict = dict;
             }

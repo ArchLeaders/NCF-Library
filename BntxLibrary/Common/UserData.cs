@@ -175,7 +175,7 @@ namespace BntxLibrary.Common
             return false;
         }
 
-        internal void SaveData(BntxFileSaver saver)
+        internal void SaveData(BntxFileWriter saver)
         {
             switch (Type)
             {
@@ -199,7 +199,7 @@ namespace BntxLibrary.Common
 
         internal long DataOffset;
 
-        void IResData.Save(BntxFileSaver saver)
+        void IResData.Save(BntxFileWriter saver)
         {
             saver.SaveString(Name);
             DataOffset = saver.SaveOffset();

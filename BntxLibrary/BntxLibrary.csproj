@@ -1,9 +1,45 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Copyright>(c) KillzXGaming, and Syroot, licensed under MIT</Copyright>
+    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks> 
+    <!--<PackageIcon>BntxIcon-128.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>-->
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>KillzXGaming and Syroot. (Updated by S41L0R and ArchLeaders)</Authors>
+    <Description>Updated version of KillzXGaming's BntxLibrary</Description>
+    <PackageProjectUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/BfresLibrary</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ArchLeaders/NCF-Library/tree/master/BfresLibrary</RepositoryUrl>
+    <PackageTags>bfres;cafe-resource;nintendo;botw;zelda</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <VersionPrefix>1.0.1</VersionPrefix>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\Restore\Bit.cs" />
+    <Compile Remove="Common\Restore\NodeTable.cs" />
+    <Compile Remove="Common\Restore\RelocationTable.cs" />
+    <Compile Remove="Common\Restore\StringTable.cs" />
+    <Compile Remove="Common\Restore\TextureInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Syroot.BinaryData" Version="5.2.2" />
+    <PackageReference Include="Syroot.Maths" Version="1.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Texture\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Common\Restore\Bit.cs" />
+    <None Include="Common\Restore\NodeTable.cs" />
+    <None Include="Common\Restore\RelocationTable.cs" />
+    <None Include="Common\Restore\StringTable.cs" />
+    <None Include="Common\Restore\TextureInfo.cs" />
+  </ItemGroup>
 
 </Project>

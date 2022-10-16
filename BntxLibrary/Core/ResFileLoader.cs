@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using BntxLibrary.Common;
 using Syroot.BinaryData;
 using Syroot.Maths;
 
@@ -15,7 +16,7 @@ namespace BntxLibrary.Core
     {
         // ---- FIELDS -------------------------------------------------------------------------------------------------
 
-        private IDictionary<uint, IResData> _dataMap;
+        private IDictionary<uint, IResData> dataMap;
 
         // ---- CONSTRUCTORS & DESTRUCTOR ------------------------------------------------------------------------------
 
@@ -26,20 +27,18 @@ namespace BntxLibrary.Core
         /// <param name="bntxFile">The <see cref="Bntx.bntxFile"/> instance to load data into.</param>
         /// <param name="stream">The <see cref="Stream"/> to read data from.</param>
         /// <param name="leaveOpen"><c>true</c> to leave the stream open after reading, otherwise <c>false</c>.</param>
-        internal BntxFileLoader(BntxFile bntxFile, Stream stream, bool leaveOpen = false)
-            : base(stream, null, Encoding.ASCII, BooleanCoding.Byte, DateTimeCoding.NetTicks, StringCoding.ZeroTerminated, leaveOpen)
+        internal BntxFileLoader(BntxFile bntxFile, Stream stream, bool leaveOpen = false) : base(stream, encoding: Encoding.ASCII, leaveOpen: leaveOpen)
         {
             ByteConverter = ByteConverter.Little;
             BntxFile = bntxFile;
-            _dataMap = new Dictionary<uint, IResData>();
+            dataMap = new Dictionary<uint, IResData>();
         }
 
-        internal BntxFileLoader(Texture texture, Stream stream, bool leaveOpen = false)
-            : base(stream, null, Encoding.ASCII, BooleanCoding.Byte, DateTimeCoding.NetTicks, StringCoding.ZeroTerminated, leaveOpen)
+        internal BntxFileLoader(Texture texture, Stream stream, bool leaveOpen = false) : base(stream, encoding: Encoding.ASCII, leaveOpen: leaveOpen)
         {
             ByteConverter = ByteConverter.Little;
             Texture = texture;
-            _dataMap = new Dictionary<uint, IResData>();
+            dataMap = new Dictionary<uint, IResData>();
         }
 
         /// <summary>
@@ -48,10 +47,7 @@ namespace BntxLibrary.Core
         /// </summary>
         /// <param name="BntxFile">The <see cref="Bntx.BntxFile"/> instance to load data into.</param>
         /// <param name="fileName">The name of the file to load the data from.</param>
-        internal BntxFileLoader(BntxFile BntxFile, string fileName)
-            : this(BntxFile, new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-        {
-        }
+        internal BntxFileLoader(BntxFile BntxFile, string fileName) : this(BntxFile, new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BntxFileLoader"/> class from the file with the given
@@ -59,10 +55,7 @@ namespace BntxLibrary.Core
         /// </summary>
         /// <param name="texture">The <see cref="Bntx.Texture"/> instance to load data into.</param>
         /// <param name="fileName">The name of the file to load the data from.</param>
-        internal BntxFileLoader(Texture texture, string fileName)
-            : this(texture, new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-        {
-        }
+        internal BntxFileLoader(Texture texture, string fileName) : this(texture, new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) { }
 
         // ---- PROPERTIES ---------------------------------------------------------------------------------------------
 
@@ -167,8 +160,7 @@ namespace BntxLibrary.Core
         /// <returns>The <see cref="IList{T}"/> instance or <c>null</c>.</returns>
         /// <remarks>Offset required for FMDL FVTX lists (offset specified before count).</remarks>
         [DebuggerStepThrough]
-        internal IList<T> LoadList<T>(int count, long? offset = null)
-            where T : IResData, new()
+        internal IList<T> LoadList<T>(int count, long? offset = null) where T : IResData, new()
         {
             List<T> list = new List<T>(count);
             offset = offset ?? ReadOffset();
@@ -268,9 +260,7 @@ namespace BntxLibrary.Core
         {
             long offset = ReadInt64();
 
-            if (Relocated == true)
-            {
-            }
+            if (Relocated == true) { }
 
             return offset == 0 ? 0 : offset;
         }
@@ -318,13 +308,13 @@ namespace BntxLibrary.Core
             instance.Load(this);
 
             // If possible, return an instance already representing the data.
-            if (_dataMap.TryGetValue(offset, out IResData existingInstance))
+            if (dataMap.TryGetValue(offset, out IResData existingInstance))
             {
                 return (T)existingInstance;
             }
             else
             {
-                _dataMap.Add(offset, instance);
+                dataMap.Add(offset, instance);
                 return instance;
             }
         }
